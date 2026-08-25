@@ -1,0 +1,1070 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17324d">
+  <title>Anatomical Regions Quiz</title>
+
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #edf3f8;
+      --card: #ffffff;
+      --navy: #17324d;
+      --navy-2: #234b70;
+      --text: #18324b;
+      --muted: #6b7f91;
+      --border: #d9e4ec;
+      --teal: #13a3a1;
+      --teal-dark: #0d8584;
+      --teal-soft: #e7f8f7;
+      --red: #e64949;
+      --red-soft: #fff0f0;
+      --green: #23845a;
+      --green-soft: #e8f7ef;
+      --purple: #7258a7;
+      --purple-soft: #f4f0fb;
+      --shadow: 0 12px 35px rgba(23, 50, 77, 0.08);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-btn: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.45;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .app {
+      width: 100%;
+      min-height: 100%;
+    }
+
+    .site-header {
+      background: var(--navy);
+      color: white;
+      padding: clamp(18px, 3vw, 30px) clamp(18px, 4vw, 44px);
+    }
+
+    .header-inner {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .eyebrow {
+      margin: 0 0 3px;
+      color: #9edfdc;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2.1rem);
+      line-height: 1.1;
+    }
+
+    .header-sub {
+      margin: 6px 0 0;
+      color: #d7e7f3;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+    }
+
+    .score-chip {
+      flex: 0 0 auto;
+      min-width: 72px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      background: var(--navy-2);
+      color: white;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    main {
+      width: min(1080px, 100%);
+      margin: 0 auto;
+      padding: clamp(16px, 3vw, 30px);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .menu-card {
+      padding: clamp(22px, 5vw, 42px);
+      text-align: center;
+    }
+
+    .menu-card h2,
+    .quiz-card h2,
+    .results-card h2 {
+      margin: 0;
+      color: var(--text);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .rounded-button {
+      appearance: none;
+      width: 100%;
+      min-height: 58px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-btn);
+      background: #f8fbfd;
+      color: var(--text);
+      padding: 12px 18px;
+      cursor: pointer;
+      font-weight: 750;
+      transition:
+        background-color 120ms ease,
+        border-color 120ms ease,
+        color 120ms ease,
+        transform 90ms ease,
+        box-shadow 120ms ease;
+    }
+
+    .rounded-button:hover {
+      background: var(--teal-soft);
+      border-color: var(--teal);
+      box-shadow: 0 8px 20px rgba(19, 163, 161, 0.12);
+    }
+
+    .rounded-button:focus-visible {
+      outline: 4px solid rgba(19, 163, 161, 0.25);
+      outline-offset: 3px;
+      border-color: var(--teal);
+    }
+
+    .rounded-button:active,
+    .rounded-button.key-pressed {
+      transform: translateY(2px) scale(0.992);
+      background: #c7eeeb;
+      border-color: var(--teal-dark);
+    }
+
+    .rounded-button:disabled {
+      cursor: default;
+      opacity: 0.8;
+      box-shadow: none;
+    }
+
+    .mode-button {
+      min-height: 92px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+    }
+
+    .mode-button.mc {
+      background: #ebf8f7;
+      border-color: #bfe8e5;
+    }
+
+    .mode-button.free {
+      background: var(--purple-soft);
+      border-color: #ded5f1;
+    }
+
+    .mode-button.free:hover {
+      background: #ebe3f8;
+      border-color: var(--purple);
+    }
+
+    .key-badge {
+      flex: 0 0 auto;
+      min-width: 42px;
+      min-height: 34px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 10px;
+      padding: 5px 8px;
+      background: var(--teal-dark);
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 850;
+    }
+
+    .mode-button.free .key-badge {
+      background: var(--purple);
+    }
+
+    .mode-title {
+      display: block;
+      font-size: 1.03rem;
+      margin-bottom: 2px;
+    }
+
+    .mode-desc {
+      display: block;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 500;
+    }
+
+    .features {
+      margin: 20px 0 0;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .quiz-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 4px 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 9px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dfe9f1;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--teal);
+      border-radius: inherit;
+      transition: width 200ms ease;
+    }
+
+    .quiz-card {
+      padding: clamp(15px, 3vw, 24px);
+    }
+
+    .question-heading {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .question-heading h2 {
+      font-size: clamp(1.08rem, 2.6vw, 1.45rem);
+    }
+
+    .question-heading p {
+      margin: 4px 0 0;
+      font-size: 0.86rem;
+    }
+
+    .diagram-panel {
+      width: 100%;
+      border-radius: var(--radius-md);
+      background: #f8fbfd;
+      padding: clamp(8px, 2vw, 14px);
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .diagram-wrap {
+      position: relative;
+      display: inline-block;
+      width: min(100%, 645px);
+      line-height: 0;
+    }
+
+    .diagram-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .target-dot {
+      position: absolute;
+      width: clamp(15px, 2.7vw, 20px);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border: 4px solid white;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      pointer-events: none;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .answer-button {
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .answer-button .key-badge {
+      min-width: 36px;
+      min-height: 32px;
+      border-radius: 9px;
+    }
+
+    .answer-button.correct {
+      background: var(--green-soft);
+      border-color: #54aa7e;
+      color: var(--green);
+    }
+
+    .answer-button.wrong {
+      background: var(--red-soft);
+      border-color: #e26a6a;
+      color: #a73535;
+    }
+
+    .free-row {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .free-row input {
+      min-width: 0;
+      min-height: 56px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-btn);
+      background: #f8fbfd;
+      color: var(--text);
+      padding: 10px 14px;
+      font-size: 1rem;
+    }
+
+    .free-row input:focus {
+      outline: 4px solid rgba(19, 163, 161, 0.18);
+      border-color: var(--teal);
+    }
+
+    .submit-button {
+      width: auto;
+      min-width: 140px;
+      background: var(--teal-soft);
+      border-color: #bfe8e5;
+    }
+
+    .feedback {
+      min-height: 48px;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-align: center;
+      font-weight: 750;
+    }
+
+    .feedback:empty {
+      min-height: 0;
+      margin-top: 0;
+      padding: 0;
+    }
+
+    .feedback.correct {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .feedback.wrong {
+      background: var(--red-soft);
+      color: #a73535;
+    }
+
+    .feedback.neutral {
+      background: #f5f8fa;
+      color: var(--muted);
+    }
+
+    .nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .nav-row .rounded-button {
+      width: auto;
+      min-width: 145px;
+    }
+
+    .next-button {
+      background: #edf2f6;
+    }
+
+    .results-card {
+      padding: clamp(28px, 6vw, 52px);
+      text-align: center;
+    }
+
+    .score-big {
+      margin: 10px 0 0;
+      color: var(--teal);
+      font-size: clamp(3rem, 10vw, 5rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .results-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 650px;
+      margin: 24px auto 0;
+    }
+
+    .play-again {
+      background: var(--teal-soft);
+      border-color: #bfe8e5;
+    }
+
+    .screen-reader-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    @media (max-width: 650px) {
+      .site-header {
+        padding: 17px 16px;
+      }
+
+      .header-inner {
+        align-items: flex-start;
+      }
+
+      main {
+        padding: 14px;
+      }
+
+      .mode-grid,
+      .answers,
+      .results-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .free-row {
+        grid-template-columns: 1fr;
+      }
+
+      .submit-button {
+        width: 100%;
+      }
+
+      .nav-row {
+        flex-direction: column-reverse;
+      }
+
+      .nav-row .rounded-button {
+        width: 100%;
+      }
+
+      .answer-button {
+        min-height: 56px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+        animation: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<div class="app">
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">ANATOMICAL REGIONS</p>
+        <h1>Visual Identification Quiz</h1>
+        <p class="header-sub">Follow the dot. Name the region.</p>
+      </div>
+      <div id="scoreChip" class="score-chip hidden" aria-label="Current score">0</div>
+    </div>
+  </header>
+
+  <main>
+    <section id="menuScreen" class="card menu-card">
+      <h2>Choose a game mode</h2>
+      <p class="muted">Every run reshuffles the questions and multiple-choice answers.</p>
+
+      <div class="mode-grid">
+        <button id="mcModeButton" class="rounded-button mode-button mc" type="button">
+          <span class="key-badge" aria-hidden="true">1–4</span>
+          <span>
+            <span class="mode-title">Multiple Choice</span>
+            <span class="mode-desc">Choose one of four randomized regional terms.</span>
+          </span>
+        </button>
+
+        <button id="freeModeButton" class="rounded-button mode-button free" type="button">
+          <span class="key-badge" aria-hidden="true">TYPE</span>
+          <span>
+            <span class="mode-title">Free Response</span>
+            <span class="mode-desc">Type the anatomical region without answer choices.</span>
+          </span>
+        </button>
+      </div>
+
+      <div class="features">
+        35 randomized questions · anterior + posterior views · single target dot · works on phones, tablets, Chromebooks, Macs, and PCs
+      </div>
+    </section>
+
+    <section id="quizScreen" class="hidden" aria-labelledby="questionTitle">
+      <div class="quiz-meta">
+        <span id="questionCount">QUESTION 1 OF 35</span>
+        <span id="viewLabel">ANTERIOR VIEW</span>
+      </div>
+
+      <div class="progress-track" aria-hidden="true">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+
+      <div class="card quiz-card">
+        <div class="question-heading">
+          <h2 id="questionTitle">Which anatomical region is marked by the dot?</h2>
+          <p class="muted">The red dot sits where the original leader line points.</p>
+        </div>
+
+        <div class="diagram-panel">
+          <div class="diagram-wrap">
+            <img
+              src="quiz_diagram.png"
+              alt="Anterior and posterior anatomical regional diagram without visible region labels"
+              draggable="false"
+            >
+            <div id="targetDot" class="target-dot" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div id="mcAnswers" class="answers" aria-label="Answer choices"></div>
+
+        <form id="freeForm" class="free-row hidden" autocomplete="off">
+          <label class="screen-reader-only" for="freeAnswer">Your answer</label>
+          <input
+            id="freeAnswer"
+            type="text"
+            inputmode="text"
+            enterkeyhint="done"
+            placeholder="Type the anatomical region"
+            aria-describedby="feedback"
+          >
+          <button id="submitButton" class="rounded-button submit-button" type="submit">
+            Submit ↵
+          </button>
+        </form>
+
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+
+        <div class="nav-row">
+          <button id="changeModeButton" class="rounded-button" type="button">
+            Change Mode
+          </button>
+          <button id="nextButton" class="rounded-button next-button" type="button" disabled>
+            Next Question ↵
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultsScreen" class="card results-card hidden" aria-labelledby="resultsTitle">
+      <h2 id="resultsTitle">Quiz Complete</h2>
+      <div id="percentScore" class="score-big">0%</div>
+      <p id="rawScore" style="font-weight: 800; font-size: 1.2rem; margin-bottom: 5px;"></p>
+      <p id="resultMessage" class="muted"></p>
+
+      <div class="results-actions">
+        <button id="playAgainButton" class="rounded-button play-again" type="button">
+          Shuffle &amp; Play Again ↵
+        </button>
+        <button id="resultsModeButton" class="rounded-button" type="button">
+          Change Mode
+        </button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+(() => {
+  "use strict";
+
+  const IMAGE_WIDTH = 645;
+  const IMAGE_HEIGHT = 780;
+
+  const REGIONS = [
+    // Anterior
+    { answer: "Nasal",        view: "Anterior",  point: [136, 84] },
+    { answer: "Oral",         view: "Anterior",  point: [137, 101] },
+    { answer: "Cervical",     view: "Anterior",  point: [123, 128] },
+    { answer: "Acromial",     view: "Anterior",  point: [61, 150] },
+    { answer: "Thoracic",     view: "Anterior",  point: [105, 211] },
+    { answer: "Brachial",     view: "Anterior",  point: [45, 247] },
+    { answer: "Antecubital",  view: "Anterior",  point: [38, 278], aliases: ["ante cubital"] },
+    { answer: "Abdominal",    view: "Anterior",  point: [129, 322] },
+    { answer: "Umbilical",    view: "Anterior",  point: [136, 342] },
+    { answer: "Carpal",       view: "Anterior",  point: [18, 380] },
+    { answer: "Digital",      view: "Anterior",  point: [16, 418], aliases: ["digits"] },
+    { answer: "Pubic",        view: "Anterior",  point: [126, 421] },
+    { answer: "Patellar",     view: "Anterior",  point: [100, 549] },
+    { answer: "Crural (leg)", view: "Anterior",  point: [101, 607], aliases: ["crural"] },
+    { answer: "Tarsal",       view: "Anterior",  point: [96, 711] },
+
+    { answer: "Orbital",      view: "Anterior",  point: [153, 69] },
+    { answer: "Buccal",       view: "Anterior",  point: [155, 101] },
+    { answer: "Sternal",      view: "Anterior",  point: [141, 168] },
+    { answer: "Axillary",     view: "Anterior",  point: [207, 207] },
+    { answer: "Pelvic",       view: "Anterior",  point: [164, 365] },
+    { answer: "Coxal",        view: "Anterior",  point: [204, 405] },
+    { answer: "Inguinal",     view: "Anterior",  point: [158, 414] },
+    { answer: "Femoral",      view: "Anterior",  point: [177, 487], id: "femoral_anterior" },
+    { answer: "Fibular",      view: "Anterior",  point: [206, 616] },
+
+    // Posterior
+    { answer: "Cephalic",     view: "Posterior", point: [489, 69] },
+    { answer: "Occipital",    view: "Posterior", point: [515, 84] },
+    { answer: "Deltoid",      view: "Posterior", point: [526, 160] },
+    { answer: "Scapular",     view: "Posterior", point: [544, 205] },
+    { answer: "Vertebral",    view: "Posterior", point: [503, 278] },
+    { answer: "Lumbar",       view: "Posterior", point: [531, 324] },
+    { answer: "Sacral",       view: "Posterior", point: [503, 360] },
+    { answer: "Gluteal",      view: "Posterior", point: [555, 414] },
+    { answer: "Femoral",      view: "Posterior", point: [466, 480], id: "femoral_posterior" },
+    { answer: "Popliteal",    view: "Posterior", point: [536, 546] },
+    { answer: "Sural",        view: "Posterior", point: [535, 626] }
+  ];
+
+  const els = {
+    menu: document.getElementById("menuScreen"),
+    quiz: document.getElementById("quizScreen"),
+    results: document.getElementById("resultsScreen"),
+    scoreChip: document.getElementById("scoreChip"),
+    mcModeButton: document.getElementById("mcModeButton"),
+    freeModeButton: document.getElementById("freeModeButton"),
+    questionCount: document.getElementById("questionCount"),
+    viewLabel: document.getElementById("viewLabel"),
+    progressFill: document.getElementById("progressFill"),
+    targetDot: document.getElementById("targetDot"),
+    mcAnswers: document.getElementById("mcAnswers"),
+    freeForm: document.getElementById("freeForm"),
+    freeAnswer: document.getElementById("freeAnswer"),
+    submitButton: document.getElementById("submitButton"),
+    feedback: document.getElementById("feedback"),
+    changeModeButton: document.getElementById("changeModeButton"),
+    nextButton: document.getElementById("nextButton"),
+    percentScore: document.getElementById("percentScore"),
+    rawScore: document.getElementById("rawScore"),
+    resultMessage: document.getElementById("resultMessage"),
+    playAgainButton: document.getElementById("playAgainButton"),
+    resultsModeButton: document.getElementById("resultsModeButton")
+  };
+
+  let mode = null;
+  let deck = [];
+  let index = 0;
+  let score = 0;
+  let answered = false;
+  let currentChoices = [];
+  let selectedChoice = null;
+  const keysDown = new Set();
+
+  function shuffle(array) {
+    const copy = [...array];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+
+  function normalizeAnswer(text) {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/\bregion\b/g, " ")
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim()
+      .replace(/\s+/g, " ");
+  }
+
+  function currentQuestion() {
+    return deck[index];
+  }
+
+  function showOnly(screen) {
+    els.menu.classList.toggle("hidden", screen !== "menu");
+    els.quiz.classList.toggle("hidden", screen !== "quiz");
+    els.results.classList.toggle("hidden", screen !== "results");
+    els.scoreChip.classList.toggle("hidden", screen !== "quiz");
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }
+
+  function startQuiz(nextMode = mode) {
+    mode = nextMode || "mc";
+    deck = shuffle(REGIONS.map(item => ({ ...item })));
+    index = 0;
+    score = 0;
+    answered = false;
+    currentChoices = [];
+    selectedChoice = null;
+    showOnly("quiz");
+    renderQuestion();
+  }
+
+  function renderQuestion() {
+    if (index >= deck.length) {
+      showResults();
+      return;
+    }
+
+    answered = false;
+    selectedChoice = null;
+
+    const q = currentQuestion();
+    els.questionCount.textContent = `QUESTION ${index + 1} OF ${deck.length}`;
+    els.viewLabel.textContent = `${q.view.toUpperCase()} VIEW`;
+    els.progressFill.style.width = `${((index + 1) / deck.length) * 100}%`;
+    els.scoreChip.textContent = index ? `${score}/${index}` : "0";
+
+    const [x, y] = q.point;
+    els.targetDot.style.left = `${(x / IMAGE_WIDTH) * 100}%`;
+    els.targetDot.style.top = `${(y / IMAGE_HEIGHT) * 100}%`;
+
+    clearFeedback();
+    els.nextButton.disabled = true;
+    els.nextButton.classList.remove("key-pressed");
+
+    if (mode === "mc") {
+      els.mcAnswers.classList.remove("hidden");
+      els.freeForm.classList.add("hidden");
+      buildChoices(q);
+    } else {
+      els.mcAnswers.classList.add("hidden");
+      els.mcAnswers.replaceChildren();
+      els.freeForm.classList.remove("hidden");
+      els.freeAnswer.disabled = false;
+      els.freeAnswer.value = "";
+      els.submitButton.disabled = false;
+      requestAnimationFrame(() => els.freeAnswer.focus());
+    }
+  }
+
+  function buildChoices(q) {
+    const allAnswers = [...new Set(REGIONS.map(item => item.answer))];
+    const distractorPool = allAnswers.filter(answer => answer !== q.answer);
+    const distractors = shuffle(distractorPool).slice(0, 3);
+    currentChoices = shuffle([...distractors, q.answer]);
+
+    els.mcAnswers.replaceChildren();
+
+    currentChoices.forEach((choice, i) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "rounded-button answer-button";
+      button.dataset.choice = choice;
+      button.dataset.index = String(i);
+      button.setAttribute("aria-label", `Answer ${i + 1}: ${choice}`);
+
+      const badge = document.createElement("span");
+      badge.className = "key-badge";
+      badge.setAttribute("aria-hidden", "true");
+      badge.textContent = String(i + 1);
+
+      const label = document.createElement("span");
+      label.textContent = choice;
+
+      button.append(badge, label);
+      button.addEventListener("click", () => submitChoice(choice));
+      els.mcAnswers.append(button);
+    });
+  }
+
+  function answerButtons() {
+    return [...els.mcAnswers.querySelectorAll(".answer-button")];
+  }
+
+  function submitChoice(choice) {
+    if (answered || mode !== "mc") return;
+    selectedChoice = choice;
+    evaluate(choice === currentQuestion().answer);
+  }
+
+  function submitFreeResponse() {
+    if (answered || mode !== "free") return;
+
+    const typed = els.freeAnswer.value;
+    if (!typed.trim()) {
+      setFeedback("Type an answer before submitting.", "neutral");
+      els.freeAnswer.focus();
+      return;
+    }
+
+    const q = currentQuestion();
+    const accepted = new Set([
+      normalizeAnswer(q.answer),
+      ...(q.aliases || []).map(normalizeAnswer)
+    ]);
+
+    evaluate(accepted.has(normalizeAnswer(typed)));
+  }
+
+  function evaluate(isCorrect) {
+    if (answered) return;
+
+    answered = true;
+    const q = currentQuestion();
+
+    if (isCorrect) {
+      score += 1;
+      setFeedback(`✓ Correct — ${q.answer}. Press Enter for the next question.`, "correct");
+    } else {
+      setFeedback(`✕ The correct answer is ${q.answer}. Press Enter to continue.`, "wrong");
+    }
+
+    if (mode === "mc") {
+      answerButtons().forEach(button => {
+        const choice = button.dataset.choice;
+        if (choice === q.answer) {
+          button.classList.add("correct");
+        } else if (!isCorrect && choice === selectedChoice) {
+          button.classList.add("wrong");
+        }
+        button.disabled = true;
+        button.classList.remove("key-pressed");
+      });
+    } else {
+      els.freeAnswer.disabled = true;
+      els.submitButton.disabled = true;
+      els.submitButton.classList.remove("key-pressed");
+    }
+
+    els.nextButton.disabled = false;
+    els.scoreChip.textContent = `${score}/${index + 1}`;
+    els.nextButton.focus({ preventScroll: true });
+  }
+
+  function setFeedback(message, kind) {
+    els.feedback.textContent = message;
+    els.feedback.className = `feedback ${kind}`;
+  }
+
+  function clearFeedback() {
+    els.feedback.textContent = "";
+    els.feedback.className = "feedback";
+  }
+
+  function nextQuestion() {
+    if (!answered) return;
+    index += 1;
+    renderQuestion();
+  }
+
+  function showMenu() {
+    mode = null;
+    keysDown.clear();
+    showOnly("menu");
+    els.scoreChip.classList.add("hidden");
+  }
+
+  function showResults() {
+    showOnly("results");
+    const pct = deck.length ? Math.round((score / deck.length) * 100) : 0;
+    els.percentScore.textContent = `${pct}%`;
+    els.rawScore.textContent = `${score} of ${deck.length} correct`;
+
+    if (pct >= 90) {
+      els.resultMessage.textContent = "Excellent recall.";
+    } else if (pct >= 70) {
+      els.resultMessage.textContent = "Strong run — keep sharpening the region names.";
+    } else {
+      els.resultMessage.textContent = "Another shuffle will help reinforce the regions.";
+    }
+
+    els.playAgainButton.focus({ preventScroll: true });
+  }
+
+  // Mouse/touch buttons already receive visual feedback through :hover/:active.
+  // These helpers add the same visual "pressed" state to keyboard shortcuts.
+  function pressElement(element) {
+    if (element && !element.disabled) {
+      element.classList.add("key-pressed");
+    }
+  }
+
+  function releaseElement(element) {
+    if (element) {
+      element.classList.remove("key-pressed");
+    }
+  }
+
+  document.addEventListener("keydown", event => {
+    const key = event.key;
+    if (keysDown.has(key)) return;
+
+    const onQuiz = !els.quiz.classList.contains("hidden");
+    const onResults = !els.results.classList.contains("hidden");
+
+    if (onQuiz && mode === "mc" && !answered && /^[1-4]$/.test(key)) {
+      keysDown.add(key);
+      const button = answerButtons()[Number(key) - 1];
+      pressElement(button);
+      event.preventDefault();
+      return;
+    }
+
+    if (onQuiz && (key === "Enter")) {
+      // Let Enter submit the free-response form when the text field has focus.
+      if (!answered && mode === "free") {
+        keysDown.add(key);
+        pressElement(els.submitButton);
+        event.preventDefault();
+        return;
+      }
+
+      if (answered) {
+        keysDown.add(key);
+        pressElement(els.nextButton);
+        event.preventDefault();
+        return;
+      }
+    }
+
+    if (onResults && key === "Enter") {
+      keysDown.add(key);
+      pressElement(els.playAgainButton);
+      event.preventDefault();
+    }
+  });
+
+  document.addEventListener("keyup", event => {
+    const key = event.key;
+    keysDown.delete(key);
+
+    const onQuiz = !els.quiz.classList.contains("hidden");
+    const onResults = !els.results.classList.contains("hidden");
+
+    if (onQuiz && mode === "mc" && !answered && /^[1-4]$/.test(key)) {
+      const button = answerButtons()[Number(key) - 1];
+      releaseElement(button);
+      if (button) submitChoice(button.dataset.choice);
+      event.preventDefault();
+      return;
+    }
+
+    if (onQuiz && key === "Enter") {
+      if (!answered && mode === "free") {
+        releaseElement(els.submitButton);
+        submitFreeResponse();
+        event.preventDefault();
+        return;
+      }
+
+      if (answered) {
+        releaseElement(els.nextButton);
+        nextQuestion();
+        event.preventDefault();
+        return;
+      }
+    }
+
+    if (onResults && key === "Enter") {
+      releaseElement(els.playAgainButton);
+      startQuiz();
+      event.preventDefault();
+    }
+  });
+
+  els.freeForm.addEventListener("submit", event => {
+    event.preventDefault();
+    submitFreeResponse();
+  });
+
+  els.mcModeButton.addEventListener("click", () => startQuiz("mc"));
+  els.freeModeButton.addEventListener("click", () => startQuiz("free"));
+  els.changeModeButton.addEventListener("click", showMenu);
+  els.resultsModeButton.addEventListener("click", showMenu);
+  els.nextButton.addEventListener("click", nextQuestion);
+  els.playAgainButton.addEventListener("click", () => startQuiz());
+
+  showMenu();
+})();
+</script>
+</body>
+</html>
