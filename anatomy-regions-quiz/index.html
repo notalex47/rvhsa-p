@@ -583,13 +583,13 @@
       </div>
 
       <div class="features">
-        35 randomized questions · anterior + posterior views · single target dot · works on phones, tablets, Chromebooks, Macs, and PCs
+        37 randomized questions · anterior + posterior views · single target dot · works on phones, tablets, Chromebooks, Macs, and PCs
       </div>
     </section>
 
     <section id="quizScreen" class="hidden" aria-labelledby="questionTitle">
       <div class="quiz-meta">
-        <span id="questionCount">QUESTION 1 OF 35</span>
+        <span id="questionCount">QUESTION 1 OF 37</span>
         <span id="viewLabel">ANTERIOR VIEW</span>
       </div>
 
@@ -671,6 +671,7 @@
 
   const REGIONS = [
     // Anterior
+    { answer: "Frontal",      view: "Anterior",  point: [128, 48] },
     { answer: "Nasal",        view: "Anterior",  point: [136, 84] },
     { answer: "Oral",         view: "Anterior",  point: [137, 101] },
     { answer: "Cervical",     view: "Anterior",  point: [123, 128] },
@@ -678,6 +679,7 @@
     { answer: "Thoracic",     view: "Anterior",  point: [105, 211] },
     { answer: "Brachial",     view: "Anterior",  point: [45, 247] },
     { answer: "Antecubital",  view: "Anterior",  point: [38, 278], aliases: ["ante cubital"] },
+    { answer: "Antebrachial", view: "Anterior",  point: [32, 330], aliases: ["ante brachial", "antebracial"] },
     { answer: "Abdominal",    view: "Anterior",  point: [129, 322] },
     { answer: "Umbilical",    view: "Anterior",  point: [136, 342] },
     { answer: "Carpal",       view: "Anterior",  point: [18, 380] },
@@ -698,7 +700,7 @@
     { answer: "Fibular",      view: "Anterior",  point: [206, 616] },
 
     // Posterior
-    { answer: "Cephalic",     view: "Posterior", point: [489, 69] },
+    { answer: "Cephalic",     view: "Posterior", point: [489, 69], aliases: ["cephallic"] },
     { answer: "Occipital",    view: "Posterior", point: [515, 84] },
     { answer: "Deltoid",      view: "Posterior", point: [526, 160] },
     { answer: "Scapular",     view: "Posterior", point: [544, 205] },
