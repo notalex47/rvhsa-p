@@ -3,86 +3,476 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>RVHSA-P</title>
+  <meta name="theme-color" content="#173b67">
+  <title>RVHS Anatomy & Physiology Study Tools</title>
+
   <style>
     :root {
-      --blue-dark: #0f2f57;
-      --blue: #1f5f99;
-      --blue-light: #eaf3fb;
-      --text: #17324d;
-      --white: #ffffff;
-      --border: #c9dced;
+      --bg: #eef4fa;
+      --surface: #ffffff;
+      --navy: #173b67;
+      --blue: #24679f;
+      --blue-dark: #174b78;
+      --blue-soft: #e8f2fb;
+      --text: #18344f;
+      --muted: #6d8192;
+      --border: #d4e2ed;
+      --green: #2f7d5b;
+      --shadow: 0 16px 40px rgba(23, 59, 103, 0.10);
+      --radius-lg: 24px;
+      --radius-md: 18px;
     }
 
-    * {
-      box-sizing: border-box;
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--bg);
+      scroll-behavior: smooth;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #eaf3fb, #d7e9f8);
+      background:
+        radial-gradient(circle at top right, rgba(36, 103, 159, 0.10), transparent 28rem),
+        var(--bg);
       color: var(--text);
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    a { color: inherit; }
+
+    .site-header {
+      background: linear-gradient(135deg, var(--navy), #245f96);
+      color: white;
+      padding: 18px 22px;
+      box-shadow: 0 4px 18px rgba(23, 59, 103, 0.16);
+    }
+
+    .header-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      font-weight: 850;
+      letter-spacing: 0.01em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      color: #e8f2fb;
+      text-decoration: none;
+    }
+
+    .nav-links a:hover {
+      color: white;
+      text-decoration: underline;
     }
 
     main {
-      width: min(92%, 700px);
-      background: var(--white);
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 34px 20px 56px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.7fr);
+      gap: 24px;
+      align-items: stretch;
+      margin-bottom: 34px;
+    }
+
+    .hero-card,
+    .info-card,
+    .unit-section,
+    .patch-notes {
+      background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 40px;
-      box-shadow: 0 16px 40px rgba(15, 47, 87, 0.12);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card {
+      border-radius: var(--radius-lg);
+      padding: clamp(28px, 5vw, 52px);
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 { color: var(--navy); }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+    }
+
+    .hero-card p {
+      max-width: 720px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    .info-card {
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(180deg, #ffffff, #f7fbff);
+    }
+
+    .info-card strong {
+      display: block;
+      color: var(--navy);
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .unit-section {
+      border-radius: var(--radius-lg);
+      padding: clamp(24px, 4vw, 38px);
+      margin-bottom: 34px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+    }
+
+    .section-heading p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .unit-badge {
+      flex: 0 0 auto;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .quiz-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .quiz-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      background: #fbfdff;
+      display: flex;
+      flex-direction: column;
+      min-height: 250px;
+      transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+    }
+
+    .quiz-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(23, 59, 103, 0.11);
+      border-color: #b7cfe2;
+    }
+
+    .quiz-card .label {
+      color: var(--blue);
+      font-size: 0.76rem;
+      font-weight: 850;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .quiz-card h3 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .quiz-card p {
+      margin: 10px 0 18px;
+      color: var(--muted);
+      flex: 1;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .meta span {
+      padding: 6px 9px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 0.77rem;
+      font-weight: 750;
+    }
+
+    .quiz-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      border-radius: 13px;
+      padding: 11px 16px;
+      background: var(--blue);
+      color: white;
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    .quiz-link:hover { background: var(--blue-dark); }
+
+    .patch-notes {
+      border-radius: var(--radius-lg);
+      padding: clamp(24px, 4vw, 38px);
+    }
+
+    .patch-notes h2 {
+      margin: 0 0 6px;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+
+    .patch-intro {
+      margin: 0 0 22px;
+      color: var(--muted);
+    }
+
+    .patch-list {
+      display: grid;
+      gap: 16px;
+    }
+
+    .patch {
+      border-left: 4px solid var(--blue);
+      background: #f8fbfe;
+      border-radius: 0 14px 14px 0;
+      padding: 18px 20px;
+    }
+
+    .patch-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .patch-title {
+      font-weight: 850;
+      color: var(--navy);
+    }
+
+    .patch-version {
+      flex: 0 0 auto;
+      color: var(--green);
+      font-weight: 850;
+      font-size: 0.86rem;
+    }
+
+    .patch ul {
+      margin: 8px 0 0;
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    .patch li + li { margin-top: 5px; }
+
+    footer {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: 0 20px 30px;
+      color: var(--muted);
+      font-size: 0.85rem;
       text-align: center;
     }
 
-    h1 {
-      margin: 0 0 12px;
-      color: var(--blue-dark);
-      font-size: clamp(2rem, 6vw, 3rem);
-    }
+    @media (max-width: 760px) {
+      .hero,
+      .quiz-grid {
+        grid-template-columns: 1fr;
+      }
 
-    p {
-      margin: 0 0 28px;
-      color: #5f7890;
-      font-size: 1.05rem;
-    }
+      .header-inner,
+      .section-heading,
+      .patch-top {
+        align-items: flex-start;
+        flex-direction: column;
+      }
 
-    a {
-      display: inline-block;
-      padding: 16px 24px;
-      border-radius: 14px;
-      background: var(--blue);
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 700;
-      transition: transform 120ms ease, background 120ms ease;
-    }
-
-    a:hover {
-      background: var(--blue-dark);
-      transform: translateY(-2px);
-    }
-
-    a:focus-visible {
-      outline: 4px solid rgba(31, 95, 153, 0.25);
-      outline-offset: 4px;
+      .nav-links { gap: 12px; }
     }
   </style>
 </head>
-<body>
-  <main>
-    <h1>RVHS Anatomy & Physiology Study Tools</h1>
-    <p>Select a tool below to begin.</p>
 
-    <a href="anatomy-regions-quiz/">
-      Anatomical Regions Quiz
-    </a>
-    <a href="body-cavities-quiz/">
-    Body Cavities Quiz
-    </a>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">RVHS Anatomy &amp; Physiology</div>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#unit-1">Unit 1</a>
+        <a href="#patch-notes">Patch Notes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-card">
+        <span class="eyebrow">Study Tools</span>
+        <h1 id="page-title">Anatomy &amp; Physiology Practice</h1>
+        <p>
+          Interactive visual quizzes for reviewing anatomical terminology.
+          Choose a quiz below, practice in multiple-choice or free-response mode,
+          and repeat as often as needed.
+        </p>
+      </div>
+
+      <aside class="info-card">
+        <strong>Built for quick review</strong>
+        <p>
+          Questions reshuffle each run, answer choices randomize, and every quiz
+          works on phones, tablets, Chromebooks, Macs, and PCs.
+        </p>
+      </aside>
+    </section>
+
+    <section id="unit-1" class="unit-section" aria-labelledby="unit-1-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="unit-1-heading">Unit 1</h2>
+          <p>Foundational anatomical terminology and body organization.</p>
+        </div>
+        <div class="unit-badge">2 quizzes</div>
+      </div>
+
+      <div class="quiz-grid">
+        <article class="quiz-card">
+          <div class="label">Unit 1 · Quiz 1</div>
+          <h3>Anatomical Regions Quiz</h3>
+          <p>
+            Identify major anterior and posterior anatomical regions using a
+            visual diagram and target-dot prompts.
+          </p>
+
+          <div class="meta">
+            <span>37 questions</span>
+            <span>Multiple choice</span>
+            <span>Free response</span>
+          </div>
+
+          <a class="quiz-link" href="anatomy-regions-quiz/">
+            Open Anatomical Regions Quiz
+          </a>
+        </article>
+
+        <article class="quiz-card">
+          <div class="label">Unit 1 · Quiz 2</div>
+          <h3>Body Cavities Quiz</h3>
+          <p>
+            Review the major body cavities and related structures using lateral
+            and anterior views of the human body.
+          </p>
+
+          <div class="meta">
+            <span>12 questions</span>
+            <span>Multiple choice</span>
+            <span>Free response</span>
+          </div>
+
+          <a class="quiz-link" href="body-cavities-quiz/">
+            Open Body Cavities Quiz
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <section id="patch-notes" class="patch-notes" aria-labelledby="patch-heading">
+      <h2 id="patch-heading">Patch Notes</h2>
+      <p class="patch-intro">
+        A running record of the major updates made to the study site.
+      </p>
+
+      <div class="patch-list">
+        <article class="patch">
+          <div class="patch-top">
+            <div class="patch-title">Unit 1 Expansion</div>
+            <div class="patch-version">Version 1.1</div>
+          </div>
+          <ul>
+            <li>Added the new Body Cavities Quiz with 12 visual-identification questions.</li>
+            <li>Added Frontal and Antebrachial to the Anatomical Regions Quiz.</li>
+            <li>Expanded the Anatomical Regions Quiz from 35 to 37 questions.</li>
+            <li>Added accepted free-response aliases for common spelling variations.</li>
+            <li>Updated the homepage to organize both quizzes under Unit 1.</li>
+          </ul>
+        </article>
+
+        <article class="patch">
+          <div class="patch-top">
+            <div class="patch-title">Initial Anatomical Regions Release</div>
+            <div class="patch-version">Version 1.0</div>
+          </div>
+          <ul>
+            <li>Launched the Anatomical Regions Quiz.</li>
+            <li>Added randomized multiple-choice and free-response modes.</li>
+            <li>Included anterior and posterior regional anatomy questions.</li>
+            <li>Added scoring, keyboard controls, reshuffling, and responsive design.</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
   </main>
+
+  <footer>
+    RVHS Anatomy &amp; Physiology Study Tools
+  </footer>
 </body>
 </html>
