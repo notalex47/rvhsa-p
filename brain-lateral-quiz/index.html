@@ -4,87 +4,67 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#173b67">
-  <title>Brain Anatomy Quiz</title>
-
+  <title>Brain Visual Identification Quiz</title>
   <style>
     :root {
-      color-scheme: light;
-      --bg: #edf4fb;
-      --card: #ffffff;
+      --bg: #eef4fa;
+      --surface: #fff;
       --navy: #173b67;
       --blue: #286da8;
-      --blue-dark: #18527f;
-      --blue-soft: #e8f3fc;
-      --text: #173653;
-      --muted: #6a8194;
-      --border: #d5e3ef;
-      --green: #247c55;
-      --green-soft: #e8f7ef;
-      --red: #df4747;
-      --red-soft: #fff0f0;
-      --purple: #6952a3;
-      --purple-soft: #f2eefb;
-      --shadow: 0 12px 36px rgba(23, 59, 103, 0.10);
+      --blue-dark: #174b78;
+      --blue-soft: #e8f2fb;
+      --text: #18344f;
+      --muted: #6d8192;
+      --border: #d4e2ed;
+      --green: #24744f;
+      --green-soft: #e6f6ed;
+      --red: #e23d3d;
+      --red-soft: #fdecec;
+      --shadow: 0 16px 40px rgba(23,59,103,.10);
       --radius-lg: 24px;
       --radius-md: 18px;
-      --radius-btn: 16px;
+      --radius-btn: 14px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      min-width: 320px;
-      background: var(--bg);
-    }
+    html { background: var(--bg); }
 
     body {
       margin: 0;
       min-height: 100vh;
-      background: var(--bg);
+      background:
+        radial-gradient(circle at top right, rgba(40,109,168,.10), transparent 30rem),
+        var(--bg);
       color: var(--text);
-      font-family:
-        Inter, ui-sans-serif, system-ui, -apple-system,
-        BlinkMacSystemFont, "Segoe UI", sans-serif;
-      line-height: 1.45;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
     }
 
-    button,
-    input {
-      font: inherit;
-    }
+    button, input { font: inherit; }
+    button { color: inherit; }
 
-    button {
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    a {
-      color: inherit;
-    }
-
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
     .site-header {
-      background: linear-gradient(135deg, var(--navy), #245c91);
-      color: white;
-      padding: clamp(18px, 3vw, 30px) clamp(18px, 4vw, 44px);
+      background: linear-gradient(135deg, var(--navy), #245f96);
+      color: #fff;
+      padding: 20px 22px;
+      box-shadow: 0 4px 18px rgba(23,59,103,.16);
     }
 
     .header-inner {
-      width: min(1120px, 100%);
+      width: min(1040px, 100%);
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 18px;
+      gap: 20px;
     }
 
     .eyebrow {
       margin: 0 0 3px;
-      color: #9ed2f2;
+      color: #cfe5f7;
       font-size: .76rem;
       font-weight: 850;
       letter-spacing: .12em;
@@ -92,75 +72,54 @@
 
     h1 {
       margin: 0;
-      font-size: clamp(1.5rem, 3vw, 2.15rem);
-      line-height: 1.1;
+      font-size: clamp(1.55rem, 4vw, 2.35rem);
+      line-height: 1.12;
     }
 
-    .header-sub {
-      margin: 6px 0 0;
-      color: #dbeaf7;
-      font-size: clamp(.86rem, 2vw, 1rem);
-    }
+    .header-sub { margin: 5px 0 0; color: #e4eff8; }
 
     .header-right {
       display: flex;
       align-items: center;
       gap: 12px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
+      flex: 0 0 auto;
     }
 
     .home-link {
-      color: #e3f0fa;
-      text-decoration: none;
-      font-size: .86rem;
+      color: #fff;
       font-weight: 750;
+      text-decoration: none;
     }
 
-    .home-link:hover {
-      color: white;
-      text-decoration: underline;
-    }
+    .home-link:hover { text-decoration: underline; }
 
     .score-chip {
-      flex: 0 0 auto;
-      min-width: 76px;
-      padding: 9px 14px;
+      min-width: 55px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.35);
       border-radius: 999px;
       background: rgba(255,255,255,.13);
-      color: white;
       text-align: center;
       font-weight: 850;
     }
 
     main {
-      width: min(1120px, 100%);
+      width: min(1040px, 100%);
       margin: 0 auto;
-      padding: clamp(16px, 3vw, 30px);
+      padding: 24px 18px 52px;
     }
 
     .card {
-      background: var(--card);
+      background: var(--surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
       box-shadow: var(--shadow);
     }
 
-    .menu-card {
-      padding: clamp(24px, 5vw, 44px);
-      text-align: center;
-    }
+    .menu-card { padding: clamp(26px, 5vw, 48px); }
 
-    .menu-card h2,
-    .quiz-card h2,
-    .results-card h2 {
-      margin: 0;
-      color: var(--text);
-    }
-
-    .muted {
-      color: var(--muted);
-    }
+    h2 { margin: 0; color: var(--navy); }
+    .muted { color: var(--muted); }
 
     .mode-grid {
       display: grid;
@@ -170,161 +129,96 @@
     }
 
     .rounded-button {
-      appearance: none;
       width: 100%;
-      min-height: 58px;
       border: 2px solid var(--border);
       border-radius: var(--radius-btn);
-      background: #f8fbfe;
-      color: var(--text);
-      padding: 12px 18px;
+      background: #fff;
+      padding: 13px 16px;
+      font-weight: 780;
       cursor: pointer;
-      font-weight: 760;
-      transition:
-        background-color 120ms ease,
-        border-color 120ms ease,
-        transform 90ms ease,
-        box-shadow 120ms ease;
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
     }
 
-    .rounded-button:hover {
-      background: var(--blue-soft);
-      border-color: var(--blue);
-      box-shadow: 0 8px 20px rgba(40,109,168,.13);
+    .rounded-button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: #a9c7df;
+      box-shadow: 0 8px 18px rgba(23,59,103,.10);
     }
 
-    .rounded-button:focus-visible {
-      outline: 4px solid rgba(40,109,168,.22);
-      outline-offset: 3px;
-      border-color: var(--blue);
+    .rounded-button:focus-visible, input:focus-visible {
+      outline: 4px solid rgba(40,109,168,.20);
+      outline-offset: 2px;
     }
 
-    .rounded-button:active,
-    .rounded-button.key-pressed {
-      transform: translateY(2px) scale(.992);
-      background: #d5eafa;
-      border-color: var(--blue-dark);
-    }
-
-    .rounded-button:disabled {
-      cursor: default;
-      opacity: .82;
-      box-shadow: none;
-    }
+    .rounded-button:disabled { cursor: default; opacity: .66; }
+    .rounded-button.key-pressed { transform: translateY(2px) scale(.99); }
 
     .mode-button {
-      min-height: 96px;
+      min-height: 108px;
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
       text-align: left;
+      background: #fbfdff;
     }
 
-    .mode-button.mc {
-      background: var(--blue-soft);
-      border-color: #bfd9ed;
-    }
-
-    .mode-button.free {
-      background: var(--purple-soft);
-      border-color: #ded5f1;
-    }
-
-    .mode-button.free:hover {
-      background: #e9e1f8;
-      border-color: var(--purple);
-    }
+    .mode-button.mc { border-color: #bfd9ed; }
+    .mode-button.free { border-color: #c8d9e8; }
 
     .key-badge {
-      flex: 0 0 auto;
-      min-width: 42px;
-      min-height: 34px;
       display: inline-grid;
       place-items: center;
+      min-width: 52px;
+      min-height: 40px;
+      padding: 4px 8px;
       border-radius: 10px;
-      padding: 5px 8px;
-      background: var(--blue-dark);
-      color: white;
-      font-size: .78rem;
-      font-weight: 850;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: .82rem;
+      font-weight: 900;
     }
 
-    .mode-button.free .key-badge {
-      background: var(--purple);
-    }
-
-    .mode-title {
-      display: block;
-      font-size: 1.03rem;
-      margin-bottom: 2px;
-    }
-
-    .mode-desc {
-      display: block;
-      color: var(--muted);
-      font-size: .86rem;
-      font-weight: 500;
-    }
+    .mode-title { display: block; color: var(--navy); font-size: 1.08rem; }
+    .mode-desc { display: block; margin-top: 3px; color: var(--muted); font-size: .9rem; font-weight: 500; }
 
     .features {
-      margin: 20px 0 0;
-      padding: 16px 18px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+      margin-top: 22px;
+      border-radius: 14px;
+      background: #f6f9fc;
+      padding: 13px 15px;
       color: var(--muted);
+      text-align: center;
       font-size: .9rem;
     }
 
     .quiz-meta {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
-      margin: 0 4px 8px;
-      color: var(--muted);
-      font-size: .82rem;
+      gap: 16px;
+      margin-bottom: 8px;
+      color: var(--blue-dark);
+      font-size: .78rem;
       font-weight: 850;
-      letter-spacing: .04em;
+      letter-spacing: .07em;
     }
 
     .progress-track {
-      width: 100%;
-      height: 9px;
+      height: 8px;
       margin-bottom: 14px;
       overflow: hidden;
       border-radius: 999px;
       background: #dce8f2;
     }
 
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      background: var(--blue);
-      border-radius: inherit;
-      transition: width 200ms ease;
-    }
+    .progress-fill { height: 100%; width: 0; background: var(--blue); transition: width 180ms ease; }
 
-    .quiz-card {
-      padding: clamp(15px, 3vw, 24px);
-    }
-
-    .question-heading {
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    .question-heading h2 {
-      font-size: clamp(1.08rem, 2.6vw, 1.45rem);
-    }
-
-    .question-heading p {
-      margin: 4px 0 0;
-      font-size: .86rem;
-    }
+    .quiz-card { padding: clamp(18px, 4vw, 32px); }
+    .question-heading { text-align: center; }
+    .question-heading p { margin: 5px 0 16px; }
 
     .diagram-panel {
-      width: 100%;
       border-radius: var(--radius-md);
-      background: white;
+      background: #fff;
       padding: clamp(6px, 1.5vw, 12px);
       display: flex;
       justify-content: center;
@@ -338,7 +232,7 @@
       width: min(100%, 780px);
       line-height: 0;
       overflow: hidden;
-      background: white;
+      background: #fff;
     }
 
     .diagram-wrap img {
@@ -349,16 +243,7 @@
       -webkit-user-drag: none;
     }
 
-    /*
-      These white rectangles cover only the printed anatomical
-      answer labels. The original source image otherwise remains visible.
-    */
-    .mask {
-      position: absolute;
-      background: white;
-      z-index: 2;
-      pointer-events: none;
-    }
+    .mask { position: absolute; z-index: 2; pointer-events: none; background: #fff; }
 
     .target-dot {
       position: absolute;
@@ -366,10 +251,10 @@
       width: clamp(15px, 2.3vw, 21px);
       aspect-ratio: 1;
       transform: translate(-50%, -50%);
-      border: 4px solid white;
+      border: 4px solid #fff;
       border-radius: 50%;
       background: var(--red);
-      box-shadow: 0 2px 8px rgba(0,0,0,.28);
+      box-shadow: 0 2px 8px rgba(0,0,0,.32);
       pointer-events: none;
     }
 
@@ -388,30 +273,15 @@
       text-align: left;
     }
 
-    .answer-button .key-badge {
-      min-width: 36px;
-      min-height: 32px;
-      border-radius: 9px;
-    }
-
-    .answer-button.correct {
-      background: var(--green-soft);
-      border-color: #55aa7e;
-      color: var(--green);
-    }
-
-    .answer-button.wrong {
-      background: var(--red-soft);
-      border-color: #e26a6a;
-      color: #a73535;
-    }
+    .answer-button .key-badge { min-width: 36px; min-height: 32px; }
+    .answer-button.correct { background: var(--green-soft); border-color: #55aa7e; color: var(--green); }
+    .answer-button.wrong { background: var(--red-soft); border-color: #e26a6a; color: #a73535; }
 
     .free-row {
       margin-top: 14px;
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 12px;
-      align-items: stretch;
     }
 
     .free-row input {
@@ -422,20 +292,9 @@
       background: #f8fbfe;
       color: var(--text);
       padding: 10px 14px;
-      font-size: 1rem;
     }
 
-    .free-row input:focus {
-      outline: 4px solid rgba(40,109,168,.18);
-      border-color: var(--blue);
-    }
-
-    .submit-button {
-      width: auto;
-      min-width: 140px;
-      background: var(--blue-soft);
-      border-color: #bfd9ed;
-    }
+    .submit-button { width: auto; min-width: 140px; background: var(--blue-soft); border-color: #bfd9ed; }
 
     .feedback {
       min-height: 48px;
@@ -449,68 +308,19 @@
       font-weight: 760;
     }
 
-    .feedback:empty {
-      min-height: 0;
-      margin-top: 0;
-      padding: 0;
-    }
+    .feedback:empty { min-height: 0; margin-top: 0; padding: 0; }
+    .feedback.correct { background: var(--green-soft); color: var(--green); }
+    .feedback.wrong { background: var(--red-soft); color: #a73535; }
+    .feedback.neutral { background: #f5f8fb; color: var(--muted); }
 
-    .feedback.correct {
-      background: var(--green-soft);
-      color: var(--green);
-    }
+    .nav-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; }
+    .nav-row .rounded-button { width: auto; min-width: 145px; }
+    .next-button { background: #edf3f8; }
 
-    .feedback.wrong {
-      background: var(--red-soft);
-      color: #a73535;
-    }
-
-    .feedback.neutral {
-      background: #f5f8fb;
-      color: var(--muted);
-    }
-
-    .nav-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .nav-row .rounded-button {
-      width: auto;
-      min-width: 145px;
-    }
-
-    .next-button {
-      background: #edf3f8;
-    }
-
-    .results-card {
-      padding: clamp(28px, 6vw, 52px);
-      text-align: center;
-    }
-
-    .score-big {
-      margin: 10px 0 0;
-      color: var(--blue);
-      font-size: clamp(3rem, 10vw, 5rem);
-      font-weight: 900;
-      line-height: 1;
-    }
-
-    .results-actions {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      max-width: 650px;
-      margin: 24px auto 0;
-    }
-
-    .play-again {
-      background: var(--blue-soft);
-      border-color: #bfd9ed;
-    }
+    .results-card { padding: clamp(28px, 6vw, 52px); text-align: center; }
+    .score-big { margin: 10px 0 0; color: var(--blue); font-size: clamp(3rem, 10vw, 5rem); font-weight: 900; line-height: 1; }
+    .results-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 650px; margin: 24px auto 0; }
+    .play-again { background: var(--blue-soft); border-color: #bfd9ed; }
 
     .screen-reader-only {
       position: absolute !important;
@@ -525,1552 +335,462 @@
     }
 
     @media (max-width: 700px) {
-      .site-header {
-        padding: 17px 16px;
-      }
-
-      .header-inner {
-        align-items: flex-start;
-      }
-
-      .header-right {
-        flex-direction: column;
-        align-items: flex-end;
-      }
-
-      main {
-        padding: 14px;
-      }
-
-      .mode-grid,
-      .answers,
-      .results-actions {
-        grid-template-columns: 1fr;
-      }
-
-      .free-row {
-        grid-template-columns: 1fr;
-      }
-
-      .submit-button {
-        width: 100%;
-      }
-
-      .nav-row {
-        flex-direction: column-reverse;
-      }
-
-      .nav-row .rounded-button {
-        width: 100%;
-      }
-
-      .answer-button {
-        min-height: 56px;
-      }
+      .site-header { padding: 17px 16px; }
+      .header-inner { align-items: flex-start; }
+      .header-right { flex-direction: column; align-items: flex-end; }
+      main { padding: 14px; }
+      .mode-grid, .answers, .results-actions { grid-template-columns: 1fr; }
+      .free-row { grid-template-columns: 1fr; }
+      .submit-button, .nav-row .rounded-button { width: 100%; }
+      .nav-row { flex-direction: column-reverse; }
+      .answer-button { min-height: 56px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
-        scroll-behavior: auto !important;
-        transition: none !important;
-        animation: none !important;
-      }
+      *, *::before, *::after { transition: none !important; }
     }
   </style>
 </head>
-
 <body>
-
-<header class="site-header">
-  <div class="header-inner">
-    <div>
-      <p class="eyebrow">UNIT 2 · BRAIN ANATOMY</p>
-      <h1>Brain Visual Identification Quiz</h1>
-      <p class="header-sub">
-        Follow the red dot and identify the brain structure.
-      </p>
-    </div>
-
-    <div class="header-right">
-      <a class="home-link" href="../">← Study Tools</a>
-      <div id="scoreChip" class="score-chip hidden">0</div>
-    </div>
-  </div>
-</header>
-
-<main>
-
-  <!-- MENU -->
-  <section id="menuScreen" class="card menu-card">
-    <h2>Choose a game mode</h2>
-
-    <p class="muted">
-      All 12 structures are reshuffled every time.
-    </p>
-
-    <div class="mode-grid">
-
-      <button
-        id="mcModeButton"
-        class="rounded-button mode-button mc"
-        type="button"
-      >
-        <span class="key-badge" aria-hidden="true">1–4</span>
-
-        <span>
-          <span class="mode-title">Multiple Choice</span>
-          <span class="mode-desc">
-            Choose one of four related anatomical structures.
-          </span>
-        </span>
-      </button>
-
-      <button
-        id="freeModeButton"
-        class="rounded-button mode-button free"
-        type="button"
-      >
-        <span class="key-badge" aria-hidden="true">TYPE</span>
-
-        <span>
-          <span class="mode-title">Free Response</span>
-          <span class="mode-desc">
-            Type the anatomical structure without answer choices.
-          </span>
-        </span>
-      </button>
-
-    </div>
-
-    <div class="features">
-      12 randomized questions · lobes · gyri &amp; sulci ·
-      brainstem structures · keyboard friendly · mobile friendly
-    </div>
-  </section>
-
-
-  <!-- QUIZ -->
-  <section
-    id="quizScreen"
-    class="hidden"
-    aria-labelledby="questionTitle"
-  >
-
-    <div class="quiz-meta">
-      <span id="questionCount">QUESTION 1 OF 12</span>
-      <span id="categoryLabel">BRAIN ANATOMY</span>
-    </div>
-
-    <div class="progress-track" aria-hidden="true">
-      <div id="progressFill" class="progress-fill"></div>
-    </div>
-
-    <div class="card quiz-card">
-
-      <div class="question-heading">
-        <h2 id="questionTitle">
-          Which brain structure is marked by the red dot?
-        </h2>
-
-        <p class="muted">
-          The printed anatomical labels are hidden.
-        </p>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">UNIT 2 · BRAIN ANATOMY</p>
+        <h1>Brain Visual Identification Quiz</h1>
+        <p class="header-sub">Follow the red dot and identify the brain structure.</p>
       </div>
+      <div class="header-right">
+        <a class="home-link" href="../">← Study Tools</a>
+        <div id="scoreChip" class="score-chip hidden">0</div>
+      </div>
+    </div>
+  </header>
 
+  <main>
+    <section id="menuScreen" class="card menu-card">
+      <h2>Choose a game mode</h2>
+      <p class="muted">All 13 structures are reshuffled every time.</p>
+      <div class="mode-grid">
+        <button id="mcModeButton" class="rounded-button mode-button mc" type="button">
+          <span class="key-badge" aria-hidden="true">1–4</span>
+          <span><span class="mode-title">Multiple Choice</span><span class="mode-desc">Choose one of four related anatomical structures.</span></span>
+        </button>
+        <button id="freeModeButton" class="rounded-button mode-button free" type="button">
+          <span class="key-badge" aria-hidden="true">TYPE</span>
+          <span><span class="mode-title">Free Response</span><span class="mode-desc">Type the anatomical structure without answer choices.</span></span>
+        </button>
+      </div>
+      <div class="features">13 randomized questions · lobes · gyri &amp; sulci · brainstem structures · keyboard friendly · mobile friendly</div>
+    </section>
 
-      <div class="diagram-panel">
+    <section id="quizScreen" class="hidden" aria-labelledby="questionTitle">
+      <div class="quiz-meta"><span id="questionCount">QUESTION 1 OF 13</span><span id="categoryLabel">BRAIN ANATOMY</span></div>
+      <div class="progress-track" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+      <div class="card quiz-card">
+        <div class="question-heading">
+          <h2 id="questionTitle">Which brain structure is marked by the red dot?</h2>
+          <p class="muted">The printed anatomical labels are hidden.</p>
+        </div>
+        <div class="diagram-panel">
+          <div class="diagram-wrap">
+            <img src="brain-lateral.png" alt="Lateral view diagram of the human brain" draggable="false">
 
-        <div class="diagram-wrap">
+            <!-- Masks cover the labels printed on the original 1500 × 1600 diagram. -->
+            <div class="mask" style="left:20.3%;top:20.2%;width:12.9%;height:5.9%"></div>
+            <div class="mask" style="left:38.2%;top:15.7%;width:14.2%;height:5.3%"></div>
+            <div class="mask" style="left:64.1%;top:20.1%;width:13.8%;height:6.0%"></div>
+            <div class="mask" style="left:1.5%;top:32.9%;width:13.2%;height:5.0%"></div>
+            <div class="mask" style="left:82.7%;top:32.9%;width:16.2%;height:5.0%"></div>
+            <div class="mask" style="left:85.3%;top:48.6%;width:13.9%;height:6.4%"></div>
+            <div class="mask" style="left:1.3%;top:60.7%;width:16.5%;height:4.6%"></div>
+            <div class="mask" style="left:12.5%;top:66.7%;width:15.2%;height:4.7%"></div>
+            <div class="mask" style="left:31.8%;top:72.8%;width:7.7%;height:4.0%"></div>
+            <div class="mask" style="left:31.8%;top:76.4%;width:9.5%;height:4.1%"></div>
+            <div class="mask" style="left:83.5%;top:66.8%;width:16.3%;height:5.0%"></div>
+            <div class="mask" style="left:84.1%;top:72.8%;width:15.8%;height:5.0%"></div>
 
-          <img
-            src="brain-lateral.png"
-            alt="Lateral view diagram of the human brain"
-            draggable="false"
-          >
-
-
-          <!--
-            LABEL MASKS
-            Percentages are based on the original 1500 × 1600 image.
-          -->
-
-          <!-- Precentral gyrus -->
-          <div
-            class="mask"
-            style="
-              left:20.3%;
-              top:20.2%;
-              width:12.9%;
-              height:5.9%;
-            "
-          ></div>
-
-          <!-- Central sulcus -->
-          <div
-            class="mask"
-            style="
-              left:38.2%;
-              top:15.7%;
-              width:14.2%;
-              height:5.3%;
-            "
-          ></div>
-
-          <!-- Postcentral gyrus -->
-          <div
-            class="mask"
-            style="
-              left:64.1%;
-              top:20.1%;
-              width:13.8%;
-              height:6.0%;
-            "
-          ></div>
-
-          <!-- Frontal lobe -->
-          <div
-            class="mask"
-            style="
-              left:1.5%;
-              top:32.9%;
-              width:13.2%;
-              height:5.0%;
-            "
-          ></div>
-
-          <!-- Parietal lobe -->
-          <div
-            class="mask"
-            style="
-              left:82.7%;
-              top:32.9%;
-              width:16.2%;
-              height:5.0%;
-            "
-          ></div>
-
-          <!-- Occipital lobe -->
-          <div
-            class="mask"
-            style="
-              left:85.3%;
-              top:48.6%;
-              width:13.9%;
-              height:6.4%;
-            "
-          ></div>
-
-          <!-- Lateral sulcus -->
-          <div
-            class="mask"
-            style="
-              left:1.3%;
-              top:60.7%;
-              width:16.5%;
-              height:4.6%;
-            "
-          ></div>
-
-          <!-- Temporal lobe -->
-          <div
-            class="mask"
-            style="
-              left:12.5%;
-              top:66.7%;
-              width:15.2%;
-              height:4.7%;
-            "
-          ></div>
-
-          <!-- Pons -->
-          <div
-            class="mask"
-            style="
-              left:31.8%;
-              top:72.8%;
-              width:7.7%;
-              height:4.0%;
-            "
-          ></div>
-
-          <!-- Medulla -->
-          <div
-            class="mask"
-            style="
-              left:31.8%;
-              top:76.4%;
-              width:9.5%;
-              height:4.1%;
-            "
-          ></div>
-
-          <!-- Cerebellum -->
-          <div
-            class="mask"
-            style="
-              left:83.5%;
-              top:66.8%;
-              width:16.3%;
-              height:5.0%;
-            "
-          ></div>
-
-          <!-- Spinal cord -->
-          <div
-            class="mask"
-            style="
-              left:84.1%;
-              top:72.8%;
-              width:15.8%;
-              height:5.0%;
-            "
-          ></div>
-
-
-          <div
-            id="targetDot"
-            class="target-dot"
-            aria-hidden="true"
-          ></div>
-
+            <div id="targetDot" class="target-dot" aria-hidden="true"></div>
+          </div>
         </div>
 
+        <div id="mcAnswers" class="answers" aria-label="Answer choices"></div>
+        <form id="freeForm" class="free-row hidden" autocomplete="off">
+          <label class="screen-reader-only" for="freeAnswer">Your answer</label>
+          <input id="freeAnswer" type="text" inputmode="text" enterkeyhint="done" placeholder="Type the brain structure" aria-describedby="feedback">
+          <button id="submitButton" class="rounded-button submit-button" type="submit">Submit ↵</button>
+        </form>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div class="nav-row">
+          <button id="changeModeButton" class="rounded-button" type="button">Change Mode</button>
+          <button id="nextButton" class="rounded-button next-button" type="button" disabled>Next Question ↵</button>
+        </div>
       </div>
+    </section>
 
-
-      <div
-        id="mcAnswers"
-        class="answers"
-        aria-label="Answer choices"
-      ></div>
-
-
-      <form
-        id="freeForm"
-        class="free-row hidden"
-        autocomplete="off"
-      >
-
-        <label
-          class="screen-reader-only"
-          for="freeAnswer"
-        >
-          Your answer
-        </label>
-
-        <input
-          id="freeAnswer"
-          type="text"
-          inputmode="text"
-          enterkeyhint="done"
-          placeholder="Type the brain structure"
-          aria-describedby="feedback"
-        >
-
-        <button
-          id="submitButton"
-          class="rounded-button submit-button"
-          type="submit"
-        >
-          Submit ↵
-        </button>
-
-      </form>
-
-
-      <div
-        id="feedback"
-        class="feedback"
-        aria-live="polite"
-      ></div>
-
-
-      <div class="nav-row">
-
-        <button
-          id="changeModeButton"
-          class="rounded-button"
-          type="button"
-        >
-          Change Mode
-        </button>
-
-        <button
-          id="nextButton"
-          class="rounded-button next-button"
-          type="button"
-          disabled
-        >
-          Next Question ↵
-        </button>
-
+    <section id="resultsScreen" class="card results-card hidden" aria-labelledby="resultsTitle">
+      <h2 id="resultsTitle">Quiz Complete</h2>
+      <div id="percentScore" class="score-big">0%</div>
+      <p id="rawScore" style="font-weight:800;font-size:1.2rem;margin-bottom:5px"></p>
+      <p id="resultMessage" class="muted"></p>
+      <div class="results-actions">
+        <button id="playAgainButton" class="rounded-button play-again" type="button">Shuffle &amp; Play Again ↵</button>
+        <button id="resultsModeButton" class="rounded-button" type="button">Change Mode</button>
       </div>
-
-    </div>
-
-  </section>
-
-
-  <!-- RESULTS -->
-  <section
-    id="resultsScreen"
-    class="card results-card hidden"
-    aria-labelledby="resultsTitle"
-  >
-
-    <h2 id="resultsTitle">Quiz Complete</h2>
-
-    <div
-      id="percentScore"
-      class="score-big"
-    >
-      0%
-    </div>
-
-    <p
-      id="rawScore"
-      style="
-        font-weight:800;
-        font-size:1.2rem;
-        margin-bottom:5px;
-      "
-    ></p>
-
-    <p
-      id="resultMessage"
-      class="muted"
-    ></p>
-
-
-    <div class="results-actions">
-
-      <button
-        id="playAgainButton"
-        class="rounded-button play-again"
-        type="button"
-      >
-        Shuffle &amp; Play Again ↵
-      </button>
-
-      <button
-        id="resultsModeButton"
-        class="rounded-button"
-        type="button"
-      >
-        Change Mode
-      </button>
-
-    </div>
-
-  </section>
-
-</main>
-
-
-<script>
-(() => {
-  "use strict";
-
-  /*
-    Original uploaded image dimensions.
-    DO NOT change these even when the image is displayed smaller.
-  */
-  const IMAGE_WIDTH = 1500;
-  const IMAGE_HEIGHT = 1600;
-
-
-  /*
-    The quiz is divided into three sets of four related structures.
-
-    This makes multiple-choice distractors more useful:
-      - cortical landmarks compete against cortical landmarks
-      - lobes compete against lobes
-      - brainstem/other structures compete against each other
-  */
-  const QUESTIONS = [
-
-    // --------------------------------
-    // CORTICAL LANDMARKS
-    // --------------------------------
-
-    {
-      answer: "Precentral gyrus",
-      point: [620, 435],
-      group: "cortex",
-      category: "GYRI & SULCI",
-      aliases: [
-        "pre central gyrus",
-        "pre-central gyrus",
-        "precentral"
-      ]
-    },
-
-    {
-      answer: "Central sulcus",
-      point: [704, 424],
-      group: "cortex",
-      category: "GYRI & SULCI",
-      aliases: [
-        "central groove"
-      ]
-    },
-
-    {
-      answer: "Postcentral gyrus",
-      point: [772, 437],
-      group: "cortex",
-      category: "GYRI & SULCI",
-      aliases: [
-        "post central gyrus",
-        "post-central gyrus",
-        "postcentral"
-      ]
-    },
-
-    {
-      answer: "Lateral sulcus",
-      point: [575, 804],
-      group: "cortex",
-      category: "GYRI & SULCI",
-      aliases: [
-        "lateral fissure",
-        "sylvian fissure",
-        "sylvian sulcus"
-      ]
-    },
-
-
-    // --------------------------------
-    // CEREBRAL LOBES
-    // --------------------------------
-
-    {
-      answer: "Frontal lobe",
-      point: [430, 625],
-      group: "lobes",
-      category: "CEREBRAL LOBES",
-      aliases: [
-        "frontal"
-      ]
-    },
-
-    {
-      answer: "Parietal lobe",
-      point: [960, 625],
-      group: "lobes",
-      category: "CEREBRAL LOBES",
-      aliases: [
-        "parietal"
-      ]
-    },
-
-    {
-      answer: "Occipital lobe",
-      point: [1110, 820],
-      group: "lobes",
-      category: "CEREBRAL LOBES",
-      aliases: [
-        "occipital"
-      ]
-    },
-
-    {
-      answer: "Temporal lobe",
-      point: [700, 925],
-      group: "lobes",
-      category: "CEREBRAL LOBES",
-      aliases: [
-        "temporal"
-      ]
-    },
-
-
-    // --------------------------------
-    // BRAINSTEM / OTHER
-    // --------------------------------
-
-    {
-      answer: "Pons",
-      point: [820, 1110],
-      group: "brainstem",
-      category: "BRAINSTEM & OTHER",
-      aliases: []
-    },
-
-    {
-      answer: "Medulla",
-      point: [824, 1158],
-      group: "brainstem",
-      category: "BRAINSTEM & OTHER",
-      aliases: [
-        "medulla oblongata"
-      ]
-    },
-
-    {
-      answer: "Cerebellum",
-      point: [1035, 1082],
-      group: "brainstem",
-      category: "BRAINSTEM & OTHER",
-      aliases: []
-    },
-
-    {
-      answer: "Spinal cord",
-      point: [970, 1248],
-      group: "brainstem",
-      category: "BRAINSTEM & OTHER",
-      aliases: [
-        "spinal"
-      ]
-    }
-
-  ];
-
-
-  const els = {
-
-    menu:
-      document.getElementById("menuScreen"),
-
-    quiz:
-      document.getElementById("quizScreen"),
-
-    results:
-      document.getElementById("resultsScreen"),
-
-    scoreChip:
-      document.getElementById("scoreChip"),
-
-    mcModeButton:
-      document.getElementById("mcModeButton"),
-
-    freeModeButton:
-      document.getElementById("freeModeButton"),
-
-    questionCount:
-      document.getElementById("questionCount"),
-
-    categoryLabel:
-      document.getElementById("categoryLabel"),
-
-    progressFill:
-      document.getElementById("progressFill"),
-
-    targetDot:
-      document.getElementById("targetDot"),
-
-    mcAnswers:
-      document.getElementById("mcAnswers"),
-
-    freeForm:
-      document.getElementById("freeForm"),
-
-    freeAnswer:
-      document.getElementById("freeAnswer"),
-
-    submitButton:
-      document.getElementById("submitButton"),
-
-    feedback:
-      document.getElementById("feedback"),
-
-    changeModeButton:
-      document.getElementById("changeModeButton"),
-
-    nextButton:
-      document.getElementById("nextButton"),
-
-    percentScore:
-      document.getElementById("percentScore"),
-
-    rawScore:
-      document.getElementById("rawScore"),
-
-    resultMessage:
-      document.getElementById("resultMessage"),
-
-    playAgainButton:
-      document.getElementById("playAgainButton"),
-
-    resultsModeButton:
-      document.getElementById("resultsModeButton")
-
-  };
-
-
-  let mode = null;
-  let deck = [];
-  let index = 0;
-  let score = 0;
-  let answered = false;
-  let selectedChoice = null;
-
-  const keysDown = new Set();
-
-
-  function shuffle(array) {
-
-    const copy = [...array];
-
-    for (
-      let i = copy.length - 1;
-      i > 0;
-      i--
-    ) {
-
-      const j =
-        Math.floor(Math.random() * (i + 1));
-
-      [
-        copy[i],
-        copy[j]
-      ] = [
-        copy[j],
-        copy[i]
-      ];
-
-    }
-
-    return copy;
-  }
-
-
-  function normalizeAnswer(text) {
-
-    return text
-      .toLowerCase()
-      .trim()
-      .replace(/\bthe\b/g, " ")
-      .replace(/[^a-z0-9]+/g, " ")
-      .trim()
-      .replace(/\s+/g, " ");
-
-  }
-
-
-  function currentQuestion() {
-    return deck[index];
-  }
-
-
-  function showOnly(screen) {
-
-    els.menu.classList.toggle(
-      "hidden",
-      screen !== "menu"
-    );
-
-    els.quiz.classList.toggle(
-      "hidden",
-      screen !== "quiz"
-    );
-
-    els.results.classList.toggle(
-      "hidden",
-      screen !== "results"
-    );
-
-    els.scoreChip.classList.toggle(
-      "hidden",
-      screen !== "quiz"
-    );
-
-    window.scrollTo({
-      top: 0,
-      behavior: "auto"
-    });
-
-  }
-
-
-  function startQuiz(nextMode = mode) {
-
-    mode = nextMode || "mc";
-
-    deck =
-      shuffle(
-        QUESTIONS.map(
-          item => ({ ...item })
-        )
-      );
-
-    index = 0;
-    score = 0;
-    answered = false;
-    selectedChoice = null;
-
-    showOnly("quiz");
-
-    renderQuestion();
-
-  }
-
-
-  function renderQuestion() {
-
-    if (index >= deck.length) {
-
-      showResults();
-      return;
-
-    }
-
-    answered = false;
-    selectedChoice = null;
-
-    const q = currentQuestion();
-
-    els.questionCount.textContent =
-      `QUESTION ${index + 1} OF ${deck.length}`;
-
-    els.categoryLabel.textContent =
-      q.category;
-
-    els.progressFill.style.width =
-      `${((index + 1) / deck.length) * 100}%`;
-
-    els.scoreChip.textContent =
-      index
-        ? `${score}/${index}`
-        : "0";
-
-
-    /*
-      Convert original image pixel coordinates
-      to responsive percentage coordinates.
-    */
-    const [x, y] = q.point;
-
-    els.targetDot.style.left =
-      `${(x / IMAGE_WIDTH) * 100}%`;
-
-    els.targetDot.style.top =
-      `${(y / IMAGE_HEIGHT) * 100}%`;
-
-
-    clearFeedback();
-
-    els.nextButton.disabled = true;
-
-    els.nextButton.classList.remove(
-      "key-pressed"
-    );
-
-
-    if (mode === "mc") {
-
-      els.mcAnswers.classList.remove(
-        "hidden"
-      );
-
-      els.freeForm.classList.add(
-        "hidden"
-      );
-
-      buildChoices(q);
-
-    } else {
-
-      els.mcAnswers.classList.add(
-        "hidden"
-      );
-
-      els.mcAnswers.replaceChildren();
-
-      els.freeForm.classList.remove(
-        "hidden"
-      );
-
-      els.freeAnswer.disabled = false;
-
-      els.freeAnswer.value = "";
-
-      els.submitButton.disabled = false;
-
-      requestAnimationFrame(
-        () => els.freeAnswer.focus()
-      );
-
-    }
-
-  }
-
-
-  function buildChoices(q) {
-
-    /*
-      Prefer distractors from the same anatomical group.
-      Each group contains exactly four terms.
-    */
-    const relatedAnswers =
-      QUESTIONS
-        .filter(
-          item => item.group === q.group
-        )
-        .map(
-          item => item.answer
-        );
-
-
-    let choices;
-
-    if (relatedAnswers.length >= 4) {
-
-      choices = shuffle(relatedAnswers);
-
-    } else {
-
-      const allAnswers =
-        QUESTIONS.map(
-          item => item.answer
-        );
-
-      const distractors =
-        shuffle(
-          allAnswers.filter(
-            answer => answer !== q.answer
-          )
-        ).slice(0, 3);
-
-      choices =
-        shuffle([
-          ...distractors,
-          q.answer
-        ]);
-
-    }
-
-
-    els.mcAnswers.replaceChildren();
-
-
-    choices.forEach((choice, i) => {
-
-      const button =
-        document.createElement("button");
-
-      button.type = "button";
-
-      button.className =
-        "rounded-button answer-button";
-
-      button.dataset.choice = choice;
-
-      button.dataset.index = String(i);
-
-
-      const badge =
-        document.createElement("span");
-
-      badge.className = "key-badge";
-
-      badge.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-      badge.textContent =
-        String(i + 1);
-
-
-      const label =
-        document.createElement("span");
-
-      label.textContent = choice;
-
-
-      button.append(
-        badge,
-        label
-      );
-
-
-      button.addEventListener(
-        "click",
-        () => submitChoice(choice)
-      );
-
-
-      els.mcAnswers.append(button);
-
-    });
-
-  }
-
-
-  function answerButtons() {
-
-    return [
-      ...els.mcAnswers.querySelectorAll(
-        ".answer-button"
-      )
+    </section>
+  </main>
+
+  <script>
+  (() => {
+    "use strict";
+
+    const IMAGE_WIDTH = 1500;
+    const IMAGE_HEIGHT = 1600;
+
+    const QUESTIONS = [
+      {
+        answer: "Precentral gyrus",
+        point: [650, 570],
+        group: "cortex",
+        category: "GYRI & SULCI",
+        aliases: ["pre central gyrus", "pre-central gyrus", "precentral"]
+      },
+      {
+        answer: "Precentral sulcus",
+        point: [590, 570],
+        group: "cortex",
+        category: "GYRI & SULCI",
+        aliases: ["pre central sulcus", "pre-central sulcus"]
+      },
+      {
+        answer: "Central sulcus",
+        point: [708, 535],
+        group: "cortex",
+        category: "GYRI & SULCI",
+        aliases: ["central groove"]
+      },
+      {
+        answer: "Postcentral gyrus",
+        point: [790, 505],
+        group: "cortex",
+        category: "GYRI & SULCI",
+        aliases: ["post central gyrus", "post-central gyrus", "postcentral"]
+      },
+      {
+        answer: "Lateral sulcus",
+        point: [575, 804],
+        group: "cortex",
+        category: "GYRI & SULCI",
+        aliases: ["lateral fissure", "sylvian fissure", "sylvian sulcus"]
+      },
+      { answer: "Frontal lobe", point: [430, 625], group: "lobes", category: "CEREBRAL LOBES", aliases: ["frontal"] },
+      { answer: "Parietal lobe", point: [960, 625], group: "lobes", category: "CEREBRAL LOBES", aliases: ["parietal"] },
+      { answer: "Occipital lobe", point: [1110, 820], group: "lobes", category: "CEREBRAL LOBES", aliases: ["occipital"] },
+      { answer: "Temporal lobe", point: [700, 925], group: "lobes", category: "CEREBRAL LOBES", aliases: ["temporal"] },
+      { answer: "Pons", point: [820, 1110], group: "brainstem", category: "BRAINSTEM & OTHER", aliases: [] },
+      { answer: "Medulla", point: [824, 1158], group: "brainstem", category: "BRAINSTEM & OTHER", aliases: ["medulla oblongata"] },
+      { answer: "Cerebellum", point: [1035, 1082], group: "brainstem", category: "BRAINSTEM & OTHER", aliases: [] },
+      { answer: "Spinal cord", point: [970, 1248], group: "brainstem", category: "BRAINSTEM & OTHER", aliases: ["spinal"] }
     ];
 
-  }
+    const els = {
+      menu: document.getElementById("menuScreen"),
+      quiz: document.getElementById("quizScreen"),
+      results: document.getElementById("resultsScreen"),
+      scoreChip: document.getElementById("scoreChip"),
+      mcModeButton: document.getElementById("mcModeButton"),
+      freeModeButton: document.getElementById("freeModeButton"),
+      questionCount: document.getElementById("questionCount"),
+      categoryLabel: document.getElementById("categoryLabel"),
+      progressFill: document.getElementById("progressFill"),
+      targetDot: document.getElementById("targetDot"),
+      mcAnswers: document.getElementById("mcAnswers"),
+      freeForm: document.getElementById("freeForm"),
+      freeAnswer: document.getElementById("freeAnswer"),
+      submitButton: document.getElementById("submitButton"),
+      feedback: document.getElementById("feedback"),
+      changeModeButton: document.getElementById("changeModeButton"),
+      nextButton: document.getElementById("nextButton"),
+      percentScore: document.getElementById("percentScore"),
+      rawScore: document.getElementById("rawScore"),
+      resultMessage: document.getElementById("resultMessage"),
+      playAgainButton: document.getElementById("playAgainButton"),
+      resultsModeButton: document.getElementById("resultsModeButton")
+    };
 
+    let mode = null;
+    let deck = [];
+    let index = 0;
+    let score = 0;
+    let answered = false;
+    let selectedChoice = null;
+    const keysDown = new Set();
 
-  function submitChoice(choice) {
-
-    if (
-      answered ||
-      mode !== "mc"
-    ) {
-      return;
+    function shuffle(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
     }
 
-    selectedChoice = choice;
-
-    evaluate(
-      choice === currentQuestion().answer
-    );
-
-  }
-
-
-  function submitFreeResponse() {
-
-    if (
-      answered ||
-      mode !== "free"
-    ) {
-      return;
+    function normalizeAnswer(text) {
+      return text.toLowerCase().trim().replace(/\bthe\b/g, " ").replace(/[^a-z0-9]+/g, " ").trim().replace(/\s+/g, " ");
     }
 
-    const typed =
-      els.freeAnswer.value;
+    function currentQuestion() { return deck[index]; }
 
-
-    if (!typed.trim()) {
-
-      setFeedback(
-        "Type an answer before submitting.",
-        "neutral"
-      );
-
-      els.freeAnswer.focus();
-
-      return;
-
+    function showOnly(screen) {
+      els.menu.classList.toggle("hidden", screen !== "menu");
+      els.quiz.classList.toggle("hidden", screen !== "quiz");
+      els.results.classList.toggle("hidden", screen !== "results");
+      els.scoreChip.classList.toggle("hidden", screen !== "quiz");
+      window.scrollTo({ top: 0, behavior: "auto" });
     }
 
-
-    const q =
-      currentQuestion();
-
-
-    const accepted =
-      new Set([
-
-        normalizeAnswer(q.answer),
-
-        ...(q.aliases || [])
-          .map(normalizeAnswer)
-
-      ]);
-
-
-    evaluate(
-      accepted.has(
-        normalizeAnswer(typed)
-      )
-    );
-
-  }
-
-
-  function evaluate(isCorrect) {
-
-    if (answered) {
-      return;
+    function startQuiz(nextMode = mode) {
+      mode = nextMode || "mc";
+      deck = shuffle(QUESTIONS.map(item => ({ ...item })));
+      index = 0;
+      score = 0;
+      answered = false;
+      selectedChoice = null;
+      showOnly("quiz");
+      renderQuestion();
     }
 
-    answered = true;
+    function renderQuestion() {
+      if (index >= deck.length) { showResults(); return; }
+      answered = false;
+      selectedChoice = null;
+      const q = currentQuestion();
+      els.questionCount.textContent = `QUESTION ${index + 1} OF ${deck.length}`;
+      els.categoryLabel.textContent = q.category;
+      els.progressFill.style.width = `${((index + 1) / deck.length) * 100}%`;
+      els.scoreChip.textContent = index ? `${score}/${index}` : "0";
+      const [x, y] = q.point;
+      els.targetDot.style.left = `${(x / IMAGE_WIDTH) * 100}%`;
+      els.targetDot.style.top = `${(y / IMAGE_HEIGHT) * 100}%`;
+      clearFeedback();
+      els.nextButton.disabled = true;
+      els.nextButton.classList.remove("key-pressed");
 
-    const q =
-      currentQuestion();
-
-
-    if (isCorrect) {
-
-      score += 1;
-
-      setFeedback(
-        `✓ Correct — ${q.answer}. Press Enter for the next question.`,
-        "correct"
-      );
-
-    } else {
-
-      setFeedback(
-        `✕ The correct answer is ${q.answer}. Press Enter to continue.`,
-        "wrong"
-      );
-
+      if (mode === "mc") {
+        els.mcAnswers.classList.remove("hidden");
+        els.freeForm.classList.add("hidden");
+        buildChoices(q);
+      } else {
+        els.mcAnswers.classList.add("hidden");
+        els.mcAnswers.replaceChildren();
+        els.freeForm.classList.remove("hidden");
+        els.freeAnswer.disabled = false;
+        els.freeAnswer.value = "";
+        els.submitButton.disabled = false;
+        requestAnimationFrame(() => els.freeAnswer.focus());
+      }
     }
 
-
-    if (mode === "mc") {
-
-      answerButtons().forEach(button => {
-
-        const choice =
-          button.dataset.choice;
-
-
-        if (choice === q.answer) {
-
-          button.classList.add(
-            "correct"
-          );
-
-        } else if (
-          !isCorrect &&
-          choice === selectedChoice
-        ) {
-
-          button.classList.add(
-            "wrong"
-          );
-
-        }
-
-
-        button.disabled = true;
-
-        button.classList.remove(
-          "key-pressed"
-        );
-
+    function buildChoices(q) {
+      const related = QUESTIONS.filter(item => item.group === q.group && item.answer !== q.answer);
+      const firstPool = shuffle(related).slice(0, 3);
+      let distractors = firstPool;
+      if (distractors.length < 3) {
+        const used = new Set([q.answer, ...distractors.map(item => item.answer)]);
+        distractors = [...distractors, ...shuffle(QUESTIONS.filter(item => !used.has(item.answer))).slice(0, 3 - distractors.length)];
+      }
+      const choices = shuffle([q.answer, ...distractors.map(item => item.answer)]);
+      els.mcAnswers.replaceChildren();
+      choices.forEach((choice, i) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "rounded-button answer-button";
+        button.dataset.choice = choice;
+        const badge = document.createElement("span");
+        badge.className = "key-badge";
+        badge.setAttribute("aria-hidden", "true");
+        badge.textContent = String(i + 1);
+        const label = document.createElement("span");
+        label.textContent = choice;
+        button.append(badge, label);
+        button.addEventListener("click", () => submitChoice(choice));
+        els.mcAnswers.append(button);
       });
-
-    } else {
-
-      els.freeAnswer.disabled = true;
-
-      els.submitButton.disabled = true;
-
-      els.submitButton.classList.remove(
-        "key-pressed"
-      );
-
     }
 
+    function answerButtons() { return [...els.mcAnswers.querySelectorAll(".answer-button")]; }
 
-    els.nextButton.disabled = false;
-
-    els.scoreChip.textContent =
-      `${score}/${index + 1}`;
-
-    els.nextButton.focus({
-      preventScroll: true
-    });
-
-  }
-
-
-  function setFeedback(
-    message,
-    kind
-  ) {
-
-    els.feedback.textContent =
-      message;
-
-    els.feedback.className =
-      `feedback ${kind}`;
-
-  }
-
-
-  function clearFeedback() {
-
-    els.feedback.textContent = "";
-
-    els.feedback.className =
-      "feedback";
-
-  }
-
-
-  function nextQuestion() {
-
-    if (!answered) {
-      return;
+    function submitChoice(choice) {
+      if (answered || mode !== "mc") return;
+      selectedChoice = choice;
+      evaluate(choice === currentQuestion().answer);
     }
 
-    index += 1;
-
-    renderQuestion();
-
-  }
-
-
-  function showMenu() {
-
-    mode = null;
-
-    keysDown.clear();
-
-    showOnly("menu");
-
-  }
-
-
-  function showResults() {
-
-    showOnly("results");
-
-
-    const pct =
-      deck.length
-        ? Math.round(
-            (score / deck.length) * 100
-          )
-        : 0;
-
-
-    els.percentScore.textContent =
-      `${pct}%`;
-
-    els.rawScore.textContent =
-      `${score} of ${deck.length} correct`;
-
-
-    if (pct >= 90) {
-
-      els.resultMessage.textContent =
-        "Excellent brain anatomy recall.";
-
-    } else if (pct >= 70) {
-
-      els.resultMessage.textContent =
-        "Strong run — review the structures you missed and try another shuffle.";
-
-    } else {
-
-      els.resultMessage.textContent =
-        "Keep practicing the lobes, cortical landmarks, and brainstem structures.";
-
-    }
-
-
-    els.playAgainButton.focus({
-      preventScroll: true
-    });
-
-  }
-
-
-  function pressElement(element) {
-
-    if (
-      element &&
-      !element.disabled
-    ) {
-      element.classList.add(
-        "key-pressed"
-      );
-    }
-
-  }
-
-
-  function releaseElement(element) {
-
-    if (element) {
-
-      element.classList.remove(
-        "key-pressed"
-      );
-
-    }
-
-  }
-
-
-  document.addEventListener(
-    "keydown",
-    event => {
-
-      const key =
-        event.key;
-
-
-      if (keysDown.has(key)) {
+    function submitFreeResponse() {
+      if (answered || mode !== "free") return;
+      const typed = els.freeAnswer.value;
+      if (!typed.trim()) {
+        setFeedback("Type an answer before submitting.", "neutral");
+        els.freeAnswer.focus();
         return;
       }
+      const q = currentQuestion();
+      const accepted = new Set([normalizeAnswer(q.answer), ...(q.aliases || []).map(normalizeAnswer)]);
+      evaluate(accepted.has(normalizeAnswer(typed)));
+    }
 
+    function evaluate(isCorrect) {
+      if (answered) return;
+      answered = true;
+      const q = currentQuestion();
+      if (isCorrect) {
+        score += 1;
+        setFeedback(`✓ Correct — ${q.answer}. Press Enter for the next question.`, "correct");
+      } else {
+        setFeedback(`✕ The correct answer is ${q.answer}. Press Enter to continue.`, "wrong");
+      }
 
-      const onQuiz =
-        !els.quiz.classList.contains(
-          "hidden"
-        );
+      if (mode === "mc") {
+        answerButtons().forEach(button => {
+          const choice = button.dataset.choice;
+          if (choice === q.answer) button.classList.add("correct");
+          else if (!isCorrect && choice === selectedChoice) button.classList.add("wrong");
+          button.disabled = true;
+          button.classList.remove("key-pressed");
+        });
+      } else {
+        els.freeAnswer.disabled = true;
+        els.submitButton.disabled = true;
+        els.submitButton.classList.remove("key-pressed");
+      }
 
-      const onResults =
-        !els.results.classList.contains(
-          "hidden"
-        );
+      els.nextButton.disabled = false;
+      els.scoreChip.textContent = `${score}/${index + 1}`;
+      els.nextButton.focus({ preventScroll: true });
+    }
 
+    function setFeedback(message, kind) {
+      els.feedback.textContent = message;
+      els.feedback.className = `feedback ${kind}`;
+    }
 
-      /*
-        Multiple-choice:
-        keyboard numbers 1–4
-      */
-      if (
-        onQuiz &&
-        mode === "mc" &&
-        !answered &&
-        /^[1-4]$/.test(key)
-      ) {
+    function clearFeedback() {
+      els.feedback.textContent = "";
+      els.feedback.className = "feedback";
+    }
 
+    function nextQuestion() {
+      if (!answered) return;
+      index += 1;
+      renderQuestion();
+    }
+
+    function showMenu() {
+      mode = null;
+      keysDown.clear();
+      showOnly("menu");
+    }
+
+    function showResults() {
+      showOnly("results");
+      const pct = deck.length ? Math.round((score / deck.length) * 100) : 0;
+      els.percentScore.textContent = `${pct}%`;
+      els.rawScore.textContent = `${score} of ${deck.length} correct`;
+      els.resultMessage.textContent = pct >= 90
+        ? "Excellent brain anatomy recall."
+        : pct >= 70
+          ? "Strong run — review the structures you missed and try another shuffle."
+          : "Keep practicing the lobes, cortical landmarks, and brainstem structures.";
+      els.playAgainButton.focus({ preventScroll: true });
+    }
+
+    function pressElement(element) {
+      if (element && !element.disabled) element.classList.add("key-pressed");
+    }
+
+    function releaseElement(element) {
+      if (element) element.classList.remove("key-pressed");
+    }
+
+    document.addEventListener("keydown", event => {
+      const key = event.key;
+      if (keysDown.has(key)) return;
+      const onQuiz = !els.quiz.classList.contains("hidden");
+      const onResults = !els.results.classList.contains("hidden");
+
+      if (onQuiz && mode === "mc" && !answered && /^[1-4]$/.test(key)) {
         keysDown.add(key);
-
-        const button =
-          answerButtons()[
-            Number(key) - 1
-          ];
-
-        pressElement(button);
-
+        pressElement(answerButtons()[Number(key) - 1]);
         event.preventDefault();
-
         return;
       }
 
-
-      /*
-        Free response submit,
-        or go to next question.
-      */
-      if (
-        onQuiz &&
-        key === "Enter"
-      ) {
-
-        if (
-          !answered &&
-          mode === "free"
-        ) {
-
+      if (onQuiz && key === "Enter") {
+        if (!answered && mode === "free") {
           keysDown.add(key);
-
-          pressElement(
-            els.submitButton
-          );
-
+          pressElement(els.submitButton);
           event.preventDefault();
-
           return;
-
         }
-
-
         if (answered) {
-
           keysDown.add(key);
-
-          pressElement(
-            els.nextButton
-          );
-
+          pressElement(els.nextButton);
           event.preventDefault();
-
           return;
-
         }
-
       }
 
-
-      /*
-        Enter on result screen
-        starts another shuffled run.
-      */
-      if (
-        onResults &&
-        key === "Enter"
-      ) {
-
+      if (onResults && key === "Enter") {
         keysDown.add(key);
-
-        pressElement(
-          els.playAgainButton
-        );
-
+        pressElement(els.playAgainButton);
         event.preventDefault();
-
       }
+    });
 
-    }
-  );
-
-
-  document.addEventListener(
-    "keyup",
-    event => {
-
-      const key =
-        event.key;
-
+    document.addEventListener("keyup", event => {
+      const key = event.key;
       keysDown.delete(key);
+      const onQuiz = !els.quiz.classList.contains("hidden");
+      const onResults = !els.results.classList.contains("hidden");
 
-
-      const onQuiz =
-        !els.quiz.classList.contains(
-          "hidden"
-        );
-
-      const onResults =
-        !els.results.classList.contains(
-          "hidden"
-        );
-
-
-      if (
-        onQuiz &&
-        mode === "mc" &&
-        !answered &&
-        /^[1-4]$/.test(key)
-      ) {
-
-        const button =
-          answerButtons()[
-            Number(key) - 1
-          ];
-
+      if (onQuiz && mode === "mc" && !answered && /^[1-4]$/.test(key)) {
+        const button = answerButtons()[Number(key) - 1];
         releaseElement(button);
-
-
-        if (button) {
-
-          submitChoice(
-            button.dataset.choice
-          );
-
-        }
-
-
+        if (button) submitChoice(button.dataset.choice);
         event.preventDefault();
-
         return;
-
       }
 
-
-      if (
-        onQuiz &&
-        key === "Enter"
-      ) {
-
-        if (
-          !answered &&
-          mode === "free"
-        ) {
-
-          releaseElement(
-            els.submitButton
-          );
-
+      if (onQuiz && key === "Enter") {
+        if (!answered && mode === "free") {
+          releaseElement(els.submitButton);
           submitFreeResponse();
-
           event.preventDefault();
-
           return;
-
         }
-
-
         if (answered) {
-
-          releaseElement(
-            els.nextButton
-          );
-
+          releaseElement(els.nextButton);
           nextQuestion();
-
           event.preventDefault();
-
           return;
-
         }
-
       }
 
-
-      if (
-        onResults &&
-        key === "Enter"
-      ) {
-
-        releaseElement(
-          els.playAgainButton
-        );
-
+      if (onResults && key === "Enter") {
+        releaseElement(els.playAgainButton);
         startQuiz();
-
         event.preventDefault();
-
       }
+    });
 
-    }
-  );
-
-
-  els.freeForm.addEventListener(
-    "submit",
-    event => {
-
-      event.preventDefault();
-
-      submitFreeResponse();
-
-    }
-  );
-
-
-  els.mcModeButton.addEventListener(
-    "click",
-    () => startQuiz("mc")
-  );
-
-
-  els.freeModeButton.addEventListener(
-    "click",
-    () => startQuiz("free")
-  );
-
-
-  els.changeModeButton.addEventListener(
-    "click",
-    showMenu
-  );
-
-
-  els.resultsModeButton.addEventListener(
-    "click",
-    showMenu
-  );
-
-
-  els.nextButton.addEventListener(
-    "click",
-    nextQuestion
-  );
-
-
-  els.playAgainButton.addEventListener(
-    "click",
-    () => startQuiz()
-  );
-
-
-  showMenu();
-
-})();
-</script>
-
+    els.freeForm.addEventListener("submit", event => { event.preventDefault(); submitFreeResponse(); });
+    els.mcModeButton.addEventListener("click", () => startQuiz("mc"));
+    els.freeModeButton.addEventListener("click", () => startQuiz("free"));
+    els.changeModeButton.addEventListener("click", showMenu);
+    els.resultsModeButton.addEventListener("click", showMenu);
+    els.nextButton.addEventListener("click", nextQuestion);
+    els.playAgainButton.addEventListener("click", () => startQuiz());
+    showMenu();
+  })();
+  </script>
 </body>
 </html>
