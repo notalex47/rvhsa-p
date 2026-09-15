@@ -23,9 +23,7 @@
       --radius-md: 18px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       background: var(--bg);
@@ -36,35 +34,22 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(
-          circle at top right,
-          rgba(36, 103, 159, 0.10),
-          transparent 28rem
-        ),
+        radial-gradient(circle at top right, rgba(36, 103, 159, 0.10), transparent 28rem),
         var(--bg);
       color: var(--text);
       font-family:
-        Inter, ui-sans-serif, system-ui, -apple-system,
-        BlinkMacSystemFont, "Segoe UI", sans-serif;
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
       line-height: 1.5;
     }
 
-    a {
-      color: inherit;
-    }
+    a { color: inherit; }
 
     .site-header {
-      background:
-        linear-gradient(
-          135deg,
-          var(--navy),
-          #245f96
-        );
+      background: linear-gradient(135deg, var(--navy), #245f96);
       color: white;
       padding: 18px 22px;
-      box-shadow:
-        0 4px 18px
-        rgba(23, 59, 103, 0.16);
+      box-shadow: 0 4px 18px rgba(23, 59, 103, 0.16);
     }
 
     .header-inner {
@@ -107,9 +92,7 @@
 
     .hero {
       display: grid;
-      grid-template-columns:
-        minmax(0, 1.5fr)
-        minmax(280px, 0.7fr);
+      grid-template-columns: minmax(0, 1.5fr) minmax(280px, 0.7fr);
       gap: 24px;
       align-items: stretch;
       margin-bottom: 34px;
@@ -139,11 +122,7 @@
       text-transform: uppercase;
     }
 
-    h1,
-    h2,
-    h3 {
-      color: var(--navy);
-    }
+    h1, h2, h3 { color: var(--navy); }
 
     h1 {
       margin: 0;
@@ -165,12 +144,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      background:
-        linear-gradient(
-          180deg,
-          #ffffff,
-          #f7fbff
-        );
+      background: linear-gradient(180deg, #ffffff, #f7fbff);
     }
 
     .info-card strong {
@@ -202,8 +176,7 @@
 
     .section-heading h2 {
       margin: 0;
-      font-size:
-        clamp(1.6rem, 3vw, 2.2rem);
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
     }
 
     .section-heading p {
@@ -224,8 +197,7 @@
 
     .quiz-grid {
       display: grid;
-      grid-template-columns:
-        repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 18px;
     }
 
@@ -237,17 +209,12 @@
       display: flex;
       flex-direction: column;
       min-height: 250px;
-      transition:
-        transform 140ms ease,
-        box-shadow 140ms ease,
-        border-color 140ms ease;
+      transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
     }
 
     .quiz-card:hover {
       transform: translateY(-3px);
-      box-shadow:
-        0 12px 28px
-        rgba(23, 59, 103, 0.11);
+      box-shadow: 0 12px 28px rgba(23, 59, 103, 0.11);
       border-color: #b7cfe2;
     }
 
@@ -300,9 +267,7 @@
       font-weight: 800;
     }
 
-    .quiz-link:hover {
-      background: var(--blue-dark);
-    }
+    .quiz-link:hover { background: var(--blue-dark); }
 
     .patch-notes {
       border-radius: var(--radius-lg);
@@ -311,8 +276,7 @@
 
     .patch-notes h2 {
       margin: 0 0 6px;
-      font-size:
-        clamp(1.5rem, 3vw, 2rem);
+      font-size: clamp(1.5rem, 3vw, 2rem);
     }
 
     .patch-intro {
@@ -326,11 +290,9 @@
     }
 
     .patch {
-      border-left:
-        4px solid var(--blue);
+      border-left: 4px solid var(--blue);
       background: #f8fbfe;
-      border-radius:
-        0 14px 14px 0;
+      border-radius: 0 14px 14px 0;
       padding: 18px 20px;
     }
 
@@ -360,9 +322,7 @@
       color: var(--muted);
     }
 
-    .patch li + li {
-      margin-top: 5px;
-    }
+    .patch li + li { margin-top: 5px; }
 
     footer {
       width: min(1120px, 100%);
@@ -374,7 +334,6 @@
     }
 
     @media (max-width: 760px) {
-
       .hero,
       .quiz-grid {
         grid-template-columns: 1fr;
@@ -387,493 +346,182 @@
         flex-direction: column;
       }
 
-      .nav-links {
-        gap: 12px;
-      }
+      .nav-links { gap: 12px; }
     }
   </style>
 </head>
 
-
 <body>
-
-<header class="site-header">
-
-  <div class="header-inner">
-
-    <div class="brand">
-      RVHS Anatomy &amp; Physiology
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="brand">RVHS Anatomy &amp; Physiology</div>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#unit-1">Unit 1</a>
+        <a href="#unit-2">Unit 2</a>
+        <a href="#patch-notes">Patch Notes</a>
+      </nav>
     </div>
+  </header>
 
-    <nav
-      class="nav-links"
-      aria-label="Main navigation"
-    >
-      <a href="#unit-1">Unit 1</a>
-      <a href="#unit-2">Unit 2</a>
-      <a href="#patch-notes">
-        Patch Notes
-      </a>
-    </nav>
+  <main>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-card">
+        <span class="eyebrow">Study Tools</span>
+        <h1 id="page-title">Anatomy &amp; Physiology Practice</h1>
+        <p>
+          Interactive visual quizzes for reviewing anatomical terminology.
+          Choose a quiz below, practice in multiple-choice or free-response mode,
+          and repeat as often as needed.
+        </p>
+      </div>
 
-  </div>
+      <aside class="info-card">
+        <strong>Built for quick review</strong>
+        <p>
+          Questions reshuffle each run, answer choices randomize, and every quiz
+          works on phones, tablets, Chromebooks, Macs, and PCs.
+        </p>
+      </aside>
+    </section>
 
-</header>
+    <section id="unit-1" class="unit-section" aria-labelledby="unit-1-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="unit-1-heading">Unit 1</h2>
+          <p>Foundational anatomical terminology and body organization.</p>
+        </div>
+        <div class="unit-badge">2 quizzes</div>
+      </div>
 
+      <div class="quiz-grid">
+        <article class="quiz-card">
+          <div class="label">Unit 1 · Quiz 1</div>
+          <h3>Anatomical Regions Quiz</h3>
+          <p>
+            Identify major anterior and posterior anatomical regions using a
+            visual diagram and target-dot prompts.
+          </p>
 
-<main>
+          <div class="meta">
+            <span>37 questions</span>
+            <span>Multiple choice</span>
+            <span>Free response</span>
+          </div>
 
-  <!-- HERO -->
+          <a class="quiz-link" href="anatomy-regions-quiz/">
+            Open Anatomical Regions Quiz
+          </a>
+        </article>
 
-  <section
-    class="hero"
-    aria-labelledby="page-title"
-  >
+        <article class="quiz-card">
+          <div class="label">Unit 1 · Quiz 2</div>
+          <h3>Body Cavities Quiz</h3>
+          <p>
+            Review the major body cavities and related structures using lateral
+            and anterior views of the human body.
+          </p>
 
-    <div class="hero-card">
+          <div class="meta">
+            <span>12 questions</span>
+            <span>Multiple choice</span>
+            <span>Free response</span>
+          </div>
 
-      <span class="eyebrow">
-        Study Tools
-      </span>
+          <a class="quiz-link" href="body-cavities-quiz/">
+            Open Body Cavities Quiz
+          </a>
+        </article>
+      </div>
+    </section>
 
-      <h1 id="page-title">
-        Anatomy &amp; Physiology Practice
-      </h1>
+    <section id="unit-2" class="unit-section" aria-labelledby="unit-2-heading">
+      <div class="section-heading">
+        <div>
+          <h2 id="unit-2-heading">Unit 2</h2>
+          <p>Brain anatomy and major structures visible from the lateral view.</p>
+        </div>
+        <div class="unit-badge">1 quiz</div>
+      </div>
 
-      <p>
-        Interactive visual quizzes for reviewing
-        anatomical terminology and structures.
-        Choose a quiz below, practice in
-        multiple-choice or free-response mode,
-        and repeat as often as needed.
+      <div class="quiz-grid">
+        <article class="quiz-card">
+          <div class="label">Unit 2 · Quiz 1</div>
+          <h3>Brain Anatomy Quiz</h3>
+          <p>
+            Identify cerebral lobes, cortical landmarks, the cerebellum, and
+            major brainstem structures from a lateral view of the human brain.
+          </p>
+
+          <div class="meta">
+            <span>13 questions</span>
+            <span>Multiple choice</span>
+            <span>Free response</span>
+          </div>
+
+          <a class="quiz-link" href="brain-lateral-quiz/">
+            Open Brain Anatomy Quiz
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <section id="patch-notes" class="patch-notes" aria-labelledby="patch-heading">
+      <h2 id="patch-heading">Patch Notes</h2>
+      <p class="patch-intro">
+        A running record of the major updates made to the study site.
       </p>
 
-    </div>
+      <div class="patch-list">
+        <article class="patch">
+          <div class="patch-top">
+            <div class="patch-title">Unit 2: Brain Anatomy</div>
+            <div class="patch-version">Version 2.0</div>
+          </div>
+          <ul>
+            <li>Added Unit 2 to the study site.</li>
+            <li>Added the Brain Anatomy Quiz with 13 lateral-view identification questions.</li>
+            <li>Added cerebral lobe identification: frontal, parietal, temporal, and occipital lobes.</li>
+            <li>Added cortical landmarks: precentral gyrus, precentral sulcus, central sulcus, postcentral gyrus, and lateral sulcus.</li>
+            <li>Corrected the precentral gyrus target to the pink band and placed the precentral sulcus target at the blue–pink boundary.</li>
+            <li>Added pons, medulla, cerebellum, and spinal cord identification.</li>
+            <li>Multiple-choice distractors stay within related anatomical categories while showing four choices per question.</li>
+            <li>Added free-response aliases for common alternative names and spelling formats.</li>
+          </ul>
+        </article>
 
+        <article class="patch">
+          <div class="patch-top">
+            <div class="patch-title">Unit 1 Expansion</div>
+            <div class="patch-version">Version 1.1</div>
+          </div>
+          <ul>
+            <li>Added the new Body Cavities Quiz with 12 visual-identification questions.</li>
+            <li>Added Frontal and Antebrachial to the Anatomical Regions Quiz.</li>
+            <li>Expanded the Anatomical Regions Quiz from 35 to 37 questions.</li>
+            <li>Added accepted free-response aliases for common spelling variations.</li>
+            <li>Updated the homepage to organize both quizzes under Unit 1.</li>
+          </ul>
+        </article>
 
-    <aside class="info-card">
-
-      <strong>
-        Built for quick review
-      </strong>
-
-      <p>
-        Questions reshuffle each run,
-        answer choices randomize,
-        and every quiz works on phones,
-        tablets, Chromebooks, Macs, and PCs.
-      </p>
-
-    </aside>
-
-  </section>
-
-
-
-  <!-- UNIT 1 -->
-
-  <section
-    id="unit-1"
-    class="unit-section"
-    aria-labelledby="unit-1-heading"
-  >
-
-    <div class="section-heading">
-
-      <div>
-
-        <h2 id="unit-1-heading">
-          Unit 1
-        </h2>
-
-        <p>
-          Foundational anatomical terminology
-          and body organization.
-        </p>
+        <article class="patch">
+          <div class="patch-top">
+            <div class="patch-title">Initial Anatomical Regions Release</div>
+            <div class="patch-version">Version 1.0</div>
+          </div>
+          <ul>
+            <li>Launched the Anatomical Regions Quiz.</li>
+            <li>Added randomized multiple-choice and free-response modes.</li>
+            <li>Included anterior and posterior regional anatomy questions.</li>
+            <li>Added scoring, keyboard controls, reshuffling, and responsive design.</li>
+          </ul>
+        </article>
 
       </div>
-
-
-      <div class="unit-badge">
-        2 quizzes
-      </div>
-
-    </div>
-
-
-    <div class="quiz-grid">
-
-
-      <!-- UNIT 1 QUIZ 1 -->
-
-      <article class="quiz-card">
-
-        <div class="label">
-          Unit 1 · Quiz 1
-        </div>
-
-        <h3>
-          Anatomical Regions Quiz
-        </h3>
-
-        <p>
-          Identify major anterior and posterior
-          anatomical regions using a visual
-          diagram and target-dot prompts.
-        </p>
-
-
-        <div class="meta">
-
-          <span>
-            37 questions
-          </span>
-
-          <span>
-            Multiple choice
-          </span>
-
-          <span>
-            Free response
-          </span>
-
-        </div>
-
-
-        <a
-          class="quiz-link"
-          href="anatomy-regions-quiz/"
-        >
-          Open Anatomical Regions Quiz
-        </a>
-
-      </article>
-
-
-
-      <!-- UNIT 1 QUIZ 2 -->
-
-      <article class="quiz-card">
-
-        <div class="label">
-          Unit 1 · Quiz 2
-        </div>
-
-        <h3>
-          Body Cavities Quiz
-        </h3>
-
-        <p>
-          Review the major body cavities
-          and related structures using lateral
-          and anterior views of the human body.
-        </p>
-
-
-        <div class="meta">
-
-          <span>
-            12 questions
-          </span>
-
-          <span>
-            Multiple choice
-          </span>
-
-          <span>
-            Free response
-          </span>
-
-        </div>
-
-
-        <a
-          class="quiz-link"
-          href="body-cavities-quiz/"
-        >
-          Open Body Cavities Quiz
-        </a>
-
-      </article>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- UNIT 2 -->
-
-  <section
-    id="unit-2"
-    class="unit-section"
-    aria-labelledby="unit-2-heading"
-  >
-
-    <div class="section-heading">
-
-      <div>
-
-        <h2 id="unit-2-heading">
-          Unit 2
-        </h2>
-
-        <p>
-          Brain anatomy and major structures
-          visible from the lateral view.
-        </p>
-
-      </div>
-
-
-      <div class="unit-badge">
-        1 quiz
-      </div>
-
-    </div>
-
-
-    <div class="quiz-grid">
-
-
-      <!-- UNIT 2 QUIZ 1 -->
-
-      <article class="quiz-card">
-
-        <div class="label">
-          Unit 2 · Quiz 1
-        </div>
-
-        <h3>
-          Brain Anatomy Quiz
-        </h3>
-
-        <p>
-          Identify cerebral lobes, cortical
-          landmarks, the cerebellum, and major
-          brainstem structures from a lateral
-          view of the human brain.
-        </p>
-
-
-        <div class="meta">
-
-          <span>
-            12 questions
-          </span>
-
-          <span>
-            Multiple choice
-          </span>
-
-          <span>
-            Free response
-          </span>
-
-        </div>
-
-
-        <a
-          class="quiz-link"
-          href="brain-lateral-quiz/"
-        >
-          Open Brain Anatomy Quiz
-        </a>
-
-      </article>
-
-    </div>
-
-  </section>
-
-
-
-  <!-- PATCH NOTES -->
-
-  <section
-    id="patch-notes"
-    class="patch-notes"
-    aria-labelledby="patch-heading"
-  >
-
-    <h2 id="patch-heading">
-      Patch Notes
-    </h2>
-
-    <p class="patch-intro">
-      A running record of the major updates
-      made to the study site.
-    </p>
-
-
-    <div class="patch-list">
-
-
-      <!-- VERSION 2.0 -->
-
-      <article class="patch">
-
-        <div class="patch-top">
-
-          <div class="patch-title">
-            Unit 2: Brain Anatomy
-          </div>
-
-          <div class="patch-version">
-            Version 2.0
-          </div>
-
-        </div>
-
-
-        <ul>
-          <li>
-            Added Unit 2 to the study site.
-          </li>
-
-          <li>
-            Added the new Brain Anatomy Quiz
-            with 12 lateral-view identification
-            questions.
-          </li>
-
-          <li>
-            Added cerebral lobe identification:
-            frontal, parietal, temporal,
-            and occipital lobes.
-          </li>
-
-          <li>
-            Added cortical landmarks:
-            precentral gyrus, central sulcus,
-            postcentral gyrus,
-            and lateral sulcus.
-          </li>
-
-          <li>
-            Added pons, medulla,
-            cerebellum, and spinal cord
-            identification.
-          </li>
-
-          <li>
-            Multiple-choice distractors now
-            stay within related anatomical
-            categories for more challenging
-            practice.
-          </li>
-
-          <li>
-            Added free-response aliases
-            for common alternative names
-            and spelling formats.
-          </li>
-        </ul>
-
-      </article>
-
-
-
-      <!-- VERSION 1.1 -->
-
-      <article class="patch">
-
-        <div class="patch-top">
-
-          <div class="patch-title">
-            Unit 1 Expansion
-          </div>
-
-          <div class="patch-version">
-            Version 1.1
-          </div>
-
-        </div>
-
-
-        <ul>
-          <li>
-            Added the new Body Cavities Quiz
-            with 12 visual-identification
-            questions.
-          </li>
-
-          <li>
-            Added Frontal and Antebrachial
-            to the Anatomical Regions Quiz.
-          </li>
-
-          <li>
-            Expanded the Anatomical Regions
-            Quiz from 35 to 37 questions.
-          </li>
-
-          <li>
-            Added accepted free-response
-            aliases for common spelling
-            variations.
-          </li>
-
-          <li>
-            Updated the homepage to organize
-            both quizzes under Unit 1.
-          </li>
-        </ul>
-
-      </article>
-
-
-
-      <!-- VERSION 1.0 -->
-
-      <article class="patch">
-
-        <div class="patch-top">
-
-          <div class="patch-title">
-            Initial Anatomical Regions Release
-          </div>
-
-          <div class="patch-version">
-            Version 1.0
-          </div>
-
-        </div>
-
-
-        <ul>
-          <li>
-            Launched the Anatomical Regions Quiz.
-          </li>
-
-          <li>
-            Added randomized multiple-choice
-            and free-response modes.
-          </li>
-
-          <li>
-            Included anterior and posterior
-            regional anatomy questions.
-          </li>
-
-          <li>
-            Added scoring, keyboard controls,
-            reshuffling, and responsive design.
-          </li>
-        </ul>
-
-      </article>
-
-    </div>
-
-  </section>
-
-</main>
-
-
-<footer>
-  RVHS Anatomy &amp; Physiology Study Tools
-</footer>
-
+    </section>
+  </main>
+
+  <footer>
+    RVHS Anatomy &amp; Physiology Study Tools
+  </footer>
 </body>
 </html>
