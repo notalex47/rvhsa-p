@@ -308,6 +308,9 @@
       font-weight: 760;
     }
 
+    .structure-blurb { margin: 12px 0 0; padding: 14px 16px; border-left: 4px solid var(--blue); border-radius: 10px; background: var(--blue-soft); color: var(--text); line-height: 1.6; }
+    .structure-blurb:empty { display: none; }
+
     .feedback:empty { min-height: 0; margin-top: 0; padding: 0; }
     .feedback.correct { background: var(--green-soft); color: var(--green); }
     .feedback.wrong { background: var(--red-soft); color: #a73535; }
@@ -413,6 +416,7 @@
           <button id="submitButton" class="rounded-button submit-button" type="submit">Submit ↵</button>
         </form>
         <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div id="structureBlurb" class="structure-blurb" aria-live="polite" aria-atomic="true"></div>
         <div class="nav-row">
           <button id="changeModeButton" class="rounded-button" type="button">Change Mode</button>
           <button id="nextButton" class="rounded-button next-button" type="button" disabled>Next Question ↵</button>
@@ -504,6 +508,15 @@
   }
 ];
 
+    const STRUCTURE_FUNCTIONS = {
+  "Corpus callosum": "A large bundle of nerve fibers that connects the left and right cerebral hemispheres, allowing them to share information and coordinate activity.",
+  "Cingulate gyrus": "Helps link emotion with attention, motivation, and behavior. It also contributes to processing pain and regulating emotional responses.",
+  "Thalamus": "Relays and processes most sensory information on its way to the cerebral cortex; smell is the main exception to this initial relay. It also supports attention, alertness, and motor circuits.",
+  "Hypothalamus": "Helps maintain internal balance by regulating body temperature, hunger, thirst, and daily rhythms. It also controls many hormonal responses through the pituitary gland.",
+  "Amygdala": "Helps evaluate the emotional significance of experiences, including threats, and supports emotional learning and memory.",
+  "Hippocampus": "Helps form and consolidate new memories of facts and events. It also supports spatial memory and navigation."
+};
+
     const els = {
       menu: document.getElementById("menuScreen"),
       quiz: document.getElementById("quizScreen"),
@@ -520,6 +533,7 @@
       freeAnswer: document.getElementById("freeAnswer"),
       submitButton: document.getElementById("submitButton"),
       feedback: document.getElementById("feedback"),
+      structureBlurb: document.getElementById("structureBlurb"),
       changeModeButton: document.getElementById("changeModeButton"),
       nextButton: document.getElementById("nextButton"),
       percentScore: document.getElementById("percentScore"),
@@ -654,6 +668,7 @@
       if (answered) return;
       answered = true;
       const q = currentQuestion();
+      els.structureBlurb.textContent = `${q.answer}: ${STRUCTURE_FUNCTIONS[q.answer]}`;
       if (isCorrect) {
         score += 1;
         setFeedback(`✓ Correct — ${q.answer}. Press Enter for the next question.`, "correct");
@@ -686,6 +701,7 @@
     }
 
     function clearFeedback() {
+      els.structureBlurb.textContent = "";
       els.feedback.textContent = "";
       els.feedback.className = "feedback";
     }
