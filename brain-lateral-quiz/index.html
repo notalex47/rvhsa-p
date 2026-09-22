@@ -308,6 +308,9 @@
       font-weight: 760;
     }
 
+    .structure-blurb { margin: 12px 0 0; padding: 14px 16px; border-left: 4px solid var(--blue); border-radius: 10px; background: var(--blue-soft); color: var(--text); line-height: 1.6; }
+    .structure-blurb:empty { display: none; }
+
     .feedback:empty { min-height: 0; margin-top: 0; padding: 0; }
     .feedback.correct { background: var(--green-soft); color: var(--green); }
     .feedback.wrong { background: var(--red-soft); color: #a73535; }
@@ -420,6 +423,7 @@
           <button id="submitButton" class="rounded-button submit-button" type="submit">Submit ↵</button>
         </form>
         <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div id="structureBlurb" class="structure-blurb" aria-live="polite" aria-atomic="true"></div>
         <div class="nav-row">
           <button id="changeModeButton" class="rounded-button" type="button">Change Mode</button>
           <button id="nextButton" class="rounded-button next-button" type="button" disabled>Next Question ↵</button>
@@ -492,6 +496,22 @@
       { answer: "Spinal cord", point: [970, 1248], group: "brainstem", category: "BRAINSTEM & OTHER", aliases: ["spinal"] }
     ];
 
+    const STRUCTURE_FUNCTIONS = {
+  "Precentral gyrus": "Contains the primary motor cortex, which sends signals that control voluntary movements, mainly on the opposite side of the body.",
+  "Precentral sulcus": "A groove just in front of the precentral gyrus. It marks the front boundary of this region of the motor cortex and serves as an anatomical landmark.",
+  "Central sulcus": "Separates the frontal and parietal lobes. It lies between the primary motor cortex in front and the primary somatosensory cortex behind.",
+  "Postcentral gyrus": "Contains the primary somatosensory cortex, which processes touch, pressure, pain, temperature, and body-position information, mainly from the opposite side of the body.",
+  "Lateral sulcus": "A deep groove that separates the temporal lobe below from the frontal and parietal lobes above. It is an anatomical landmark, with the insula lying deep inside it.",
+  "Frontal lobe": "Supports planning, decision-making, attention, impulse control, and voluntary movement. In most people, its left side also contains an important region for producing speech.",
+  "Parietal lobe": "Combines sensory information from the body and helps you judge spatial relationships, locate objects, and understand where your body is in space.",
+  "Occipital lobe": "Processes visual information, including features such as shape, color, and motion.",
+  "Temporal lobe": "Helps process sounds, recognize objects, and form memories. Regions in the dominant hemisphere, usually the left, also support understanding language.",
+  "Pons": "Relays signals between brain regions, including the cerebrum and cerebellum. It also helps regulate breathing, sleep, and arousal.",
+  "Medulla": "Helps regulate vital automatic functions, including breathing, heart rate, and blood pressure. It also coordinates reflexes such as swallowing, coughing, and vomiting.",
+  "Cerebellum": "Fine-tunes movement, balance, and posture. It helps with timing, coordination, and learning motor skills through practice.",
+  "Spinal cord": "Carries sensory signals to the brain and motor commands to the body. It also contains circuits that produce many reflexes without waiting for a conscious decision."
+};
+
     const els = {
       menu: document.getElementById("menuScreen"),
       quiz: document.getElementById("quizScreen"),
@@ -508,6 +528,7 @@
       freeAnswer: document.getElementById("freeAnswer"),
       submitButton: document.getElementById("submitButton"),
       feedback: document.getElementById("feedback"),
+      structureBlurb: document.getElementById("structureBlurb"),
       changeModeButton: document.getElementById("changeModeButton"),
       nextButton: document.getElementById("nextButton"),
       percentScore: document.getElementById("percentScore"),
@@ -642,6 +663,7 @@
       if (answered) return;
       answered = true;
       const q = currentQuestion();
+      els.structureBlurb.textContent = `${q.answer}: ${STRUCTURE_FUNCTIONS[q.answer]}`;
       if (isCorrect) {
         score += 1;
         setFeedback(`✓ Correct — ${q.answer}. Press Enter for the next question.`, "correct");
@@ -674,6 +696,7 @@
     }
 
     function clearFeedback() {
+      els.structureBlurb.textContent = "";
       els.feedback.textContent = "";
       els.feedback.className = "feedback";
     }
