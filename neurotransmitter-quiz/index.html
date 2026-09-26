@@ -1,0 +1,925 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173b67">
+  <title>Neurotransmitter Functions Quiz</title>
+
+  <style>
+    :root {
+      --bg: #eef4fa;
+      --surface: #ffffff;
+      --navy: #173b67;
+      --blue: #286da8;
+      --blue-dark: #174b78;
+      --blue-soft: #e8f2fb;
+      --text: #18344f;
+      --muted: #6d8192;
+      --border: #d4e2ed;
+      --green: #24744f;
+      --green-soft: #e6f6ed;
+      --red: #b83b3b;
+      --red-soft: #fdecec;
+      --shadow: 0 16px 40px rgba(23, 59, 103, 0.10);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-btn: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--bg); }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(40, 109, 168, 0.10), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family:
+        Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .hidden { display: none !important; }
+
+    .site-header {
+      background: linear-gradient(135deg, var(--navy), #245f96);
+      color: white;
+      padding: 20px 22px;
+      box-shadow: 0 4px 18px rgba(23, 59, 103, 0.16);
+    }
+
+    .header-inner {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .eyebrow {
+      margin: 0 0 3px;
+      color: #cfe5f7;
+      font-size: 0.76rem;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 4vw, 2.35rem);
+      line-height: 1.12;
+    }
+
+    .header-sub { margin: 5px 0 0; color: #e4eff8; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 0 0 auto;
+    }
+
+    .home-link {
+      color: white;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .home-link:hover { text-decoration: underline; }
+
+    .score-chip {
+      min-width: 60px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.13);
+      text-align: center;
+      font-weight: 850;
+    }
+
+    main {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      padding: 24px 18px 52px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    h2 { margin: 0; color: var(--navy); }
+    .muted { color: var(--muted); }
+
+    .menu-card {
+      padding: clamp(28px, 6vw, 54px);
+      text-align: center;
+    }
+
+    .menu-card > p {
+      max-width: 680px;
+      margin: 12px auto 0;
+    }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      max-width: 760px;
+      margin: 24px auto 0;
+    }
+
+    .mode-button {
+      min-height: 108px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+      background: #fbfdff;
+    }
+
+    .mode-button.mc { border-color: #bfd9ed; }
+    .mode-button.free { border-color: #c8d9e8; }
+    .mode-title { display: block; color: var(--navy); font-size: 1.08rem; }
+    .mode-desc { display: block; margin-top: 3px; color: var(--muted); font-size: 0.9rem; font-weight: 500; }
+
+    .term-preview {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      max-width: 820px;
+      margin: 24px auto;
+    }
+
+    .term-preview span {
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 0.82rem;
+      font-weight: 750;
+    }
+
+    .rounded-button {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-btn);
+      background: white;
+      padding: 13px 16px;
+      font-weight: 780;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+    }
+
+    .rounded-button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: #a9c7df;
+      box-shadow: 0 8px 18px rgba(23, 59, 103, 0.10);
+    }
+
+    .rounded-button:focus-visible, input:focus-visible {
+      outline: 4px solid rgba(40, 109, 168, 0.20);
+      outline-offset: 2px;
+    }
+
+    .rounded-button:disabled { cursor: default; opacity: 0.72; }
+    .rounded-button.key-pressed { transform: translateY(2px) scale(0.99); }
+
+    .features {
+      margin: 22px auto 0;
+      border-radius: 14px;
+      background: #f6f9fc;
+      padding: 13px 15px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .quiz-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+      color: var(--blue-dark);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.07em;
+    }
+
+    .progress-track {
+      height: 8px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dce8f2;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      background: var(--blue);
+      transition: width 180ms ease;
+    }
+
+    .quiz-card { padding: clamp(22px, 5vw, 42px); }
+
+    .question-heading {
+      max-width: 790px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .prompt-label {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--blue);
+      font-size: 0.76rem;
+      font-weight: 850;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .definition-card {
+      margin: 20px auto 0;
+      border: 1px solid #c7dceb;
+      border-radius: var(--radius-md);
+      background: linear-gradient(180deg, #fbfdff, #f2f8fd);
+      padding: clamp(22px, 5vw, 36px);
+      color: var(--navy);
+      font-size: clamp(1.08rem, 2.6vw, 1.38rem);
+      font-weight: 720;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .answer-button {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .key-badge {
+      display: inline-grid;
+      place-items: center;
+      min-width: 36px;
+      min-height: 32px;
+      padding: 4px 8px;
+      border-radius: 10px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .answer-button.correct {
+      background: var(--green-soft);
+      border-color: #55aa7e;
+      color: var(--green);
+    }
+
+    .answer-button.wrong {
+      background: var(--red-soft);
+      border-color: #e26a6a;
+      color: var(--red);
+    }
+
+    .free-row {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+    }
+
+    .free-row input {
+      min-width: 0;
+      min-height: 56px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-btn);
+      background: #f8fbfe;
+      color: var(--text);
+      padding: 10px 14px;
+    }
+
+    .submit-button {
+      min-width: 140px;
+      background: var(--blue-soft);
+      border-color: #bfd9ed;
+    }
+
+    .feedback {
+      min-height: 48px;
+      margin-top: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-align: center;
+      font-weight: 760;
+    }
+
+    .feedback:empty { min-height: 0; margin-top: 0; padding: 0; }
+    .feedback.correct { background: var(--green-soft); color: var(--green); }
+    .feedback.wrong { background: var(--red-soft); color: var(--red); }
+
+    .fact-box {
+      margin-top: 12px;
+      border-left: 4px solid var(--blue);
+      border-radius: 10px;
+      background: var(--blue-soft);
+      padding: 14px 16px;
+      line-height: 1.6;
+    }
+
+    .fact-box:empty { display: none; }
+
+    .nav-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .nav-row .rounded-button { min-width: 145px; }
+    .next-button { background: #edf3f8; }
+
+    .results-card {
+      padding: clamp(28px, 6vw, 52px);
+      text-align: center;
+    }
+
+    .score-big {
+      margin: 10px 0 0;
+      color: var(--blue);
+      font-size: clamp(3rem, 10vw, 5rem);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .results-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 650px;
+      margin: 24px auto 0;
+    }
+
+    .play-again { background: var(--blue-soft); border-color: #bfd9ed; }
+
+    .screen-reader-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    @media (max-width: 700px) {
+      .site-header { padding: 17px 16px; }
+      .header-inner { align-items: flex-start; }
+      .header-right { flex-direction: column; align-items: flex-end; }
+      main { padding: 14px; }
+      .mode-grid, .answers, .results-actions, .free-row { grid-template-columns: 1fr; }
+      .nav-row { flex-direction: column-reverse; }
+      .nav-row .rounded-button, .submit-button { width: 100%; }
+      .answer-button { min-height: 56px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <div>
+        <p class="eyebrow">UNIT 2 · NEUROTRANSMITTERS</p>
+        <h1>Neurotransmitter Functions Quiz</h1>
+        <p class="header-sub">Read the definition and choose the matching chemical messenger.</p>
+      </div>
+      <div class="header-right">
+        <a class="home-link" href="../">← Study Tools</a>
+        <div id="scoreChip" class="score-chip hidden">0</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="menuScreen" class="card menu-card">
+      <h2>Choose a game mode</h2>
+      <p class="muted">
+        The quiz includes 14 neurotransmitters and neuromodulators. Questions and answer choices
+        are reshuffled every time.
+      </p>
+
+      <div class="term-preview" aria-label="Terms included in the quiz">
+        <span>Glutamate</span>
+        <span>Dopamine</span>
+        <span>Endorphins</span>
+        <span>Epinephrine</span>
+        <span>GABA</span>
+        <span>Serotonin</span>
+        <span>Histamine</span>
+        <span>Norepinephrine</span>
+        <span>Oxytocin</span>
+        <span>Adenosine</span>
+        <span>Endocannabinoids</span>
+        <span>Substance P</span>
+        <span>Nitric oxide</span>
+        <span>Acetylcholine</span>
+      </div>
+
+      <div class="mode-grid">
+        <button id="mcModeButton" class="rounded-button mode-button mc" type="button">
+          <span class="key-badge" aria-hidden="true">1–4</span>
+          <span>
+            <span class="mode-title">Multiple Choice</span>
+            <span class="mode-desc">Choose the matching messenger from four answer choices.</span>
+          </span>
+        </button>
+        <button id="freeModeButton" class="rounded-button mode-button free" type="button">
+          <span class="key-badge" aria-hidden="true">TYPE</span>
+          <span>
+            <span class="mode-title">Free Response</span>
+            <span class="mode-desc">Type the neurotransmitter without seeing answer choices.</span>
+          </span>
+        </button>
+      </div>
+      <div class="features">14 randomized questions · four newly randomized choices each time · free response option · keyboard friendly</div>
+    </section>
+
+    <section id="quizScreen" class="hidden" aria-labelledby="questionTitle">
+      <div class="quiz-meta">
+        <span id="questionCount">QUESTION 1 OF 14</span>
+        <span>NEUROTRANSMITTER FUNCTIONS</span>
+      </div>
+      <div class="progress-track" aria-hidden="true">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+
+      <div class="card quiz-card">
+        <div class="question-heading">
+          <span class="prompt-label">Which neurotransmitter matches this definition?</span>
+          <h2 id="questionTitle">Choose the best answer.</h2>
+        </div>
+
+        <div id="definitionText" class="definition-card"></div>
+        <div id="mcAnswers" class="answers" aria-label="Answer choices"></div>
+        <form id="freeForm" class="free-row hidden" autocomplete="off">
+          <label class="screen-reader-only" for="freeAnswer">Your answer</label>
+          <input id="freeAnswer" type="text" inputmode="text" enterkeyhint="done" placeholder="Type the neurotransmitter" aria-describedby="feedback">
+          <button id="submitButton" class="rounded-button submit-button" type="submit">Submit ↵</button>
+        </form>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div id="factBox" class="fact-box" aria-live="polite" aria-atomic="true"></div>
+
+        <div class="nav-row">
+          <button id="backToMenuButton" class="rounded-button" type="button">Back to Menu</button>
+          <button id="nextButton" class="rounded-button next-button" type="button" disabled>
+            Next Question ↵
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultsScreen" class="card results-card hidden" aria-labelledby="resultsTitle">
+      <h2 id="resultsTitle">Quiz Complete</h2>
+      <div id="percentScore" class="score-big">0%</div>
+      <p id="rawScore" style="font-weight:800;font-size:1.2rem;margin-bottom:5px"></p>
+      <p id="resultMessage" class="muted"></p>
+      <div class="results-actions">
+        <button id="playAgainButton" class="rounded-button play-again" type="button">
+          Shuffle &amp; Play Again ↵
+        </button>
+        <button id="resultsMenuButton" class="rounded-button" type="button">Back to Menu</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const QUESTIONS = [
+        {
+          answer: "Glutamate",
+          aliases: ["glutamic acid"],
+          definition: "The brain’s main excitatory neurotransmitter. It increases the likelihood that neurons will fire and is essential for learning, memory, and synaptic plasticity.",
+          note: "Too much glutamate activity can overstimulate and damage neurons, a process called excitotoxicity."
+        },
+        {
+          answer: "Dopamine",
+          aliases: [],
+          definition: "Helps regulate movement, motivation, reward-based learning, attention, and reinforcement.",
+          note: "Loss of dopamine-producing neurons is a major feature of Parkinson’s disease."
+        },
+        {
+          answer: "Endorphins",
+          aliases: ["endorphin"],
+          definition: "A group of the body’s natural opioid peptides that reduce pain and can contribute to pleasure or euphoria during stress and exercise.",
+          note: "The name combines “endogenous,” meaning made within the body, with “morphine.”"
+        },
+        {
+          answer: "Epinephrine",
+          aliases: ["adrenaline", "adrenalin"],
+          definition: "Also called adrenaline, this chemical messenger acts mainly as a hormone that strengthens the fight-or-flight response by increasing heart rate and energy availability.",
+          note: "Epinephrine is released mainly by the adrenal medulla and has a smaller neurotransmitter role in the brain."
+        },
+        {
+          answer: "GABA",
+          aliases: ["gamma aminobutyric acid", "gamma-aminobutyric acid"],
+          definition: "The brain’s main inhibitory neurotransmitter. It makes neurons less likely to fire and helps regulate anxiety, sleep, and muscle tone.",
+          note: "GABA is short for gamma-aminobutyric acid."
+        },
+        {
+          answer: "Serotonin",
+          aliases: ["5 ht", "5-ht"],
+          definition: "A neurotransmitter involved in mood regulation, sleep, appetite, digestion, and pain processing.",
+          note: "Most serotonin in the body is found in the gastrointestinal system, although brain serotonin has major signaling roles."
+        },
+        {
+          answer: "Histamine",
+          aliases: [],
+          definition: "Promotes wakefulness and attention in the brain and helps regulate appetite; elsewhere in the body it also participates in immune reactions and stomach-acid release.",
+          note: "Some antihistamines cause drowsiness because they block histamine signaling in the brain."
+        },
+        {
+          answer: "Norepinephrine",
+          aliases: ["noradrenaline", "noradrenalin"],
+          definition: "Also called noradrenaline, it increases alertness, attention, arousal, and readiness to respond during stress.",
+          note: "It functions as both a neurotransmitter and a hormone and is important in the sympathetic nervous system."
+        },
+        {
+          answer: "Oxytocin",
+          aliases: [],
+          definition: "A peptide messenger that stimulates uterine contractions and milk letdown and also contributes to social bonding and attachment.",
+          note: "Oxytocin is produced in the hypothalamus and released into the bloodstream by the posterior pituitary."
+        },
+        {
+          answer: "Adenosine",
+          aliases: [],
+          definition: "An inhibitory neuromodulator that builds up during waking hours, reduces neural activity, and increases the pressure to sleep.",
+          note: "Caffeine promotes alertness mainly by blocking adenosine receptors."
+        },
+        {
+          answer: "Endocannabinoids",
+          aliases: ["endocannabinoid"],
+          definition: "Fat-derived messengers made on demand that often travel backward across a synapse to reduce transmitter release and help regulate appetite, pain, mood, memory, and stress.",
+          note: "They activate cannabinoid receptors, including the same receptor system affected by THC."
+        },
+        {
+          answer: "Substance P",
+          aliases: [],
+          definition: "A neuropeptide that helps transmit pain signals and can promote inflammation.",
+          note: "It is released by certain sensory neurons when tissue is damaged or strongly stimulated."
+        },
+        {
+          answer: "Nitric oxide",
+          aliases: ["NO"],
+          definition: "A gaseous messenger made on demand that diffuses directly across cell membranes and participates in blood-vessel relaxation and synaptic plasticity.",
+          note: "Unlike neurotransmitters stored in vesicles, nitric oxide is synthesized when needed and quickly diffuses away."
+        },
+        {
+          answer: "Acetylcholine",
+          aliases: ["ACh"],
+          definition: "Triggers skeletal-muscle contraction at the neuromuscular junction and also supports attention, learning, memory, and autonomic nervous-system signaling.",
+          note: "It is used by every motor neuron that activates a skeletal muscle."
+        }
+      ];
+
+      const els = {
+        menu: document.getElementById("menuScreen"),
+        quiz: document.getElementById("quizScreen"),
+        results: document.getElementById("resultsScreen"),
+        scoreChip: document.getElementById("scoreChip"),
+        mcModeButton: document.getElementById("mcModeButton"),
+        freeModeButton: document.getElementById("freeModeButton"),
+        questionCount: document.getElementById("questionCount"),
+        progressFill: document.getElementById("progressFill"),
+        definitionText: document.getElementById("definitionText"),
+        mcAnswers: document.getElementById("mcAnswers"),
+        freeForm: document.getElementById("freeForm"),
+        freeAnswer: document.getElementById("freeAnswer"),
+        submitButton: document.getElementById("submitButton"),
+        feedback: document.getElementById("feedback"),
+        factBox: document.getElementById("factBox"),
+        backToMenuButton: document.getElementById("backToMenuButton"),
+        nextButton: document.getElementById("nextButton"),
+        percentScore: document.getElementById("percentScore"),
+        rawScore: document.getElementById("rawScore"),
+        resultMessage: document.getElementById("resultMessage"),
+        playAgainButton: document.getElementById("playAgainButton"),
+        resultsMenuButton: document.getElementById("resultsMenuButton")
+      };
+
+      let mode = null;
+      let deck = [];
+      let index = 0;
+      let score = 0;
+      let answered = false;
+      let selectedChoice = null;
+      const keysDown = new Set();
+
+      function shuffle(array) {
+        const copy = [...array];
+        for (let i = copy.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [copy[i], copy[j]] = [copy[j], copy[i]];
+        }
+        return copy;
+      }
+
+      function normalizeAnswer(text) {
+        return text
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, " ")
+          .trim()
+          .replace(/\s+/g, " ");
+      }
+
+      function currentQuestion() { return deck[index]; }
+
+      function showOnly(screen) {
+        els.menu.classList.toggle("hidden", screen !== "menu");
+        els.quiz.classList.toggle("hidden", screen !== "quiz");
+        els.results.classList.toggle("hidden", screen !== "results");
+        els.scoreChip.classList.toggle("hidden", screen !== "quiz");
+        window.scrollTo({ top: 0, behavior: "auto" });
+      }
+
+      function startQuiz(nextMode = mode) {
+        mode = nextMode || "mc";
+        deck = shuffle(QUESTIONS.map(question => ({ ...question })));
+        index = 0;
+        score = 0;
+        answered = false;
+        selectedChoice = null;
+        keysDown.clear();
+        showOnly("quiz");
+        renderQuestion();
+      }
+
+      function renderQuestion() {
+        if (index >= deck.length) {
+          showResults();
+          return;
+        }
+
+        answered = false;
+        selectedChoice = null;
+        const question = currentQuestion();
+        els.questionCount.textContent = `QUESTION ${index + 1} OF ${deck.length}`;
+        els.progressFill.style.width = `${((index + 1) / deck.length) * 100}%`;
+        els.scoreChip.textContent = index ? `${score}/${index}` : "0";
+        els.definitionText.textContent = question.definition;
+        els.feedback.textContent = "";
+        els.feedback.className = "feedback";
+        els.factBox.textContent = "";
+        els.nextButton.disabled = true;
+        els.nextButton.classList.remove("key-pressed");
+        if (mode === "mc") {
+          els.mcAnswers.classList.remove("hidden");
+          els.freeForm.classList.add("hidden");
+          buildChoices(question);
+        } else {
+          els.mcAnswers.classList.add("hidden");
+          els.mcAnswers.replaceChildren();
+          els.freeForm.classList.remove("hidden");
+          els.freeAnswer.disabled = false;
+          els.freeAnswer.value = "";
+          els.submitButton.disabled = false;
+          requestAnimationFrame(() => els.freeAnswer.focus());
+        }
+      }
+
+      function buildChoices(question) {
+        // Select three new distractors from all other terms for every question.
+        const distractors = shuffle(
+          QUESTIONS
+            .map(item => item.answer)
+            .filter(answer => answer !== question.answer)
+        ).slice(0, 3);
+
+        // Shuffle the correct answer together with the three random distractors.
+        const choices = shuffle([question.answer, ...distractors]);
+
+        els.mcAnswers.replaceChildren();
+        choices.forEach((choice, choiceIndex) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "rounded-button answer-button";
+          button.dataset.choice = choice;
+
+          const badge = document.createElement("span");
+          badge.className = "key-badge";
+          badge.setAttribute("aria-hidden", "true");
+          badge.textContent = String(choiceIndex + 1);
+
+          const label = document.createElement("span");
+          label.textContent = choice;
+
+          button.append(badge, label);
+          button.addEventListener("click", () => submitChoice(choice));
+          els.mcAnswers.append(button);
+        });
+      }
+
+      function answerButtons() {
+        return [...els.mcAnswers.querySelectorAll(".answer-button")];
+      }
+
+      function submitChoice(choice) {
+        if (answered || mode !== "mc") return;
+        selectedChoice = choice;
+        evaluate(choice === currentQuestion().answer);
+      }
+
+      function submitFreeResponse() {
+        if (answered || mode !== "free") return;
+        const typed = els.freeAnswer.value;
+        if (!typed.trim()) {
+          setFeedback("Type an answer before submitting.", "wrong");
+          els.freeAnswer.focus();
+          return;
+        }
+
+        const question = currentQuestion();
+        const accepted = new Set([
+          normalizeAnswer(question.answer),
+          ...(question.aliases || []).map(normalizeAnswer)
+        ]);
+        evaluate(accepted.has(normalizeAnswer(typed)));
+      }
+
+      function evaluate(isCorrect) {
+        if (answered) return;
+        answered = true;
+        const question = currentQuestion();
+
+        if (isCorrect) {
+          score += 1;
+          setFeedback(`✓ Correct — ${question.answer}. Press Enter for the next question.`, "correct");
+        } else {
+          setFeedback(`✕ The correct answer is ${question.answer}. Press Enter to continue.`, "wrong");
+        }
+
+        els.factBox.textContent = question.note;
+        if (mode === "mc") {
+          answerButtons().forEach(button => {
+            const buttonChoice = button.dataset.choice;
+            if (buttonChoice === question.answer) button.classList.add("correct");
+            else if (!isCorrect && buttonChoice === selectedChoice) button.classList.add("wrong");
+            button.disabled = true;
+            button.classList.remove("key-pressed");
+          });
+        } else {
+          els.freeAnswer.disabled = true;
+          els.submitButton.disabled = true;
+          els.submitButton.classList.remove("key-pressed");
+        }
+
+        els.nextButton.disabled = false;
+        els.scoreChip.textContent = `${score}/${index + 1}`;
+        els.nextButton.focus({ preventScroll: true });
+      }
+
+      function setFeedback(message, kind) {
+        els.feedback.textContent = message;
+        els.feedback.className = `feedback ${kind}`;
+      }
+
+      function nextQuestion() {
+        if (!answered) return;
+        index += 1;
+        renderQuestion();
+      }
+
+      function showMenu() {
+        mode = null;
+        keysDown.clear();
+        showOnly("menu");
+        els.mcModeButton.focus({ preventScroll: true });
+      }
+
+      function showResults() {
+        showOnly("results");
+        const percent = deck.length ? Math.round((score / deck.length) * 100) : 0;
+        els.percentScore.textContent = `${percent}%`;
+        els.rawScore.textContent = `${score} of ${deck.length} correct`;
+        els.resultMessage.textContent = percent >= 90
+          ? "Excellent command of neurotransmitter functions."
+          : percent >= 70
+            ? "Strong run — review the definitions you missed and try another shuffle."
+            : "Keep practicing the chemical messengers and their primary functions.";
+        els.playAgainButton.focus({ preventScroll: true });
+      }
+
+      function pressElement(element) {
+        if (element && !element.disabled) element.classList.add("key-pressed");
+      }
+
+      function releaseElement(element) {
+        if (element) element.classList.remove("key-pressed");
+      }
+
+      document.addEventListener("keydown", event => {
+        const key = event.key;
+        if (keysDown.has(key)) return;
+        const onQuiz = !els.quiz.classList.contains("hidden");
+        const onResults = !els.results.classList.contains("hidden");
+
+        if (onQuiz && mode === "mc" && !answered && /^[1-4]$/.test(key)) {
+          keysDown.add(key);
+          pressElement(answerButtons()[Number(key) - 1]);
+          event.preventDefault();
+          return;
+        }
+
+        if (onQuiz && mode === "free" && !answered && key === "Enter") {
+          keysDown.add(key);
+          pressElement(els.submitButton);
+          event.preventDefault();
+          return;
+        }
+
+        if (onQuiz && answered && key === "Enter") {
+          keysDown.add(key);
+          pressElement(els.nextButton);
+          event.preventDefault();
+          return;
+        }
+
+        if (onResults && key === "Enter") {
+          keysDown.add(key);
+          pressElement(els.playAgainButton);
+          event.preventDefault();
+        }
+      });
+
+      document.addEventListener("keyup", event => {
+        const key = event.key;
+        const onQuiz = !els.quiz.classList.contains("hidden");
+        const onResults = !els.results.classList.contains("hidden");
+
+        if (onQuiz && mode === "mc" && /^[1-4]$/.test(key)) {
+          const button = answerButtons()[Number(key) - 1];
+          releaseElement(button);
+          if (!answered && button) button.click();
+        } else if (onQuiz && mode === "free" && !answered && key === "Enter") {
+          releaseElement(els.submitButton);
+          submitFreeResponse();
+        } else if (onQuiz && key === "Enter") {
+          releaseElement(els.nextButton);
+          if (answered) nextQuestion();
+        } else if (onResults && key === "Enter") {
+          releaseElement(els.playAgainButton);
+          startQuiz();
+        }
+
+        keysDown.delete(key);
+      });
+
+      window.addEventListener("blur", () => {
+        keysDown.clear();
+        document.querySelectorAll(".key-pressed").forEach(element => element.classList.remove("key-pressed"));
+      });
+
+      els.mcModeButton.addEventListener("click", () => startQuiz("mc"));
+      els.freeModeButton.addEventListener("click", () => startQuiz("free"));
+      els.freeForm.addEventListener("submit", event => {
+        event.preventDefault();
+        submitFreeResponse();
+      });
+      els.nextButton.addEventListener("click", nextQuestion);
+      els.backToMenuButton.addEventListener("click", showMenu);
+      els.playAgainButton.addEventListener("click", () => startQuiz());
+      els.resultsMenuButton.addEventListener("click", showMenu);
+    })();
+  </script>
+</body>
+</html>
