@@ -66,13 +66,28 @@ export function buildAnatomy(meshes) {
  // The source lacks a separate coccyx and symphyseal cartilage. These two
  // original supplements occupy their anatomical positions; they are not scan meshes.
  const symphysis=new THREE.Mesh(new THREE.SphereGeometry(1,24,16));symphysis.scale.set(0.005,0.019,0.007);symphysis.position.set(0,0.802,0.130);symphysis.material=boneMaterial;group.add(symphysis);add('symphysis',[symphysis]);
+ // Anchor to the actual inferior midline of the sacral mesh. The old fixed
+ // anterior coordinate was ~65 mm away from its tip, leaving a visible gap.
+ const sacralPosition=map.get('FJ3393').geometry.attributes.position;
+ const sacralMinY=map.get('FJ3393').geometry.boundingBox.min.y;
+ const apex=new THREE.Vector3();let apexSamples=0;
+ for(let i=0;i<sacralPosition.count;i++){
+  if(sacralPosition.getY(i)<=sacralMinY+0.006&&Math.abs(sacralPosition.getX(i))<0.016){
+   apex.add(new THREE.Vector3(sacralPosition.getX(i),sacralPosition.getY(i),sacralPosition.getZ(i)));apexSamples++;
+  }
+ }
+ if(!apexSamples)throw Error('The sacral apex could not be located.');
+ apex.divideScalar(apexSamples);apex.y=sacralMinY+0.004;
  const coccyxPositions=[],coccyxIndices=[],rings=33,sides=20;
- for(let i=0;i<rings;i++){const t=i/(rings-1),lobes=1+0.10*Math.sin(t*Math.PI*8);const rx=(0.0105*(1-t)+0.002*t)*lobes,rz=(0.007*(1-t)+0.0018*t)*lobes;
-  for(let j=0;j<sides;j++){const angle=j/sides*Math.PI*2;coccyxPositions.push(rx*Math.cos(angle),0.784-0.056*t,0.079+0.021*t*t+rz*Math.sin(angle));}
+ for(let i=0;i<rings;i++){const t=i/(rings-1),lobes=1+0.08*Math.sin(t*Math.PI*8);const rx=(0.0055*(1-t)+0.0012*t)*lobes,rz=(0.0045*(1-t)+0.0011*t)*lobes;
+  for(let j=0;j<sides;j++){const angle=j/sides*Math.PI*2;coccyxPositions.push(apex.x+rx*Math.cos(angle),apex.y-0.052*t,apex.z+0.020*t*t+rz*Math.sin(angle));}
  }
  for(let i=0;i<rings-1;i++)for(let j=0;j<sides;j++){const a=i*sides+j,b=i*sides+(j+1)%sides,c=(i+1)*sides+j,d=(i+1)*sides+(j+1)%sides;coccyxIndices.push(a,b,c,b,d,c);}
+ const topCenter=coccyxPositions.length/3;coccyxPositions.push(apex.x,apex.y,apex.z);
+ const bottomCenter=coccyxPositions.length/3;coccyxPositions.push(apex.x,apex.y-0.052,apex.z+0.020);
+ for(let j=0;j<sides;j++){coccyxIndices.push(topCenter,(j+1)%sides,j);const a=(rings-1)*sides+j,b=(rings-1)*sides+(j+1)%sides;coccyxIndices.push(bottomCenter,a,b);}
  const coccyxGeometry=new THREE.BufferGeometry();coccyxGeometry.setAttribute('position',new THREE.Float32BufferAttribute(coccyxPositions,3));coccyxGeometry.setIndex(coccyxIndices);coccyxGeometry.computeVertexNormals();
- const coccyxMesh=new THREE.Mesh(coccyxGeometry,boneMaterial);group.add(coccyxMesh);add('coccyx',[coccyxMesh]);
+ const coccyxMesh=new THREE.Mesh(coccyxGeometry,boneMaterial);coccyxMesh.userData.sacralAnchor=apex.toArray();coccyxMesh.userData.baseRingCount=sides;group.add(coccyxMesh);add('coccyx',[coccyxMesh]);
  add('femur',pair('FJ3259','FJ3365'),[],ids('FJ3259'));
  add('femoralCondyle',[],pair('FJ3259','FJ3365').map(m=>crop(m,(x,y,z)=>y<0.405&&z<0.094)));
  add('patella',pair('FJ3275','FJ3381'),[],ids('FJ3275'));
@@ -124,13 +139,14 @@ export class Viewer {
   this.controls.target.copy(center);this.camera.position.copy(center).addScaledVector(dir,distance);this.camera.up.set(0,1,0);this.camera.lookAt(center);this.controls.update();
  }
  highlight(id,view='front',autoFocus=true){
-  this.current=id;this.view=view;
+  this.current=id;this.view=view;this.defaultView=view;
   for(const t of this.anatomy.targets.values()){t.bones.forEach(m=>m.material=this.anatomy.boneMaterial);t.overlays.forEach(m=>m.visible=false);}
   const t=this.anatomy.targets.get(id);if(!t)throw Error('Unknown target '+id);
   t.bones.forEach(m=>m.material=this.anatomy.highlightMaterial);t.overlays.forEach(m=>m.visible=true);
   this.focused=autoFocus;this.frame(autoFocus?t.box:this.anatomy.allBox,view);
  }
  focus(){this.focused=true;this.frame(this.anatomy.targets.get(this.current).box,this.view);}
+ reset(){this.setGhost(false);this.focused=Boolean(this.current);this.frame(this.current?this.anatomy.targets.get(this.current).box:this.anatomy.allBox,this.current?(this.defaultView||'front'):'front');}
  whole(){this.focused=false;this.frame(this.anatomy.allBox,this.view);}
  setView(view){this.frame(this.focused&&this.current?this.anatomy.targets.get(this.current).box:this.anatomy.allBox,view);}
  setGhost(on){this.ghost=on;const m=this.anatomy.boneMaterial;m.transparent=on;m.opacity=on?0.19:1;m.depthWrite=!on;m.needsUpdate=true;}

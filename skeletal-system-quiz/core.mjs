@@ -45,6 +45,30 @@ export const QUESTIONS = [
  q('femoralCondyle','Femoral condyle','Legs & feet','The medial and lateral femoral condyles are rounded surfaces at the lower end of the femur. They articulate with the tibia at the knee.',['femoral condyles','condyle of femur','condyles of femur','medial femoral condyle','lateral femoral condyle'],'back')
 ];
 export const REGIONS = [...new Set(QUESTIONS.map(x=>x.region))];
+export const RELEASE_VERSION = '1.3.1';
+// Alternative names are scoped to the highlighted structure, not fuzzy-matched:
+// for example, "hip bone" is not accepted for just the ilium.
+const EXTRA_ALIASES = {
+ frontal:['forehead bone'],orbit:['bony orbit','bony eye socket'],
+ cervical:['cervical bones','neck vertebra','neck vertebrae','cervical vertebrae c1 c7'],
+ thoracic:['thoracic bones','thoracic vertebrae t1 t12'],lumbar:['lumbar bones','lumbar vertebrae l1 l5'],
+ trueRibs:['true ribs 1 7'],falseRibs:['false ribs 8 12'],floatingRibs:['floating ribs 11 12'],
+ coccyx:['tail bone','coccygeal vertebrae'],pubis:['pubic bone','pubic bones'],
+ symphysis:['pubic symphysis joint'],
+ tarsals:['tarsal bone'],metatarsals:['metatarsal bone'],
+ toePhalanges:['toe phalanx','phalanges toes','phalanges of toes','phalanges of the feet','toe phalanges'],
+ handPhalanges:['finger phalanx','hand phalanx','phalanges hands','phalanges fingers','phalanges of hands','phalanges of fingers'],
+ metacarpals:['metacarpal bone','palm bones'],
+ tibia:['shin','shin bones'],patella:['kneecaps','knee caps'],femur:['thigh bones'],calcaneus:['heel bones'],
+ clavicle:['collarbones','collar bones'],scapula:['shoulder blades','shoulderblade','shoulderblades'],
+ mandible:['lower jaw bone','lower jawbone'],
+ nasalAperture:['anterior nasal cavity opening','nasal opening','piriform opening','pyriform opening'],
+ parietal:['parietals'],axis:['axis vertebra','c2 vertebra','c2 bone','second neck vertebra'],
+ atlas:['atlas vertebra','c1 vertebra','c1 bone','first neck vertebra'],
+ femoralCondyle:['femur condyle','femur condyles','femoral condylar surfaces']
+};
+for(const question of QUESTIONS)question.aliases=[...new Set([...question.aliases,...(EXTRA_ALIASES[question.id]||[])])];
+const PAIRED = new Set(['orbit','costal','trueRibs','falseRibs','floatingRibs','ilium','ischium','pubis','tarsals','metatarsals','toePhalanges','talus','fibula','tibia','patella','femur','handPhalanges','metacarpals','ulna','radius','humerus','clavicle','parietal','acromion','calcaneus','scapula','femoralCondyle']);
 export function shuffle(input, random = Math.random) {
  const a=[...input]; for(let i=a.length-1;i>0;i--){const j=Math.floor(random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a;
 }
@@ -53,10 +77,12 @@ export function makeChoices(question, random=Math.random) {
  return shuffle([question,...others],random);
 }
 export function normalize(text) {
- return String(text).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ');
+ return String(text).normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().replace(/\s+/g,' ').replace(/^(the|a|an) /,'');
 }
 export function isCorrect(question,text) {
- return [question.answer,...question.aliases].some(a=>normalize(a)===normalize(text));
+ let input=normalize(text);
+ if(PAIRED.has(question.id))input=input.replace(/^(left|right) /,'');
+ return [question.answer,...question.aliases].some(a=>normalize(a)===input);
 }
 export class Quiz {
  constructor(mode,questions=QUESTIONS){this.mode=mode;this.deck=shuffle(questions);this.index=0;this.records=[];this.answered=false;}
@@ -65,4 +91,34 @@ export class Quiz {
  get missed(){return this.records.filter(r=>!r.correct).map(r=>r.question);}
  answer(text,skip=false){if(this.answered||!this.current)return null;this.answered=true;const r={question:this.current,provided:text,correct:!skip&&isCorrect(this.current,text),skipped:skip};this.records.push(r);return r;}
  next(){if(!this.answered)return false;this.index++;this.answered=false;return this.index<this.deck.length;}
+}
+
+export function serializeSession(quiz,choices=[]) {
+ return {
+  schema:1,mode:quiz.mode,deck:quiz.deck.map(q=>q.id),index:quiz.index,
+  answered:quiz.answered,
+  records:quiz.records.map(r=>({id:r.question.id,provided:r.provided,skipped:r.skipped})),
+  choices:choices.map(q=>q.id)
+ };
+}
+
+// Restore the exact deck and existing choices. Do not call shuffle/makeChoices
+// here: refreshing a page must not change an unanswered question's choices.
+export function restoreSession(data) {
+ try {
+  if(!data||data.schema!==1||!['mc','free'].includes(data.mode))return null;
+  const byId=new Map(QUESTIONS.map(q=>[q.id,q]));
+  if(!Array.isArray(data.deck)||!data.deck.length||data.deck.length>QUESTIONS.length||new Set(data.deck).size!==data.deck.length||data.deck.some(id=>!byId.has(id)))return null;
+  if(!Number.isInteger(data.index)||data.index<0||data.index>=data.deck.length||typeof data.answered!=='boolean')return null;
+  if(!Array.isArray(data.records)||data.records.length!==data.index+(data.answered?1:0))return null;
+  const quiz=Object.create(Quiz.prototype);quiz.mode=data.mode;quiz.deck=data.deck.map(id=>byId.get(id));quiz.index=data.index;quiz.answered=data.answered;
+  quiz.records=data.records.map((r,i)=>{
+   if(r.id!==quiz.deck[i].id||typeof r.provided!=='string'||r.provided.length>100||typeof r.skipped!=='boolean')throw Error('Invalid saved answer');
+   return {question:quiz.deck[i],provided:r.provided,skipped:r.skipped,correct:!r.skipped&&isCorrect(quiz.deck[i],r.provided)};
+  });
+  if(!Array.isArray(data.choices))return null;
+  if(data.mode==='mc'&&(data.choices.length!==4||new Set(data.choices).size!==4||!data.choices.includes(quiz.current.id)||data.choices.some(id=>!byId.has(id))))return null;
+  if(data.mode==='free'&&data.choices.length)return null;
+  return {quiz,choices:data.choices.map(id=>byId.get(id))};
+ } catch {return null;}
 }
