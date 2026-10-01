@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#173b67">
+ <title>Skeletal System 3D Quiz · RVHS Anatomy &amp; Physiology</title>
+ <link rel="stylesheet" href="style.css">
+</head>
+<body>
+ <header class="site-header"><div class="header-inner"><a class="brand" href="../">RVHS Anatomy &amp; Physiology</a><a class="back-link" href="../#unit-3">← All quizzes</a></div></header>
+ <main>
+  <div class="page-heading"><div><span class="eyebrow">Unit 3 · Skeletal system</span><h1>Skeletal System <span>3D Quiz</span></h1><p>Turn the skeleton. Find the structure. Make it stick.</p></div><div id="scoreChip" class="score-chip" hidden>0 correct</div></div>
+  <div class="layout">
+   <section class="model-card" aria-label="Skeleton viewer">
+    <div class="viewer-heading"><span><i class="target-dot"></i> <span id="targetHint">Explore the model</span></span><span class="viewer-tag">3D • Rotate &amp; zoom</span></div>
+    <div id="viewer" class="viewer" tabindex="0" aria-label="Skeleton viewer. Arrow keys rotate, plus and minus zoom."><div id="loadMessage" class="load-message" role="status">Loading your skeleton…</div><span class="orientation" id="orientation">Front view</span></div>
+    <div class="viewer-controls" aria-label="Model controls">
+     <div class="control-row"><button type="button" data-view="front" disabled>Front</button><button type="button" data-view="back" disabled>Back</button><button type="button" data-view="side" disabled>Left side</button><button type="button" data-view="otherSide" disabled>Right side</button></div>
+     <div class="control-row"><button id="focusButton" type="button" disabled>Focus target</button><button id="wholeButton" type="button" disabled>Whole skeleton</button><button id="rotateLeft" type="button" aria-label="Rotate left" disabled>↶</button><button id="rotateRight" type="button" aria-label="Rotate right" disabled>↷</button><button id="zoomIn" type="button" aria-label="Zoom in" disabled>+</button><button id="zoomOut" type="button" aria-label="Zoom out" disabled>−</button></div>
+     <div class="check-row"><label><input id="ghostToggle" type="checkbox" disabled> X-ray view</label><label><input id="autoFocus" type="checkbox" checked> Auto-focus questions</label></div>
+     <p class="viewer-help">Drag to rotate · scroll or pinch to zoom · right-drag / two-finger drag to pan</p>
+    </div>
+   </section>
+   <div class="quiz-panel">
+    <section id="menuScreen" class="panel" aria-labelledby="modeHeading">
+     <span class="eyebrow">Your next practice session</span><h2 id="modeHeading">Choose a quiz mode</h2>
+     <p>Identify the orange structure on the rotatable skeleton. After every answer, learn where it is or what it does.</p>
+     <label class="select-label" for="regionSelect">Structures to practice</label><select id="regionSelect"><option value="all">All 42 structures</option></select>
+     <div class="mode-grid"><button id="mcModeButton" type="button" class="mode-button" disabled><span class="mode-icon">A B C D</span><strong>Multiple Choice</strong><span>Choose from four shuffled answers.</span><b>Start multiple choice →</b></button><button id="freeModeButton" type="button" class="mode-button free-mode" disabled><span class="mode-icon">Aa</span><strong>Free Response</strong><span>Type the name without answer choices.</span><b>Start free response →</b></button></div>
+     <div class="features">42 unique structures · randomized questions · new choices each round · explanations after every answer</div>
+     <p class="small-note">An opening, cartilage, or bony landmark may be highlighted instead of an entire bone. Paired bones can both be orange; close-ups may show one side.</p>
+    </section>
+    <section id="quizScreen" class="panel" aria-labelledby="questionTitle" hidden>
+     <div class="progress-meta"><span id="questionCount">Question 1</span><span id="modeLabel">Multiple choice</span></div><progress id="progressBar" value="0" max="42" aria-label="Quiz progress"></progress>
+     <span class="eyebrow question-eyebrow">Identify the orange structure</span><h2 id="questionTitle">What is highlighted?</h2><p class="question-help">Rotate or zoom the model as much as you need.</p>
+     <div id="choices" class="answers"></div>
+     <form id="freeForm" hidden><label for="freeAnswer">Structure name</label><div class="free-row"><input id="freeAnswer" type="text" autocomplete="off" spellcheck="false" maxlength="100" placeholder="Type your answer" aria-describedby="inputHelp feedback"><button type="submit" id="submitButton" class="primary">Check answer</button></div><p id="inputHelp" class="small-note">Capitalization and punctuation do not matter. Common anatomical names are accepted.</p></form>
+     <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div>
+     <div id="factBox" class="fact-box" hidden><span class="fact-label">Anatomy note</span><h3 id="factTitle"></h3><p id="factText"></p><p id="landmarkNote" class="landmark-note" hidden></p></div>
+     <div class="question-actions"><button id="skipButton" type="button" class="secondary">I don’t know</button><button id="nextButton" type="button" class="primary" disabled>Next question →</button></div>
+     <button id="changeMode" type="button" class="text-button">Change mode / restart</button><p class="keyboard-hint">Keys: 1–4 select an answer · Enter continues after feedback.</p>
+    </section>
+    <section id="resultsScreen" class="panel" aria-labelledby="resultsHeading" hidden>
+     <span class="eyebrow">Practice complete</span><h2 id="resultsHeading">Your results</h2><div id="percentScore" class="score-big">0%</div><p id="rawScore"></p><p id="resultSummary"></p>
+     <div class="result-actions"><button id="retryButton" class="primary" type="button">Try another shuffle</button><button id="missedButton" class="secondary" type="button">Practice missed structures</button><button id="menuButton" class="secondary" type="button">Choose a mode</button></div>
+     <h3 id="reviewHeading">Review</h3><div id="reviewList" class="review-list"></div>
+    </section>
+   </div>
+  </div>
+  <details class="about"><summary>About the model &amp; anatomy references</summary><p>Bone surfaces come from BodyParts3D 4.0. Colored surface regions identify the ilium, ischium, pubis, acromion, transverse processes, and femoral condyles. Orange perimeter markers identify the eye sockets and anterior nasal aperture. The coccyx and pubic symphysis are simplified original supplements. These region boundaries and supplements are teaching approximations. False ribs include pairs 8–12; floating ribs (11–12) form a subset.</p><p><a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/" target="_blank" rel="noopener">BodyParts3D</a>, (c) The Database Center for Life Science, licensed under <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank" rel="noopener">CC Attribution-Share Alike 2.1 Japan</a>. Adapted geometry is distributed under the same license. Rendering: <a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a> (MIT).</p><p>Anatomy references: OpenStax Anatomy and Physiology 2e — <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/7-2-the-skull" target="_blank" rel="noopener">skull</a>, <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/7-3-the-vertebral-column" target="_blank" rel="noopener">vertebral column</a>, <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/7-4-the-thoracic-cage" target="_blank" rel="noopener">thoracic cage</a>, <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/8-1-the-pectoral-girdle" target="_blank" rel="noopener">shoulder girdle</a>, <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/8-2-bones-of-the-upper-limb" target="_blank" rel="noopener">upper limb</a>, <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/8-3-the-pelvic-girdle-and-pelvis" target="_blank" rel="noopener">pelvis</a>, and <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/8-4-bones-of-the-lower-limb" target="_blank" rel="noopener">lower limb</a>.</p></details>
+ </main><footer>RVHS Anatomy &amp; Physiology Study Tools</footer>
+ <noscript><p class="noscript">Enable JavaScript to use the 3D quiz.</p></noscript>
+ <script type="module" src="app.mjs"></script>
+</body>
+</html>

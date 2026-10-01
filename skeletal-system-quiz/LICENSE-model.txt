@@ -1,0 +1,32 @@
+BodyParts3D geometry attribution
+
+BodyParts3D, (c) The Database Center for Life Science licensed under
+CC Attribution-Share Alike 2.1 Japan.
+
+Original project:
+https://dbarchive.biosciencedbc.jp/en/bodyparts3d/
+Original geometry license:
+https://creativecommons.org/licenses/by-sa/2.1/jp/
+
+The 244 source components were retrieved from the BodyParts3D 4.0 OBJ mirror:
+https://github.com/jixiangying/anatomy
+Commit: be67a977abe25a36f59793fda86a506618fd4d27
+Original folder: isa_BP3D_4.0_obj_99/
+Original component IDs are preserved in skeleton.json.
+
+Modifications: source OBJ geometry was converted to compact indexed binary
+buffers, coordinates were rotated to Y-up and converted from mm to metres,
+and positions were rounded to 0.001 mm. Vertex normals are recalculated at
+runtime. Anatomical landmarks are selected with surface masks. The coccyx and
+pubic symphysis supplements and the orbital/nasal perimeter markers are
+original simplified additions. These adapted model data and supplements are
+redistributed under CC BY-SA 2.1 Japan.
+
+Three.js and OrbitControls are from the official Three.js r170 distribution:
+https://github.com/mrdoob/three.js/tree/r170
+The import path in OrbitControls.js was changed to the bundled local Three.js.
+Their MIT license is in vendor/LICENSE-three.txt.
+
+Quiz blurbs are original short explanations of anatomical facts. Reference
+links to OpenStax Anatomy and Physiology 2e are provided in the quiz's About
+section. No textbook images, diagrams, or verbatim passages were copied.
