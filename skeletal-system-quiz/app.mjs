@@ -1,5 +1,5 @@
-import {QUESTIONS,REGIONS,makeChoices,Quiz,serializeSession,restoreSession} from './core.mjs?v=1.3.1';
-import {decodeModel,buildAnatomy,Viewer} from './model.mjs?v=1.3.1';
+import {QUESTIONS,REGIONS,makeChoices,Quiz,serializeSession,restoreSession} from './core.mjs?v=1.3.2';
+import {decodeModel,buildAnatomy,Viewer} from './model.mjs?v=1.3.2';
 const $=id=>document.getElementById(id);
 const screens={menu:$('menuScreen'),quiz:$('quizScreen'),results:$('resultsScreen')};
 let viewer=null,quiz=null,lastPool=QUESTIONS,lastMode='mc',currentChoices=[];

@@ -24,6 +24,59 @@ function crop(mesh,predicate) {
 function tube(points,radius=0.0018){const curve=new THREE.CatmullRomCurve3(points.map(p=>new THREE.Vector3(...p)),true);return new THREE.Mesh(new THREE.TubeGeometry(curve,80,radius,8,true));}
 function ellipse(cx,cy,cz,rx,ry){return tube(Array.from({length:24},(_,i)=>{const t=i/24*Math.PI*2;return[cx+rx*Math.cos(t),cy+ry*Math.sin(t),cz];}));}
 
+// The source has costal cartilages 1–7 only. Add the missing 8–10 chain on
+// each side without moving the scanned ribs or attaching floating ribs 11–12.
+function lowerCostalCartilages(map,material) {
+ const result=[];
+ for(const [side,ribIds,seventhId] of [['Left',['FJ3235','FJ3236','FJ3225'],'FJ3255'],['Right',['FJ3347','FJ3348','FJ3330'],'FJ3345']]){
+  let upperCurve=null,upperName=seventhId;
+  for(let n=0;n<ribIds.length;n++){
+   const rib=map.get(ribIds[n]),p=rib.geometry.attributes.position;
+   const tip=new THREE.Vector3();let samples=0;
+   for(let i=0;i<p.count;i++)if(p.getZ(i)>=rib.geometry.boundingBox.max.z-0.003){
+    tip.add(new THREE.Vector3(p.getX(i),p.getY(i),p.getZ(i)));samples++;
+   }
+   if(!samples)throw Error('The anterior rib tip could not be located.');
+   tip.divideScalar(samples);
+   const anchor=new THREE.Vector3();
+   if(upperCurve)anchor.copy(upperCurve.getPointAt(0.55));
+   else {
+    // Meet the medial lower surface of cartilage 7, not the sternum directly.
+    const seventh=map.get(seventhId),sp=seventh.geometry.attributes.position,si=seventh.geometry.index;
+    const tri=new THREE.Triangle(),candidate=new THREE.Vector3();let distance=Infinity;
+    for(let i=0;i<si.count;i+=3){
+     tri.a.fromBufferAttribute(sp,si.getX(i));tri.b.fromBufferAttribute(sp,si.getX(i+1));tri.c.fromBufferAttribute(sp,si.getX(i+2));
+     tri.getMidpoint(candidate);
+     if(candidate.x*tip.x<=0||Math.abs(candidate.x)>0.060)continue;
+     tri.closestPointToPoint(tip,candidate);const d=tip.distanceToSquared(candidate);
+     if(d<distance){distance=d;anchor.copy(candidate);}
+    }
+    if(!Number.isFinite(distance))throw Error('The seventh costal cartilage anchor could not be located.');
+   }
+   const direction=anchor.clone().sub(tip).normalize();
+   const root=tip.clone().addScaledVector(direction,-0.003);
+   const c1=tip.clone().lerp(anchor,0.28);c1.y-=0.009;c1.z+=0.004;
+   const c2=tip.clone().lerp(anchor,0.72);c2.y-=0.005;c2.z+=0.003;
+   const curve=new THREE.CubicBezierCurve3(root,c1,c2,anchor);
+   const segments=48,sides=16,radius=[0.005,0.0045,0.004][n];
+   const geometry=new THREE.TubeGeometry(curve,segments,radius,sides,false);
+   const positions=Array.from(geometry.attributes.position.array),indices=Array.from(geometry.index.array);
+   // TubeGeometry leaves its ends open; cap them inside their attachment meshes.
+   const first=positions.length/3;positions.push(...root.toArray());
+   const last=positions.length/3;positions.push(...anchor.toArray());
+   for(let j=0;j<sides;j++){
+    indices.push(first,j,j+1);
+    const a=segments*(sides+1)+j;indices.push(last,a+1,a);
+   }
+   geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));geometry.setIndex(indices);geometry.computeVertexNormals();geometry.computeBoundingBox();
+   const mesh=new THREE.Mesh(geometry,material);mesh.name='costal-'+side.toLowerCase()+'-'+(n+8);
+   mesh.userData={label:side+' '+['eighth','ninth','tenth'][n]+' costal cartilage',supplement:true,ribId:rib.name,upperCartilage:upperName,ribAnchor:root.toArray(),upperAnchor:anchor.toArray(),segments,sides};
+   result.push(mesh);upperCurve=curve;upperName=mesh.name;
+  }
+ }
+ return result;
+}
+
 export function buildAnatomy(meshes) {
  const group=new THREE.Group(),map=new Map(meshes.map(m=>[m.name,m]));
  const boneMaterial=new THREE.MeshStandardMaterial({color:0xe6ddc5,roughness:0.62,metalness:0.02,side:THREE.DoubleSide});
@@ -45,7 +98,9 @@ export function buildAnatomy(meshes) {
  const vertebra=map.get('FJ3162');
  add('transverse',[],[crop(vertebra,(x,y,z)=>Math.abs(x)>0.023&&y>0.979&&y<1.003&&z>0.053&&z<0.086)]);
  add('sacrum',ids('FJ3393'));
- add('costal',named(/costal cartilage$/i));
+ const lowerCartilages=lowerCostalCartilages(map,boneMaterial);
+ lowerCartilages.forEach(m=>group.add(m));
+ add('costal',[...named(/costal cartilage$/i),...lowerCartilages]);
  add('trueRibs',named(/(first|second|third|fourth|fifth|sixth|seventh) rib$/i));
  add('falseRibs',named(/(eighth|ninth|tenth|eleventh|twelfth) rib$/i));
  add('floatingRibs',named(/(eleventh|twelfth) rib$/i));
