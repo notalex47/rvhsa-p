@@ -11,6 +11,7 @@
       --bg: #eef4fa;
       --surface: #ffffff;
       --navy: #173b67;
+      --navy-dark: #0f2847;
       --blue: #24679f;
       --blue-dark: #174b78;
       --blue-soft: #e8f2fb;
@@ -44,6 +45,25 @@
     }
 
     a { color: inherit; }
+
+    .top-banner {
+      background: var(--navy-dark);
+      color: #d4e2ed;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 6px 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .top-banner a {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .top-banner a:hover {
+      color: var(--blue-soft);
+    }
 
     .site-header {
       background: linear-gradient(135deg, var(--navy), #245f96);
@@ -352,6 +372,10 @@
 </head>
 
 <body>
+  <div class="top-banner">
+    Bugs? Suggestions? Email me &rarr; <a href="mailto:2165873@jeffcoschools.us">2165873@jeffcoschools.us</a>
+  </div>
+
   <header class="site-header">
     <div class="header-inner">
       <div class="brand">RVHS Anatomy &amp; Physiology</div>
@@ -548,6 +572,7 @@
             <li>Updated release numbering to the 1.x.x format, starting with Version 1.1.0.</li>
           </ul>
         </article>
+
         <article class="patch">
           <div class="patch-top">
             <div class="patch-title">Unit 3: Interactive 3D Skeletal System</div>
@@ -637,7 +662,6 @@
             <li>Added scoring, keyboard controls, reshuffling, and responsive design.</li>
           </ul>
         </article>
-
       </div>
     </section>
   </main>
