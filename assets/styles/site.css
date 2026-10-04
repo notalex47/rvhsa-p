@@ -19,13 +19,6 @@
   --color-danger: #a73535;
   --color-danger-bg: #fdecec;
   --color-neutral-bg: #f5f8fb;
-  --button-bg: #f7fbff;
-  --button-bg-hover: var(--brand-blue-soft);
-  --button-border: #bfd9ed;
-  --button-text: var(--brand-blue-dark);
-  --button-primary-bg: var(--brand-blue);
-  --button-primary-hover: var(--brand-blue-dark);
-  --button-primary-text: #ffffff;
 
   /* Compatibility aliases used by the existing quiz-specific styles. */
   --bg: var(--color-bg);
@@ -148,87 +141,15 @@ summary:focus-visible {
 }
 
 .rounded-button {
-  border: 1px solid var(--button-border);
   border-radius: var(--radius-md);
-  background: var(--button-bg);
-  color: var(--button-text);
   transition: transform var(--transition-fast), border-color var(--transition-fast),
     background-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-.rounded-button:hover:not(:disabled) {
-  border-color: var(--brand-blue);
-  background: var(--button-bg-hover);
-  transform: translateY(-2px);
-}
+.rounded-button:hover:not(:disabled) { transform: translateY(-2px); }
 .rounded-button:active:not(:disabled), .rounded-button.key-pressed { transform: translateY(1px) scale(0.99); }
 
 .mode-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
-
-.rounded-button.mode-button,
-.rounded-button.mode-button.mc,
-.rounded-button.mode-button.free {
-  border-color: var(--button-border);
-  background: var(--brand-blue-soft);
-  color: var(--color-text);
-}
-
-.rounded-button.mode-button:hover:not(:disabled),
-.rounded-button.mode-button.mc:hover:not(:disabled),
-.rounded-button.mode-button.free:hover:not(:disabled) {
-  border-color: var(--brand-blue);
-  background: #dcebf8;
-}
-
-.rounded-button.mode-button .key-badge,
-.answer-button .key-badge {
-  background: var(--brand-blue);
-  color: #fff;
-}
-
-.rounded-button.mode-button .key-badge {
-  min-width: 3.25rem;
-  padding-inline: var(--space-2);
-  white-space: nowrap;
-}
-
-.rounded-button.submit-button,
-.rounded-button.next-button,
-.rounded-button.play-again {
-  border-color: var(--button-primary-bg);
-  background: var(--button-primary-bg);
-  color: var(--button-primary-text);
-}
-
-.rounded-button.submit-button:hover:not(:disabled),
-.rounded-button.next-button:hover:not(:disabled),
-.rounded-button.play-again:hover:not(:disabled) {
-  border-color: var(--button-primary-hover);
-  background: var(--button-primary-hover);
-}
-
-.rounded-button.answer-button {
-  border-color: var(--button-border);
-  background: var(--button-bg);
-  color: var(--color-text);
-}
-
-.rounded-button.answer-button:hover:not(:disabled) {
-  border-color: var(--brand-blue);
-  background: var(--button-bg-hover);
-}
-
-.rounded-button.answer-button.correct {
-  border-color: var(--color-success);
-  background: var(--color-success-bg);
-  color: var(--color-success);
-}
-
-.rounded-button.answer-button.wrong {
-  border-color: var(--color-danger);
-  background: var(--color-danger-bg);
-  color: var(--color-danger);
-}
 
 .progress-track {
   overflow: hidden;
