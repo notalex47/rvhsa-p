@@ -26,7 +26,7 @@ const noteFor=id=>({falseRibs:'The orange group includes ribs 8–12. Floating r
 for(const region of REGIONS){const option=document.createElement('option');option.value=region;option.textContent=region+' · '+QUESTIONS.filter(q=>q.region===region).length+' structures';$('regionSelect').append(option);}
 function show(screen){for(const [name,element] of Object.entries(screens))element.hidden=name!==screen;$('scoreChip').hidden=screen==='menu';$('backToQuestion').hidden=screen!=='quiz';}
 function setView(view){viewer.setView(view);$('orientation').textContent=labels[view];}
-function showMenu(){saveSession();show('menu');quiz=null;currentChoices=[];for(const t of viewer.anatomy.targets.values()){t.bones.forEach(m=>m.material=viewer.anatomy.boneMaterial);t.overlays.forEach(m=>m.visible=false);}viewer.current=null;viewer.whole();$('focusButton').disabled=true;$('targetHint').textContent='Explore the model';refreshSavedSession();$('modeHeading').setAttribute('tabindex','-1');$('modeHeading').focus({preventScroll:true});}
+function showMenu(){saveSession();show('menu');quiz=null;currentChoices=[];for(const t of viewer.anatomy.targets.values()){t.bones.forEach(m=>m.material=m.userData.baseMaterial||viewer.anatomy.boneMaterial);t.overlays.forEach(m=>m.visible=false);}viewer.current=null;viewer.whole();$('focusButton').disabled=true;$('targetHint').textContent='Explore the model';refreshSavedSession();$('modeHeading').setAttribute('tabindex','-1');$('modeHeading').focus({preventScroll:true});}
 function start(mode,pool=null){
  if(!viewer)return;lastMode=mode;lastPool=pool||QUESTIONS.filter(q=>$('regionSelect').value==='all'||q.region===$('regionSelect').value);quiz=new Quiz(mode,lastPool);show('quiz');renderQuestion();
 }
