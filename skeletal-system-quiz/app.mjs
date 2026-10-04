@@ -42,12 +42,13 @@ function renderQuestion(savedChoices=null){
 }
 function answer(text,skip=false){
  if(!quiz||quiz.answered)return;
+ if(quiz.mode==='mc'&&!skip){const selected=[...$('choices').querySelectorAll('button')].find(button=>button.dataset.answer===text);if(selected){selected.classList.add('selected');selected.setAttribute('aria-pressed','true');}}
  if(!skip&&!String(text).trim()){$('feedback').hidden=false;$('feedback').className='feedback wrong';$('feedback').textContent='Type a structure name, or choose “I don’t know.”';$('freeAnswer').focus({preventScroll:true});return;}
  const record=quiz.answer(text,skip);if(!record)return;presentAnswer(record);saveSession();
 }
 function presentAnswer(record){
  const q=record.question,text=record.provided,skip=record.skipped;
- $('feedback').className='feedback '+(record.correct?'correct':'wrong');$('feedback').textContent=record.correct?'✓ Correct — '+q.answer+'.':(skip?'Answer: ':'✕ The correct answer is ')+q.answer+'.';$('feedback').hidden=false;
+ $('feedback').className='feedback '+(record.correct?'correct':'wrong');$('feedback').textContent=record.correct?'Correct — '+q.answer+'.':(skip?'Answer: ':'Incorrect. The correct answer is ')+q.answer+'.';$('feedback').hidden=false;
  if(!record.correct&&!skip){const provided=document.createElement('span');provided.className='user-answer';provided.textContent='Your answer: '+text;$('feedback').append(provided);}
  $('factTitle').textContent=q.answer;$('factText').textContent=q.note;const extra=noteFor(q.id);$('landmarkNote').textContent=extra;$('landmarkNote').hidden=!extra;$('factBox').hidden=false;
  for(const button of $('choices').querySelectorAll('button')){button.disabled=true;if(button.dataset.answer===q.answer)button.classList.add('correct');else if(button.dataset.answer===text&&!record.correct)button.classList.add('wrong');else button.classList.add('faded');}
@@ -62,7 +63,7 @@ function resume(){
  if(quiz.answered){const record=quiz.records.at(-1);$('freeAnswer').value=record.provided;presentAnswer(record);}
 }
 function showResults(){
- clearSavedSession();show('results');const percent=Math.round(100*quiz.score/quiz.deck.length);$('percentScore').textContent=percent+'%';$('rawScore').textContent=quiz.score+' of '+quiz.deck.length+' correct';$('resultSummary').textContent=quiz.missed.length?'Review the '+quiz.missed.length+' missed structures below, or practice them in a fresh round.':'You identified every structure in this round. Try a new shuffle or switch answer modes.';$('missedButton').hidden=!quiz.missed.length;$('reviewHeading').textContent=quiz.missed.length?'Missed structures':'All structures identified';$('reviewList').replaceChildren();
+ clearSavedSession();show('results');const percent=Math.round(100*quiz.score/quiz.deck.length);$('percentScore').textContent=percent+'%';$('percentScore').style.setProperty('--score',percent);$('rawScore').textContent=quiz.score+' of '+quiz.deck.length+' correct';$('resultSummary').textContent=percent>=90?'Excellent recall — your skeletal anatomy is looking strong.':percent>=70?'Strong work — practice the missed structures to sharpen your recall.':'Keep building momentum — a focused round on missed structures will help.';$('missedButton').hidden=!quiz.missed.length;$('reviewHeading').textContent=quiz.missed.length?'Missed structures':'All structures identified';$('reviewList').replaceChildren();
  for(const q of quiz.missed){const card=document.createElement('article');card.className='review-item';const title=document.createElement('h4');title.textContent=q.answer;const p=document.createElement('p');p.textContent=q.note;const record=quiz.records.find(r=>r.question.id===q.id);if(record&&!record.skipped)p.textContent+=' Your answer: '+record.provided;const button=document.createElement('button');button.type='button';button.className='secondary';button.textContent='Show on skeleton';button.addEventListener('click',()=>{viewer.highlight(q.id,q.view,true);$('focusButton').disabled=false;$('targetHint').textContent=q.answer;$('orientation').textContent=labels[q.view];if(innerWidth<720)$('viewer').scrollIntoView({behavior:scrollBehavior(),block:'center'});});card.append(title,p,button);$('reviewList').append(card);}
  $('scoreChip').textContent=quiz.score+' / '+quiz.deck.length+' correct';$('resultsHeading').setAttribute('tabindex','-1');$('resultsHeading').focus({preventScroll:true});
 }

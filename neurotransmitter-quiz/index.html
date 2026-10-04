@@ -412,6 +412,7 @@
     }
   </style>
   <link rel="stylesheet" href="../assets/styles/site.css?v=1.0.1">
+  <link rel="stylesheet" href="../assets/styles/quiz-interactions.css">
 </head>
 
 <body>
@@ -480,7 +481,7 @@
       <div class="quiz-meta">
         <span id="questionCount">QUESTION 1 OF 14</span>
         <span>NEUROTRANSMITTER FUNCTIONS</span>
-      </div>
+      <span id="modeLabel" class="mode-label">Multiple choice</span></div>
       <div class="progress-track" aria-hidden="true">
         <div id="progressFill" class="progress-fill"></div>
       </div>
@@ -516,10 +517,12 @@
       <p id="rawScore" style="font-weight:800;font-size:1.2rem;margin-bottom:5px"></p>
       <p id="resultMessage" class="muted"></p>
       <div class="results-actions">
+        <button id="practiceMissedButton" class="rounded-button practice-missed" type="button">Practice missed items</button>
         <button id="playAgainButton" class="rounded-button play-again" type="button">
           Shuffle &amp; Play Again ↵
         </button>
         <button id="resultsMenuButton" class="rounded-button" type="button">Back to Menu</button>
+      <a class="quiz-library-action" href="../index.html#quizzes">Return to quiz library</a>
       </div>
     </section>
   </main>
@@ -623,6 +626,7 @@
         mcModeButton: document.getElementById("mcModeButton"),
         freeModeButton: document.getElementById("freeModeButton"),
         questionCount: document.getElementById("questionCount"),
+      modeLabel: document.getElementById("modeLabel"),
         progressFill: document.getElementById("progressFill"),
         definitionText: document.getElementById("definitionText"),
         mcAnswers: document.getElementById("mcAnswers"),
@@ -636,7 +640,8 @@
         percentScore: document.getElementById("percentScore"),
         rawScore: document.getElementById("rawScore"),
         resultMessage: document.getElementById("resultMessage"),
-        playAgainButton: document.getElementById("playAgainButton"),
+        practiceMissedButton: document.getElementById("practiceMissedButton"),
+      playAgainButton: document.getElementById("playAgainButton"),
         resultsMenuButton: document.getElementById("resultsMenuButton")
       };
 
@@ -644,6 +649,7 @@
       let deck = [];
       let index = 0;
       let score = 0;
+    let missedQuestions = [];
       let answered = false;
       let selectedChoice = null;
       const keysDown = new Set();
@@ -681,6 +687,7 @@
         deck = shuffle(QUESTIONS.map(question => ({ ...question })));
         index = 0;
         score = 0;
+      missedQuestions = [];
         answered = false;
         selectedChoice = null;
         keysDown.clear();
@@ -698,6 +705,7 @@
         selectedChoice = null;
         const question = currentQuestion();
         els.questionCount.textContent = `QUESTION ${index + 1} OF ${deck.length}`;
+      els.modeLabel.textContent = mode === "mc" ? "Multiple choice" : "Free response";
         els.progressFill.style.width = `${((index + 1) / deck.length) * 100}%`;
         els.scoreChip.textContent = index ? `${score}/${index}` : "0";
         els.definitionText.textContent = question.definition;
@@ -760,6 +768,8 @@
       function submitChoice(choice) {
         if (answered || mode !== "mc") return;
         selectedChoice = choice;
+        const selectedButton = answerButtons().find(button => button.dataset.choice === choice);
+        if (selectedButton) { selectedButton.classList.add("selected"); selectedButton.setAttribute("aria-pressed", "true"); }
         evaluate(choice === currentQuestion().answer);
       }
 
@@ -787,9 +797,10 @@
 
         if (isCorrect) {
           score += 1;
-          setFeedback(`✓ Correct — ${question.answer}. Press Enter for the next question.`, "correct");
+          setFeedback(`Correct — ${question.answer}. Press Enter for the next question.`, "correct");
         } else {
-          setFeedback(`✕ The correct answer is ${question.answer}. Press Enter to continue.`, "wrong");
+          missedQuestions.push(question);
+          setFeedback(`Incorrect. The correct answer is ${question.answer}. Press Enter to continue.`, "wrong");
         }
 
         els.factBox.textContent = question.note;
@@ -834,6 +845,8 @@
         showOnly("results");
         const percent = deck.length ? Math.round((score / deck.length) * 100) : 0;
         els.percentScore.textContent = `${percent}%`;
+        els.percentScore.style.setProperty("--score", percent);
+        els.practiceMissedButton.disabled = missedQuestions.length === 0;
         els.rawScore.textContent = `${score} of ${deck.length} correct`;
         els.resultMessage.textContent = percent >= 90
           ? "Excellent command of neurotransmitter functions."
@@ -921,6 +934,19 @@
       });
       els.nextButton.addEventListener("click", nextQuestion);
       els.backToMenuButton.addEventListener("click", showMenu);
+      function practiceMissedItems() {
+        if (!missedQuestions.length) return;
+        deck = shuffle(missedQuestions.map(item => ({ ...item })));
+        missedQuestions = [];
+        index = 0;
+        score = 0;
+        answered = false;
+        selectedChoice = null;
+        showOnly("quiz");
+        renderQuestion();
+      }
+
+      els.practiceMissedButton.addEventListener("click", practiceMissedItems);
       els.playAgainButton.addEventListener("click", () => startQuiz());
       els.resultsMenuButton.addEventListener("click", showMenu);
     })();
