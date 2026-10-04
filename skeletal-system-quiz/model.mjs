@@ -53,12 +53,15 @@ function lowerCostalCartilages(map,material) {
     }
     if(!Number.isFinite(distance))throw Error('The seventh costal cartilage anchor could not be located.');
    }
+   const radius=[0.005,0.0045,0.004][n];
    const direction=anchor.clone().sub(tip).normalize();
-   const root=tip.clone().addScaledVector(direction,-0.003);
+   // Begin well inside the bony rib rather than merely touching its averaged
+   // anterior surface. The overlap prevents a visible seam at oblique views.
+   const root=tip.clone().addScaledVector(direction,-radius*1.5);
    const c1=tip.clone().lerp(anchor,0.28);c1.y-=0.009;c1.z+=0.004;
    const c2=tip.clone().lerp(anchor,0.72);c2.y-=0.005;c2.z+=0.003;
    const curve=new THREE.CubicBezierCurve3(root,c1,c2,anchor);
-   const segments=48,sides=16,radius=[0.005,0.0045,0.004][n];
+   const segments=48,sides=16;
    const geometry=new THREE.TubeGeometry(curve,segments,radius,sides,false);
    const positions=Array.from(geometry.attributes.position.array),indices=Array.from(geometry.index.array);
    // TubeGeometry leaves its ends open; cap them inside their attachment meshes.
@@ -102,7 +105,9 @@ export function buildAnatomy(meshes) {
  lowerCartilages.forEach(m=>group.add(m));
  add('costal',[...named(/costal cartilage$/i),...lowerCartilages]);
  add('trueRibs',named(/(first|second|third|fourth|fifth|sixth|seventh) rib$/i));
- add('falseRibs',named(/(eighth|ninth|tenth|eleventh|twelfth) rib$/i));
+ // Keep the indirect attachments visible with the false-rib group. Ribs 8–10
+ // join the cartilage above, while floating ribs 11–12 correctly remain free.
+ add('falseRibs',[...named(/(eighth|ninth|tenth|eleventh|twelfth) rib$/i),...lowerCartilages]);
  add('floatingRibs',named(/(eleventh|twelfth) rib$/i));
  add('sternum',ids('FJ3153','FJ3178','FJ3290'));
  add('clavicle',pair('FJ3237','FJ3362'));
