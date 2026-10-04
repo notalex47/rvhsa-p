@@ -53,12 +53,15 @@ function lowerCostalCartilages(map,material) {
     }
     if(!Number.isFinite(distance))throw Error('The seventh costal cartilage anchor could not be located.');
    }
+   const radius=[0.005,0.0045,0.004][n];
    const direction=anchor.clone().sub(tip).normalize();
-   const root=tip.clone().addScaledVector(direction,-0.003);
+   // Begin well inside the bony rib rather than merely touching its averaged
+   // anterior surface. The overlap prevents a visible seam at oblique views.
+   const root=tip.clone().addScaledVector(direction,-radius*1.5);
    const c1=tip.clone().lerp(anchor,0.28);c1.y-=0.009;c1.z+=0.004;
    const c2=tip.clone().lerp(anchor,0.72);c2.y-=0.005;c2.z+=0.003;
    const curve=new THREE.CubicBezierCurve3(root,c1,c2,anchor);
-   const segments=48,sides=16,radius=[0.005,0.0045,0.004][n];
+   const segments=48,sides=16;
    const geometry=new THREE.TubeGeometry(curve,segments,radius,sides,false);
    const positions=Array.from(geometry.attributes.position.array),indices=Array.from(geometry.index.array);
    // TubeGeometry leaves its ends open; cap them inside their attachment meshes.
@@ -80,8 +83,9 @@ function lowerCostalCartilages(map,material) {
 export function buildAnatomy(meshes) {
  const group=new THREE.Group(),map=new Map(meshes.map(m=>[m.name,m]));
  const boneMaterial=new THREE.MeshStandardMaterial({color:0xe6ddc5,roughness:0.62,metalness:0.02,side:THREE.DoubleSide});
+ const cartilageMaterial=new THREE.MeshStandardMaterial({color:0x9fc9cf,roughness:0.68,metalness:0,side:THREE.DoubleSide});
  const highlightMaterial=new THREE.MeshStandardMaterial({color:0xffa126,emissive:0x7c3300,emissiveIntensity:0.32,roughness:0.48,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
- for(const m of meshes){m.material=boneMaterial;group.add(m);}
+ for(const m of meshes){m.material=/costal cartilage$/i.test(m.userData.label)?cartilageMaterial:boneMaterial;m.userData.baseMaterial=m.material;group.add(m);}
  const targets=new Map();
  const named=(re)=>meshes.filter(m=>re.test(m.userData.label));
  const add=(id,bones,overlays=[],primary=bones)=>{overlays.forEach(m=>{m.material=highlightMaterial;m.visible=false;m.renderOrder=2;group.add(m);});targets.set(id,{bones,overlays,primary,box:new THREE.Box3()});};
@@ -98,11 +102,14 @@ export function buildAnatomy(meshes) {
  const vertebra=map.get('FJ3162');
  add('transverse',[],[crop(vertebra,(x,y,z)=>Math.abs(x)>0.023&&y>0.979&&y<1.003&&z>0.053&&z<0.086)]);
  add('sacrum',ids('FJ3393'));
- const lowerCartilages=lowerCostalCartilages(map,boneMaterial);
+ const lowerCartilages=lowerCostalCartilages(map,cartilageMaterial);
+ lowerCartilages.forEach(m=>m.userData.baseMaterial=cartilageMaterial);
  lowerCartilages.forEach(m=>group.add(m));
  add('costal',[...named(/costal cartilage$/i),...lowerCartilages]);
  add('trueRibs',named(/(first|second|third|fourth|fifth|sixth|seventh) rib$/i));
- add('falseRibs',named(/(eighth|ninth|tenth|eleventh|twelfth) rib$/i));
+ // Keep the indirect attachments visible with the false-rib group. Ribs 8–10
+ // join the cartilage above, while floating ribs 11–12 correctly remain free.
+ add('falseRibs',[...named(/(eighth|ninth|tenth|eleventh|twelfth) rib$/i),...lowerCartilages]);
  add('floatingRibs',named(/(eleventh|twelfth) rib$/i));
  add('sternum',ids('FJ3153','FJ3178','FJ3290'));
  add('clavicle',pair('FJ3237','FJ3362'));
@@ -164,7 +171,7 @@ export function buildAnatomy(meshes) {
   if(t.box.isEmpty())throw Error('Invalid target '+id);
  }
  const allBox=new THREE.Box3().setFromObject(group);
- return {group,meshes,map,targets,boneMaterial,highlightMaterial,allBox};
+ return {group,meshes,map,targets,boneMaterial,cartilageMaterial,highlightMaterial,allBox};
 }
 
 export class Viewer {
@@ -195,7 +202,7 @@ export class Viewer {
  }
  highlight(id,view='front',autoFocus=true){
   this.current=id;this.view=view;this.defaultView=view;
-  for(const t of this.anatomy.targets.values()){t.bones.forEach(m=>m.material=this.anatomy.boneMaterial);t.overlays.forEach(m=>m.visible=false);}
+  for(const t of this.anatomy.targets.values()){t.bones.forEach(m=>m.material=m.userData.baseMaterial||this.anatomy.boneMaterial);t.overlays.forEach(m=>m.visible=false);}
   const t=this.anatomy.targets.get(id);if(!t)throw Error('Unknown target '+id);
   t.bones.forEach(m=>m.material=this.anatomy.highlightMaterial);t.overlays.forEach(m=>m.visible=true);
   this.focused=autoFocus;this.frame(autoFocus?t.box:this.anatomy.allBox,view);
