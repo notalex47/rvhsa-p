@@ -544,19 +544,25 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="../assets/styles/site.css?v=1.0.0">
+  <link rel="stylesheet" href="../assets/styles/site.css?v=1.0.1">
 </head>
 
 <body>
 <div class="app">
   <header class="site-header">
-    <div class="header-inner">
-      <div>
-        <p class="eyebrow">ANATOMICAL REGIONS</p>
-        <h1>Visual Identification Quiz</h1>
-        <p class="header-sub">Follow the dot. Name the region.</p>
+    <div class="quiz-header">
+      <nav class="quiz-header-nav" aria-label="Quiz navigation">
+        <a class="quiz-brand" href="../">RVHS Anatomy &amp; Physiology</a>
+        <span class="quiz-breadcrumb">Unit 1 · Anatomical regions</span>
+        <a class="all-quizzes-link" href="../#unit-1">All quizzes</a>
+      </nav>
+      <div class="quiz-heading-row">
+        <div class="quiz-heading">
+          <h1>Visual Identification Quiz</h1>
+          <p class="header-sub">Follow the dot. Name the region.</p>
+        </div>
+        <div id="scoreChip" class="score-chip hidden" aria-label="Current score">0</div>
       </div>
-      <div id="scoreChip" class="score-chip hidden" aria-label="Current score">0</div>
     </div>
   </header>
 

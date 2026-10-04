@@ -353,19 +353,22 @@
       *, *::before, *::after { transition: none !important; }
     }
   </style>
-  <link rel="stylesheet" href="../assets/styles/site.css?v=1.0.0">
+  <link rel="stylesheet" href="../assets/styles/site.css?v=1.0.1">
 </head>
 <body>
   <header class="site-header">
-    <div class="header-inner">
-      <div>
-        <p class="eyebrow">UNIT 2 · BRAIN ANATOMY</p>
-        <h1>Brain Visual Identification Quiz</h1>
-        <p class="header-sub">Follow the red dot and identify the brain structure.</p>
-      </div>
-      <div class="header-right">
-        <a class="home-link" href="../">← Study Tools</a>
-        <div id="scoreChip" class="score-chip hidden">0</div>
+    <div class="quiz-header">
+      <nav class="quiz-header-nav" aria-label="Quiz navigation">
+        <a class="quiz-brand" href="../">RVHS Anatomy &amp; Physiology</a>
+        <span class="quiz-breadcrumb">Unit 2 · Brain anatomy</span>
+        <a class="all-quizzes-link" href="../#unit-2">All quizzes</a>
+      </nav>
+      <div class="quiz-heading-row">
+        <div class="quiz-heading">
+          <h1>Brain Visual Identification Quiz</h1>
+          <p class="header-sub">Follow the red dot and identify the brain structure.</p>
+        </div>
+        <div id="scoreChip" class="score-chip hidden" aria-label="Current score">0</div>
       </div>
     </div>
   </header>
