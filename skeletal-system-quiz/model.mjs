@@ -102,7 +102,9 @@ export function buildAnatomy(meshes) {
  lowerCartilages.forEach(m=>group.add(m));
  add('costal',[...named(/costal cartilage$/i),...lowerCartilages]);
  add('trueRibs',named(/(first|second|third|fourth|fifth|sixth|seventh) rib$/i));
- add('falseRibs',named(/(eighth|ninth|tenth|eleventh|twelfth) rib$/i));
+ // Keep the indirect attachments visible with the false-rib group. Ribs 8–10
+ // join the cartilage above, while floating ribs 11–12 correctly remain free.
+ add('falseRibs',[...named(/(eighth|ninth|tenth|eleventh|twelfth) rib$/i),...lowerCartilages]);
  add('floatingRibs',named(/(eleventh|twelfth) rib$/i));
  add('sternum',ids('FJ3153','FJ3178','FJ3290'));
  add('clavicle',pair('FJ3237','FJ3362'));
