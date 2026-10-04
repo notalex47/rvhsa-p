@@ -45,7 +45,7 @@ export const QUESTIONS = [
  q('femoralCondyle','Femoral condyle','Legs & feet','The medial and lateral femoral condyles are rounded surfaces at the lower end of the femur. They articulate with the tibia at the knee.',['femoral condyles','condyle of femur','condyles of femur','medial femoral condyle','lateral femoral condyle'],'back')
 ];
 export const REGIONS = [...new Set(QUESTIONS.map(x=>x.region))];
-export const RELEASE_VERSION = '1.3.2';
+export const RELEASE_VERSION = '1.3.5';
 // Alternative names are scoped to the highlighted structure, not fuzzy-matched:
 // for example, "hip bone" is not accepted for just the ilium.
 const EXTRA_ALIASES = {

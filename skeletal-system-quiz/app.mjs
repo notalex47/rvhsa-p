@@ -1,5 +1,5 @@
-import {QUESTIONS,REGIONS,makeChoices,Quiz,serializeSession,restoreSession} from './core.mjs?v=1.3.4';
-import {decodeModel,buildAnatomy,Viewer} from './model.mjs?v=1.3.4';
+import {QUESTIONS,REGIONS,makeChoices,Quiz,serializeSession,restoreSession} from './core.mjs?v=1.3.5';
+import {decodeModel,buildAnatomy,Viewer} from './model.mjs?v=1.3.5';
 const $=id=>document.getElementById(id);
 const screens={menu:$('menuScreen'),quiz:$('quizScreen'),results:$('resultsScreen')};
 let viewer=null,quiz=null,lastPool=QUESTIONS,lastMode='mc',currentChoices=[];
@@ -83,7 +83,7 @@ function showLoadError(message){$('loadMessage').hidden=false;$('loadMessage').c
 $('viewer').addEventListener('viewerError',event=>showLoadError(event.detail));
 refreshSavedSession();
 try {
- const [mr,br]=await Promise.all([fetch(new URL('skeleton.json',import.meta.url)),fetch(new URL('skeleton.bin',import.meta.url))]);if(!mr.ok||!br.ok)throw Error('Model files could not be loaded.');
+ const [mr,br]=await Promise.all([fetch(new URL('skeleton.json?v=1.3.5',import.meta.url),{cache:'no-cache'}),fetch(new URL('skeleton.bin?v=1.3.5',import.meta.url),{cache:'no-cache'})]);if(!mr.ok||!br.ok)throw Error('Model files could not be loaded.');
  const [manifest,buffer]=await Promise.all([mr.json(),br.arrayBuffer()]);const anatomy=buildAnatomy(decodeModel(manifest,buffer));
  for(const q of QUESTIONS)if(!anatomy.targets.has(q.id))throw Error('A target is missing from the skeleton.');
  viewer=new Viewer($('viewer'),anatomy);viewer.setGhost($('ghostToggle').checked);$('loadMessage').hidden=true;document.querySelectorAll('.viewer-controls button,.viewer-controls input,#mcModeButton,#freeModeButton').forEach(b=>b.disabled=false);$('focusButton').disabled=true;refreshSavedSession();

@@ -7,7 +7,7 @@ export function decodeModel(manifest,buffer) {
   geometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(buffer,p.positionOffset,p.vertexCount*3),3));
   geometry.setIndex(new THREE.BufferAttribute(p.indexBytes===2?new Uint16Array(buffer,p.indexOffset,p.indexCount):new Uint32Array(buffer,p.indexOffset,p.indexCount),1));
   geometry.computeVertexNormals();geometry.computeBoundingBox();
-  const mesh=new THREE.Mesh(geometry);mesh.name=p.id;mesh.userData.label=p.name;return mesh;
+  const mesh=new THREE.Mesh(geometry);mesh.name=p.id;mesh.userData={...(p.userData||{}),label:p.name};return mesh;
  });
 }
 
@@ -27,6 +27,9 @@ function ellipse(cx,cy,cz,rx,ry){return tube(Array.from({length:24},(_,i)=>{cons
 // The source has costal cartilages 1–7 only. Add the missing 8–10 chain on
 // each side without moving the scanned ribs or attaching floating ribs 11–12.
 function lowerCostalCartilages(map,material) {
+ // Current model data already contains all six sections. The procedural
+ // construction remains a fallback for older manifests, with no duplicates.
+ if(['costal-left-8','costal-left-9','costal-left-10','costal-right-8','costal-right-9','costal-right-10'].every(id=>map.has(id)))return [];
  const result=[];
  for(const [side,ribIds,seventhId] of [['Left',['FJ3235','FJ3236','FJ3225'],'FJ3255'],['Right',['FJ3347','FJ3348','FJ3330'],'FJ3345']]){
   let upperCurve=null,upperName=seventhId;
@@ -102,10 +105,10 @@ export function buildAnatomy(meshes) {
  const vertebra=map.get('FJ3162');
  add('transverse',[],[crop(vertebra,(x,y,z)=>Math.abs(x)>0.023&&y>0.979&&y<1.003&&z>0.053&&z<0.086)]);
  add('sacrum',ids('FJ3393'));
- const lowerCartilages=lowerCostalCartilages(map,cartilageMaterial);
- lowerCartilages.forEach(m=>m.userData.baseMaterial=cartilageMaterial);
- lowerCartilages.forEach(m=>group.add(m));
- add('costal',[...named(/costal cartilage$/i),...lowerCartilages]);
+ const generatedCartilages=lowerCostalCartilages(map,cartilageMaterial);
+ generatedCartilages.forEach(m=>{m.userData.baseMaterial=cartilageMaterial;group.add(m);});
+ const lowerCartilages=[...named(/^(Left|Right) (eighth|ninth|tenth) costal cartilage$/i),...generatedCartilages];
+ add('costal',[...named(/costal cartilage$/i),...generatedCartilages]);
  add('trueRibs',named(/(first|second|third|fourth|fifth|sixth|seventh) rib$/i));
  // Keep the indirect attachments visible with the false-rib group. Ribs 8–10
  // join the cartilage above, while floating ribs 11–12 correctly remain free.
