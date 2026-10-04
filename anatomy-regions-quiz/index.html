@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#17324d">
+  <meta name="theme-color" content="#173b67">
   <title>Anatomical Regions Quiz</title>
 
   <style>
@@ -204,18 +204,18 @@
     }
 
     .mode-button.mc {
-      background: #ebf8f7;
-      border-color: #bfe8e5;
+      background: var(--blue-soft);
+      border-color: #bfd9ed;
     }
 
     .mode-button.free {
-      background: var(--purple-soft);
-      border-color: #ded5f1;
+      background: var(--blue-soft);
+      border-color: #bfd9ed;
     }
 
     .mode-button.free:hover {
-      background: #ebe3f8;
-      border-color: var(--purple);
+      background: #dcebf8;
+      border-color: var(--blue);
     }
 
     .key-badge {
@@ -226,14 +226,14 @@
       place-items: center;
       border-radius: 10px;
       padding: 5px 8px;
-      background: var(--teal-dark);
+      background: var(--blue);
       color: white;
       font-size: 0.78rem;
       font-weight: 850;
     }
 
     .mode-button.free .key-badge {
-      background: var(--purple);
+      background: var(--blue);
     }
 
     .mode-title {
@@ -544,6 +544,7 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="../assets/styles/site.css?v=1.0.0">
 </head>
 
 <body>
@@ -566,7 +567,7 @@
 
       <div class="mode-grid">
         <button id="mcModeButton" class="rounded-button mode-button mc" type="button">
-          <span class="key-badge" aria-hidden="true">1–4</span>
+          <span class="key-badge" aria-hidden="true">MCQ</span>
           <span>
             <span class="mode-title">Multiple Choice</span>
             <span class="mode-desc">Choose one of four randomized regional terms.</span>
@@ -574,7 +575,7 @@
         </button>
 
         <button id="freeModeButton" class="rounded-button mode-button free" type="button">
-          <span class="key-badge" aria-hidden="true">TYPE</span>
+          <span class="key-badge" aria-hidden="true">FRQ</span>
           <span>
             <span class="mode-title">Free Response</span>
             <span class="mode-desc">Type the anatomical region without answer choices.</span>
