@@ -1,0 +1,29 @@
+/* Shared quiz interaction, progress, feedback, and result states. */
+:root { --quiz-focus: #b45309; --quiz-success: #1f7a4d; --quiz-error: #a72f3b; }
+button, .rounded-button, .answer-button { transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, box-shadow 140ms ease, transform 100ms ease; }
+button:hover:not(:disabled), .rounded-button:hover:not(:disabled) { border-color: #3979ad; }
+button:active:not(:disabled), .rounded-button:active:not(:disabled), .key-pressed { transform: translateY(1px) scale(.985); }
+button:focus-visible, input:focus-visible, a:focus-visible, .answer-button:focus-visible { outline: 3px solid var(--quiz-focus) !important; outline-offset: 3px !important; }
+button:disabled, .rounded-button:disabled { cursor: not-allowed; opacity: .52; }
+.answer-button:disabled { opacity: .62; }
+.answer-button.selected, .answer-button[aria-pressed="true"] { border-color: #286da8 !important; box-shadow: 0 0 0 3px rgba(40,109,168,.18); background: #e8f2fb; }
+.answer-button.correct, .answer-button.wrong { opacity: 1; box-shadow: none; }
+.answer-button.correct::after { content: "✓ Correct"; color: var(--quiz-success); font-size: .72rem; font-weight: 850; margin-left: auto; }
+.answer-button.wrong::after { content: "✕ Incorrect"; color: var(--quiz-error); font-size: .72rem; font-weight: 850; margin-left: auto; }
+.feedback.correct, .feedback.wrong { display: flex; align-items: flex-start; gap: .55rem; }
+.feedback.correct::before { content: "✓"; color: var(--quiz-success); font-weight: 900; }
+.feedback.wrong::before { content: "✕"; color: var(--quiz-error); font-weight: 900; }
+.quiz-meta, .progress-meta { padding: 12px 14px; border: 1px solid var(--border, #d4e2ed); border-radius: 14px 14px 0 0; background: #fff; margin-bottom: 0 !important; display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+.quiz-meta span, .progress-meta span { font-size: .75rem; font-weight: 850; letter-spacing: .045em; }
+.quiz-meta .mode-label, .progress-meta #modeLabel { color: #174b78; background: #e8f2fb; border-radius: 999px; padding: 5px 9px; }
+.progress-track, .quiz-meta + progress, .progress-meta + progress { border-radius: 0 0 14px 14px !important; height: 8px !important; margin-bottom: 24px; }
+.score-big { --score: 0; width: 132px; height: 132px; margin: 18px auto 12px !important; border-radius: 50%; display: grid; place-items: center; position: relative; color: var(--navy, #173b67) !important; background: radial-gradient(circle, #fff 0 52px, transparent 53px), conic-gradient(#286da8 calc(var(--score) * 1%), #e3edf5 0); font-size: 2.15rem !important; letter-spacing: -.04em; }
+.score-big::after { content: "Score"; position: absolute; top: 83px; color: var(--muted, #637c91); font-size: .65rem; letter-spacing: .08em; text-transform: uppercase; }
+.results-actions, .result-actions { grid-template-columns: repeat(3,minmax(0,1fr)) !important; max-width: 820px !important; }
+.results-actions .practice-missed, .result-actions #missedButton { background: #286da8; border-color: #286da8; color: white; font-weight: 850; order: -3; }
+.results-actions .play-again, .result-actions #retryButton { order: -2; }
+.quiz-library-action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 11px 16px; border: 1px solid var(--border,#d4e2ed); border-radius: 14px; color: #174b78; background: #f5f9fd; font-weight: 800; text-decoration: none; order: -1; }
+@keyframes quiz-success-pop { 0% { transform: scale(.96); opacity: .65; } 65% { transform: scale(1.025); } 100% { transform: scale(1); opacity: 1; } }
+.feedback.correct:not(:empty), .results-card:not(.hidden) .score-big, #resultsScreen:not([hidden]) .score-big { animation: quiz-success-pop 320ms ease-out; }
+@media (max-width: 650px) { .results-actions, .result-actions { grid-template-columns: 1fr !important; } .quiz-meta { flex-wrap: wrap; } }
+@media (prefers-reduced-motion: reduce) { button, .rounded-button, .answer-button { transition: none !important; } .feedback.correct:not(:empty), .results-card:not(.hidden) .score-big, #resultsScreen:not([hidden]) .score-big { animation: none !important; } }
