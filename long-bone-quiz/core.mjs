@@ -32,8 +32,8 @@ export const QUESTIONS = [
   {
     "answer": "Epiphyseal line",
     "point": [
-      442,
-      247
+      410,
+      1581
     ],
     "group": "regions",
     "category": "LONG BONE REGIONS",

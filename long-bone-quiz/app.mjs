@@ -94,7 +94,7 @@ import { IMAGE_WIDTH, IMAGE_HEIGHT, QUESTIONS, shuffle, choicesFor, acceptsAnswe
         els.freeAnswer.disabled = false;
         els.freeAnswer.value = "";
         els.submitButton.disabled = false;
-        requestAnimationFrame(() => els.freeAnswer.focus());
+        requestAnimationFrame(() => els.freeAnswer.focus({ preventScroll: true }));
       }
     }
 
@@ -133,7 +133,7 @@ import { IMAGE_WIDTH, IMAGE_HEIGHT, QUESTIONS, shuffle, choicesFor, acceptsAnswe
       const typed = els.freeAnswer.value;
       if (!typed.trim()) {
         setFeedback("Type an answer before submitting.", "neutral");
-        els.freeAnswer.focus();
+        els.freeAnswer.focus({ preventScroll: true });
         return;
       }
       const q = currentQuestion();
