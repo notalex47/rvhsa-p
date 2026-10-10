@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173b67">
+  <title>Long Bone Anatomy Quiz</title>
+  <style>
+    :root {
+      --bg: #eef4fa;
+      --surface: #fff;
+      --navy: #173b67;
+      --blue: #286da8;
+      --blue-dark: #174b78;
+      --blue-soft: #e8f2fb;
+      --text: #18344f;
+      --muted: #6d8192;
+      --border: #d4e2ed;
+      --green: #24744f;
+      --green-soft: #e6f6ed;
+      --red: #e23d3d;
+      --red-soft: #fdecec;
+      --shadow: 0 16px 40px rgba(23,59,103,.10);
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-btn: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--bg); }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top right, rgba(40,109,168,.10), transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+
+    button, input { font: inherit; }
+    button { color: inherit; }
+
+    .hidden { display: none !important; }
+
+    .site-header {
+      background: linear-gradient(135deg, var(--navy), #245f96);
+      color: #fff;
+      padding: 20px 22px;
+      box-shadow: 0 4px 18px rgba(23,59,103,.16);
+    }
+
+    .header-inner {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .eyebrow {
+      margin: 0 0 3px;
+      color: #cfe5f7;
+      font-size: .76rem;
+      font-weight: 850;
+      letter-spacing: .12em;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 4vw, 2.35rem);
+      line-height: 1.12;
+    }
+
+    .header-sub { margin: 5px 0 0; color: #e4eff8; }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 0 0 auto;
+    }
+
+    .home-link {
+      color: #fff;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .home-link:hover { text-decoration: underline; }
+
+    .score-chip {
+      min-width: 55px;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 999px;
+      background: rgba(255,255,255,.13);
+      text-align: center;
+      font-weight: 850;
+    }
+
+    main {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      padding: 24px 18px 52px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .menu-card { padding: clamp(26px, 5vw, 48px); }
+
+    h2 { margin: 0; color: var(--navy); }
+    .muted { color: var(--muted); }
+
+    .mode-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .rounded-button {
+      width: 100%;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-btn);
+      background: #fff;
+      padding: 13px 16px;
+      font-weight: 780;
+      cursor: pointer;
+      transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+    }
+
+    .rounded-button:hover:not(:disabled) {
+      transform: translateY(-1px);
+      border-color: #a9c7df;
+      box-shadow: 0 8px 18px rgba(23,59,103,.10);
+    }
+
+    .rounded-button:focus-visible, input:focus-visible {
+      outline: 4px solid rgba(40,109,168,.20);
+      outline-offset: 2px;
+    }
+
+    .rounded-button:disabled { cursor: default; opacity: .66; }
+    .rounded-button.key-pressed { transform: translateY(2px) scale(.99); }
+
+    .mode-button {
+      min-height: 108px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-align: left;
+      background: #fbfdff;
+    }
+
+    .mode-button.mc { border-color: #bfd9ed; }
+    .mode-button.free { border-color: #c8d9e8; }
+
+    .key-badge {
+      display: inline-grid;
+      place-items: center;
+      min-width: 52px;
+      min-height: 40px;
+      padding: 4px 8px;
+      border-radius: 10px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: .82rem;
+      font-weight: 900;
+    }
+
+    .mode-title { display: block; color: var(--navy); font-size: 1.08rem; }
+    .mode-desc { display: block; margin-top: 3px; color: var(--muted); font-size: .9rem; font-weight: 500; }
+
+    .features {
+      margin-top: 22px;
+      border-radius: 14px;
+      background: #f6f9fc;
+      padding: 13px 15px;
+      color: var(--muted);
+      text-align: center;
+      font-size: .9rem;
+    }
+
+    .quiz-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+      color: var(--blue-dark);
+      font-size: .78rem;
+      font-weight: 850;
+      letter-spacing: .07em;
+    }
+
+    .progress-track {
+      height: 8px;
+      margin-bottom: 14px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #dce8f2;
+    }
+
+    .progress-fill { height: 100%; width: 0; background: var(--blue); transition: width 180ms ease; }
+
+    .quiz-card { padding: clamp(18px, 4vw, 32px); }
+    .question-heading { text-align: center; }
+    .question-heading p { margin: 5px 0 16px; }
+
+    .diagram-panel {
+      border-radius: var(--radius-md);
+      background: #fff;
+      padding: clamp(6px, 1.5vw, 12px);
+      display: flex;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid #e4edf5;
+    }
+
+    .diagram-wrap {
+      position: relative;
+      display: inline-block;
+      width: min(100%, 780px);
+      line-height: 0;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .diagram-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+
+    .target-dot {
+      position: absolute;
+      z-index: 5;
+      width: clamp(15px, 2.3vw, 21px);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border: 4px solid #fff;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 2px 8px rgba(0,0,0,.32);
+      pointer-events: none;
+    }
+
+    .answers {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .answer-button {
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .answer-button .key-badge { min-width: 36px; min-height: 32px; }
+    .answer-button.correct { background: var(--green-soft); border-color: #55aa7e; color: var(--green); }
+    .answer-button.wrong { background: var(--red-soft); border-color: #e26a6a; color: #a73535; }
+
+    .free-row {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+    }
+
+    .free-row input {
+      min-width: 0;
+      min-height: 56px;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-btn);
+      background: #f8fbfe;
+      color: var(--text);
+      padding: 10px 14px;
+    }
+
+    .submit-button { width: auto; min-width: 140px; background: var(--blue-soft); border-color: #bfd9ed; }
+
+    .feedback {
+      min-height: 48px;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      padding: 10px 14px;
+      text-align: center;
+      font-weight: 760;
+    }
+
+    .structure-blurb { margin: 12px 0 0; padding: 14px 16px; border-left: 4px solid var(--blue); border-radius: 10px; background: var(--blue-soft); color: var(--text); line-height: 1.6; }
+    .structure-blurb:empty { display: none; }
+
+    .feedback:empty { min-height: 0; margin-top: 0; padding: 0; }
+    .feedback.correct { background: var(--green-soft); color: var(--green); }
+    .feedback.wrong { background: var(--red-soft); color: #a73535; }
+    .feedback.neutral { background: #f5f8fb; color: var(--muted); }
+
+    .nav-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 12px; }
+    .nav-row .rounded-button { width: auto; min-width: 145px; }
+    .next-button { background: #edf3f8; }
+
+    .results-card { padding: clamp(28px, 6vw, 52px); text-align: center; }
+    .score-big { margin: 10px 0 0; color: var(--blue); font-size: clamp(3rem, 10vw, 5rem); font-weight: 900; line-height: 1; }
+    .results-actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 650px; margin: 24px auto 0; }
+    .play-again { background: var(--blue-soft); border-color: #bfd9ed; }
+
+    .screen-reader-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0,0,0,0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    @media (max-width: 700px) {
+      .site-header { padding: 17px 16px; }
+      .header-inner { align-items: flex-start; }
+      .header-right { flex-direction: column; align-items: flex-end; }
+      main { padding: 14px; }
+      .mode-grid, .answers, .results-actions { grid-template-columns: 1fr; }
+      .free-row { grid-template-columns: 1fr; }
+      .submit-button, .nav-row .rounded-button { width: 100%; }
+      .nav-row { flex-direction: column-reverse; }
+      .answer-button { min-height: 56px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+
+    .question-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, .85fr); align-items: start; gap: 24px; }
+    .diagram-wrap { width: min(100%, 440px); }
+    .diagram-wrap img { height: auto; }
+    .answer-panel .answers { grid-template-columns: 1fr; margin-top: 0; }
+    .answer-panel .free-row { grid-template-columns: 1fr; margin-top: 0; }
+    .answer-panel .submit-button { width: 100%; }
+    .region-bracket { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+    .region-bracket path { fill: none; stroke: #a73535; stroke-width: 6; stroke-linejoin: round; }
+    .target-dot { background: #a73535; }
+    .nav-row { flex-wrap: wrap; }
+    .nav-row .rounded-button { flex: 1; }
+    @media (max-width: 700px) {
+      .question-layout { grid-template-columns: 1fr; gap: 18px; }
+      .diagram-wrap { width: min(100%, 320px); }
+    }
+  </style>
+  <link rel="stylesheet" href="../assets/styles/site.css?v=1.0.1">
+  <link rel="stylesheet" href="../assets/styles/quiz-interactions.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="quiz-header">
+      <nav class="quiz-header-nav" aria-label="Quiz navigation">
+        <a class="quiz-brand" href="../">RVHS Anatomy &amp; Physiology</a>
+        <span class="quiz-breadcrumb">Unit 3 · Long bone anatomy</span>
+        <a class="all-quizzes-link" href="../#unit-3">All quizzes</a>
+      </nav>
+      <div class="quiz-heading-row">
+        <div class="quiz-heading">
+          <h1>Long Bone Anatomy Quiz</h1>
+          <p class="header-sub">Identify the marked structure in a sectioned long bone.</p>
+        </div>
+        <div id="scoreChip" class="score-chip hidden" aria-label="Current score">0</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="menuScreen" class="card menu-card">
+      <h2>Choose a game mode</h2>
+      <p class="muted">All 12 structures are reshuffled every time.</p>
+      <div class="mode-grid">
+        <button id="mcModeButton" class="rounded-button mode-button mc" type="button">
+          <span class="key-badge" aria-hidden="true">MCQ</span>
+          <span><span class="mode-title">Multiple Choice</span><span class="mode-desc">Choose one of four related anatomical structures.</span></span>
+        </button>
+        <button id="freeModeButton" class="rounded-button mode-button free" type="button">
+          <span class="key-badge" aria-hidden="true">FRQ</span>
+          <span><span class="mode-title">Free Response</span><span class="mode-desc">Type the anatomical structure without answer choices.</span></span>
+        </button>
+      </div>
+      <div class="features">12 unique structures · bone regions · coverings · marrow · keyboard friendly · mobile friendly</div>
+    </section>
+
+    <section id="quizScreen" class="hidden" aria-labelledby="questionTitle">
+      <div class="quiz-meta"><span id="questionCount">QUESTION 1 OF 12</span><span id="categoryLabel">LONG BONE ANATOMY</span><span id="modeLabel" class="mode-label">Multiple choice</span></div>
+      <div class="progress-track" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+      <div class="card quiz-card">
+        <div class="question-heading">
+          <h2 id="questionTitle">Which bone structure is marked?</h2>
+          <p class="muted">Identify the red dot or the red region bracket. Labels appear only after answering.</p>
+        </div>
+        <div class="question-layout">
+        <div class="diagram-panel">
+          <div class="diagram-wrap">
+            <img src="long-bone.png" alt="Two longitudinal sections of a long bone showing marrow, bone layers, and expanded ends" draggable="false" width="1256" height="1792">
+            <svg id="regionBracket" class="region-bracket hidden" viewBox="0 0 1256 1792" aria-hidden="true"><path id="bracketPath"></path></svg>
+            <div id="targetDot" class="target-dot" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="answer-panel">
+        <div id="mcAnswers" class="answers" aria-label="Answer choices"></div>
+        <form id="freeForm" class="free-row hidden" autocomplete="off">
+          <label class="screen-reader-only" for="freeAnswer">Your answer</label>
+          <input id="freeAnswer" type="text" inputmode="text" enterkeyhint="done" placeholder="Type the bone structure" aria-describedby="feedback">
+          <button id="submitButton" class="rounded-button submit-button" type="submit">Submit ↵</button>
+        </form>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div id="structureBlurb" class="structure-blurb" aria-live="polite" aria-atomic="true"></div>
+        <div class="nav-row">
+          <button id="changeModeButton" class="rounded-button" type="button">Change Mode</button>
+          <button id="nextButton" class="rounded-button next-button" type="button" disabled>Next Question ↵</button>
+        </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultsScreen" class="card results-card hidden" aria-labelledby="resultsTitle">
+      <h2 id="resultsTitle">Quiz Complete</h2>
+      <div id="percentScore" class="score-big">0%</div>
+      <p id="rawScore" style="font-weight:800;font-size:1.2rem;margin-bottom:5px"></p>
+      <p id="resultMessage" class="muted"></p>
+      <div class="results-actions">
+        <button id="practiceMissedButton" class="rounded-button practice-missed" type="button">Practice missed items</button>
+        <button id="playAgainButton" class="rounded-button play-again" type="button">Shuffle &amp; Play Again ↵</button>
+        <button id="resultsModeButton" class="rounded-button" type="button">Change Mode</button>
+      <a class="quiz-library-action" href="../#unit-3">Return to quiz library</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="app.mjs?v=1.3.6"></script>
+</body>
+</html>
