@@ -94,7 +94,6 @@
 .patch-history[open] { padding-bottom: 16px; }
 .patch-history[open] > summary { margin-bottom: 10px; }
 .study-home footer { width: min(1120px, 100%); margin: auto; padding: 0 24px 30px; color: var(--muted); font-size: .75rem; text-align: center; }
-@media (min-width: 1000px) { #unit-2 .quiz-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (max-width: 850px) {
   .hero { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .feature-body { grid-template-columns: 75px minmax(0, 1fr); gap: 12px; }
