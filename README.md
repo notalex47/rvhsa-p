@@ -66,16 +66,10 @@ These checks cover question sets, diagram targets, answer aliases, randomized ch
 
 This history expands the existing [homepage patch notes](index.html#patch-notes) and repository documentation. Context below describes the study or usability problem addressed by the documented changes; it does not attribute unverified requests to past conversations. Codex chat history and message timestamps were unavailable for verification, so published dates are preserved. Versions 1.1.0, 1.1.1, and 1.2.0 have no recorded release date in the patch notes and remain undated.
 
-### Unreleased · Repository documentation
-
-**Context:** Give the repository one place to explain the site's purpose, operation, and release history as the study library grows.
-
-- Consolidate the three quiz-specific READMEs into this root README, retaining setup instructions, diagram and answer-matching notes, model limitations, attribution links, and test commands.
-- Document all 15 numbered releases, including the retired neurotransmitter quiz, with context for the progression from foundational diagrams to 3D skeletal and muscular practice.
-
 ### 1.4.1 · November 4, 2026 · Muscular System 3D Quiz
 
-**Context:** Extend Unit 4 from microscopic muscle organization to the location and function of whole muscles, using the interaction pattern of the skeletal 3D quiz.
+**Context:** Extend Unit 4 from microscopic muscle organization to the location and function of whole muscles, using the interaction pattern of the skeletal 3D quiz. Give the repository one place to explain the site's purpose, operation, and release history as the study library grows.
+
 
 - Add a sixth Unit 4 quiz with 25 muscle targets, bringing the library to 12 quizzes across four units.
 - Highlight complete bilateral targets, including all modeled heads and portions, rather than presenting individual components as separate questions.
@@ -83,6 +77,8 @@ This history expands the existing [homepage patch notes](index.html#patch-notes)
 - Support multiple choice, free response, regional practice, optional saved-session resume, answer explanations, scores, and missed-structure review.
 - Accept common anatomical aliases, including “Surtorius” for Sartorius, while requiring the specific pars peripheralis name for that portion of orbicularis oris.
 - Bundle muscle geometry and rendering assets locally, reuse the skeletal model for bone context, and identify the six targets represented by teaching approximations in the model documentation.
+- Consolidate the three quiz-specific READMEs into this root README, retaining setup instructions, diagram and answer-matching notes, model limitations, attribution links, and test commands.
+- Document all 15 numbered releases, including the retired neurotransmitter quiz, with context for the progression from foundational diagrams to 3D skeletal and muscular practice.
 
 ### 1.4.0 · November 4, 2026 · Muscular System Unit
 
