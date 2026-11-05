@@ -342,18 +342,8 @@
       .diagram-wrap { width: min(100%, 320px); }
     }
 
-/* Unit 4 palette, scoped to these five pages. */
-:root {
-  --radius-btn: 14px;
-  --brand-navy: #75213c; --brand-blue: #af3158; --brand-blue-dark: #872341;
-  --brand-blue-soft: #fce9ef; --color-bg: #fff5f7; --color-text: #442333;
-  --color-muted: #765563; --color-border: #edcbd5; --button-border: #dfa6b7;
-  --button-bg: #fffafb; --button-bg-hover: #fce9ef;
-  --color-focus: #006b78; --quiz-focus: #006b78;
-}
-body { background: radial-gradient(circle at top right, #f9d7e2, transparent 32rem), var(--color-bg); }
-.site-header { background: linear-gradient(130deg, #75213c, #b83860); }
-.quiz-breadcrumb, .quiz-heading .header-sub { color: #ffe2eb; }
+/* Diagram layout; colors come from the shared blue site theme. */
+:root { --radius-btn: 14px; }
 main { width: min(1280px, 100%); }
 .question-layout { grid-template-columns: minmax(0, 1.65fr) minmax(260px, 1fr); gap: 22px; }
 .diagram-panel { padding: 6px; overflow: auto; justify-content: flex-start; border-color: var(--color-border); }
@@ -362,16 +352,6 @@ main { width: min(1280px, 100%); }
 .target-dot { width: 18px; border: 3px solid white; background: #005a70; box-shadow: 0 0 0 1px #003d4c, 0 2px 6px #0004; }
 .region-bracket path { stroke: #005a70; stroke-width: 3; vector-effect: non-scaling-stroke; }
 .region-bracket .marker-halo { stroke: white; stroke-width: 6; }
-.rounded-button.mode-button:hover:not(:disabled) { background: #f9d8e3; }
-.rounded-button:hover:not(:disabled) { border-color: var(--brand-blue); }
-.answer-button.selected, .answer-button[aria-pressed="true"] { border-color: var(--brand-blue) !important; box-shadow: 0 0 0 3px #af315822; }
-.quiz-meta .mode-label { color: var(--brand-blue-dark); background: var(--brand-blue-soft); }
-.progress-track { background: #f0d5de; }
-.features { background: #fff5f7; }
-.free-row input { background: #fffafb; }
-.score-big { background: radial-gradient(circle, #fff 0 52px, transparent 53px), conic-gradient(#af3158 calc(var(--score) * 1%), #f0d5de 0); }
-.results-actions .practice-missed { background: var(--brand-blue); border-color: var(--brand-blue); }
-.quiz-library-action { color: var(--brand-blue-dark); background: var(--brand-blue-soft); }
 .quiz-meta { flex-wrap: wrap; }
 @media (max-width: 950px) {
   .question-layout { grid-template-columns: 1fr; }
