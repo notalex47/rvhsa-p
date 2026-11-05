@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import * as THREE from './vendor/three.module.min.js';
 import {QUESTIONS,makeChoices,isCorrect,Quiz,serializeSession,restoreSession} from './core.mjs';
 import {decodeModel,buildAnatomy,Viewer} from './model.mjs';
+import {createSupplements} from './supplements.mjs';
 async function load(path){const manifest=JSON.parse(await readFile(new URL(path+'.json',import.meta.url)));const bytes=await readFile(new URL(path+'.bin',import.meta.url));return decodeModel(manifest,bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength));}
 const anatomy=buildAnatomy(await load('./muscles'),await load('../skeletal-system-quiz/skeleton'));
 test('exactly the 25 requested structures, with meaningful answer handling',()=>{
@@ -40,4 +41,16 @@ test('a full quiz scores once per question and restores exact progress',()=>{
  assert.equal(quiz.score,25);assert.equal(quiz.missed.length,0);
  const free=new Quiz('free');free.answer('',true);assert.equal(free.score,0);assert.equal(free.missed.length,1);assert.ok(restoreSession(serializeSession(free)));
  assert.equal(restoreSession({...saved,deck:['bogus']}),null);
+});
+
+test('pars peripheralis surrounds the teeth and matches its bundled geometry',()=>{
+ const target=anatomy.targets.get('parsPeripheralis'),band=target.bones[0];
+ const teeth=new THREE.Box3();
+ for(const m of anatomy.group.children.filter(m=>/tooth$/i.test(m.userData.label)))teeth.expandByObject(m);
+ assert.ok(!teeth.isEmpty());
+ const center=target.box.getCenter(new THREE.Vector3()),mouth=teeth.getCenter(new THREE.Vector3());
+ assert.ok(Math.abs(center.y-mouth.y)<.003,'the band must be centered at the teeth, below the nose');
+ assert.ok(target.box.min.y<mouth.y && target.box.max.y>mouth.y,'the complete band must surround the mouth vertically');
+ const generated=createSupplements().find(m=>m.name===band.name);
+ assert.deepEqual(band.geometry.attributes.position.array,generated.geometry.attributes.position.array,'the shipped model must include the source correction');
 });
