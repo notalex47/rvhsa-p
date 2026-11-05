@@ -1,6 +1,6 @@
 # Unit 4: Muscular System — v1.4.0
 
-Five standalone visual quizzes share one dependency-free engine and pinkish-red stylesheet. Start from Unit 4 on the homepage. Each quiz offers randomized multiple choice and free response, explanations after answers, scoring, replay, and missed-item practice.
+Five standalone visual quizzes share one dependency-free engine and the shared blue site theme. The Muscular System homepage section retains its pinkish-red unit accent. Start from Unit 4 on the homepage. Each quiz offers randomized multiple choice and free response, explanations after answers, scoring, replay, and missed-item practice.
 
 | Route | Diagram | Structures |
 | --- | --- | --- |
