@@ -1,0 +1,37 @@
+BodyParts3D muscle geometry attribution
+
+BodyParts3D, (c) The Database Center for Life Science licensed under
+CC Attribution-Share Alike 2.1 Japan.
+Original: https://dbarchive.biosciencedbc.jp/en/bodyparts3d/
+License: https://creativecommons.org/licenses/by-sa/2.1/jp/
+
+84 muscle components from BodyParts3D 4.0 OBJ mirror:
+https://github.com/jixiangying/anatomy
+Commit: be67a977abe25a36f59793fda86a506618fd4d27
+Folder: isa_BP3D_4.0_obj_99/
+Source component IDs and English names are preserved in muscles.json.
+
+Modifications: converted source OBJ meshes to compact indexed binary buffers;
+rotated Z-up coordinates to Y-up, converted millimeters to meters, and rounded
+positions to 0.001 mm. Runtime recalculates vertex normals. No target source
+muscles are cropped: all included heads/portions and both sides are highlighted.
+
+14 original simplified supplement components represent six targets absent
+from the selected source dataset: temporalis, orbicularis oculi, pars peripheralis
+of orbicularis oris, occipitofrontalis (frontal and occipital bellies plus epicranial
+aponeurosis), rectus abdominis, and latissimus dorsi. Supplements are teaching
+approximations, not scanned anatomy; pars peripheralis is represented as a
+peripheral band excluding the marginal lip region. Scalp surfaces are fitted
+to the source skull. Source definitions are in supplements.mjs; baked data in
+muscles.json/muscles.bin is used at runtime. All adapted geometry and original
+supplements are redistributed under CC BY-SA 2.1 Japan.
+
+The shared skeleton is loaded from ../skeletal-system-quiz/skeleton.json and
+skeleton.bin. Its attribution and modifications are described in that folder's
+LICENSE-model.txt. Its source bone geometry is retained unchanged here.
+
+Three.js and OrbitControls: official Three.js r170 distribution (MIT).
+https://github.com/mrdoob/three.js/tree/r170
+OrbitControls imports the bundled local Three.js. See vendor/LICENSE-three.txt.
+
+Quiz notes are original explanations; anatomy references are linked in index.html.
