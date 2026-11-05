@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#a02c50">
+  <title>Skeletal Muscle Organization Quiz</title>
+  <link rel="stylesheet" href="../../assets/styles/site.css?v=1.0.1">
+  <link rel="stylesheet" href="../../assets/styles/quiz-interactions.css">
+  <link rel="stylesheet" href="../style.css?v=1.4.0">
+</head>
+<body data-quiz="muscle-organization">
+  <header class="site-header">
+    <div class="quiz-header">
+      <nav class="quiz-header-nav" aria-label="Quiz navigation">
+        <a class="quiz-brand" href="../../">RVHS Anatomy &amp; Physiology</a>
+        <span class="quiz-breadcrumb">Unit 4 · Muscular System · v1.4.0</span>
+        <a class="all-quizzes-link" href="../../#unit-4">All quizzes</a>
+      </nav>
+      <div class="quiz-heading-row">
+        <div class="quiz-heading">
+          <h1>Skeletal Muscle Organization Quiz</h1>
+          <p class="header-sub">Trace muscle organization from the whole muscle to a myofibril.</p>
+        </div>
+        <div id="scoreChip" class="score-chip hidden" aria-label="Current score">0</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="menuScreen" class="card menu-card">
+      <h2 id="menuTitle" tabindex="-1">Choose a game mode</h2>
+      <p class="muted">All 9 structures are reshuffled every time.</p>
+      <div class="mode-grid">
+        <button id="mcModeButton" class="rounded-button mode-button mc" type="button">
+          <span class="key-badge" aria-hidden="true">MCQ</span>
+          <span><span class="mode-title">Multiple Choice</span><span class="mode-desc">Choose one of four related anatomical structures.</span></span>
+        </button>
+        <button id="freeModeButton" class="rounded-button mode-button free" type="button">
+          <span class="key-badge" aria-hidden="true">FRQ</span>
+          <span><span class="mode-title">Free Response</span><span class="mode-desc">Short anatomical names are enough; full label phrases are optional.</span></span>
+        </button>
+      </div>
+      <div class="features">Diagram 1 of 5 · 9 structures · explanations · missed-item practice</div>
+    </section>
+
+    <section id="quizScreen" class="hidden" aria-labelledby="questionTitle">
+      <div class="quiz-meta"><span id="questionCount">QUESTION 1 OF 9</span><span id="categoryLabel">MUSCULAR SYSTEM</span><span id="modeLabel" class="mode-label">Multiple choice</span></div>
+      <div class="progress-track" aria-hidden="true"><div id="progressFill" class="progress-fill"></div></div>
+      <div class="card quiz-card">
+        <div class="question-heading">
+          <h2 id="questionTitle">Which structure is marked?</h2>
+          <p class="muted">Identify the teal dot, line, or bracket. The answer appears after you submit. Scroll the diagram sideways if needed.</p>
+        </div>
+        <div class="question-layout">
+        <div class="diagram-panel" tabindex="0" aria-label="Anatomy diagram. Scroll sideways to inspect small structures on narrow screens.">
+          <div class="diagram-wrap">
+            <img src="../images/muscle-organization.webp" alt="Sectioned skeletal muscle attached to bone, with a fascicle, muscle fiber, and myofibril pulled out in sequence." draggable="false" width="1000" height="714">
+            <svg id="regionBracket" class="region-bracket hidden" viewBox="0 0 1000 714" aria-hidden="true"><path class="marker-halo"></path><path id="bracketPath"></path></svg>
+            <div id="targetDot" class="target-dot" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="answer-panel">
+        <div id="mcAnswers" class="answers" aria-label="Answer choices"></div>
+        <form id="freeForm" class="free-row hidden" autocomplete="off">
+          <label class="screen-reader-only" for="freeAnswer">Your answer</label>
+          <input spellcheck="false" autocapitalize="none" id="freeAnswer" type="text" inputmode="text" enterkeyhint="done" placeholder="Type a short anatomical name" aria-describedby="feedback">
+          <button id="submitButton" class="rounded-button submit-button" type="submit">Submit ↵</button>
+        </form>
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+        <div id="structureBlurb" class="structure-blurb" aria-live="polite" aria-atomic="true"></div>
+        <div class="nav-row">
+          <button id="changeModeButton" class="rounded-button" type="button">Change Mode</button>
+          <button id="nextButton" class="rounded-button next-button" type="button" disabled>Next Question ↵</button>
+        </div>
+        </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="resultsScreen" class="card results-card hidden" aria-labelledby="resultsTitle">
+      <h2 id="resultsTitle" tabindex="-1">Quiz Complete</h2>
+      <div id="percentScore" class="score-big">0%</div>
+      <p id="rawScore" style="font-weight:800;font-size:1.2rem;margin-bottom:5px"></p>
+      <p id="resultMessage" class="muted"></p>
+      <div class="results-actions">
+        <button id="practiceMissedButton" class="rounded-button practice-missed" type="button">Practice missed items</button>
+        <button id="playAgainButton" class="rounded-button play-again" type="button">Shuffle &amp; Play Again ↵</button>
+        <button id="resultsModeButton" class="rounded-button" type="button">Change Mode</button>
+      <a id="nextDiagramLink" class="quiz-library-action" href="../fascicle-anatomy/">Next diagram</a>
+      <a class="quiz-library-action" href="../../#unit-4">Return to quiz library</a>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="../app.mjs?v=1.4.0"></script>
+</body>
+</html>
