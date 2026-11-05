@@ -70,7 +70,7 @@ export function createSupplements(bones=[]){
   result.push(mesh(swept([[side*.014,.805,.144,.006,.002],[side*.024,.86,.179,.019,.005],[side*.027,.94,.211,.024,.008],[side*.029,1.04,.225,.028,.009],[side*.034,1.13,.224,.031,.008],[side*.039,1.196,.207,.030,.004]],x,z,80,24,intersections),`supp-rectus-${side}`,`${word} rectus abdominis`));
   result.push(mesh(latissimus(side),`supp-latissimus-${side}`,`${word} latissimus dorsi`));
  }
- result.push(mesh(ellipticalBand(0,1.478,.193,.028,.017,.019,.008,.002), 'supp-peripheralis','Pars peripheralis of orbicularis oris'));
+ result.push(mesh(ellipticalBand(0,1.456,.193,.028,.017,.019,.008,.002), 'supp-peripheralis','Pars peripheralis of orbicularis oris'));
  const scalp=mesh(scalpSheet(),'supp-galea','Epicranial aponeurosis of occipitofrontalis');scalp.userData.aponeurosis=true;result.push(scalp);
  // Fit the scalp sheet and bellies to the source skull instead of using a
  // detached ellipsoid. Each radial sample finds the outermost skull surface.

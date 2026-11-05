@@ -1,5 +1,5 @@
-import {QUESTIONS,REGIONS,makeChoices,Quiz,serializeSession,restoreSession} from './core.mjs?v=1.0.0';
-import {decodeModel,buildAnatomy,Viewer} from './model.mjs?v=1.0.0';
+import {QUESTIONS,REGIONS,makeChoices,Quiz,serializeSession,restoreSession} from './core.mjs?v=1.0.1';
+import {decodeModel,buildAnatomy,Viewer} from './model.mjs?v=1.0.1';
 const $=id=>document.getElementById(id);
 const screens={menu:$('menuScreen'),quiz:$('quizScreen'),results:$('resultsScreen')};
 let viewer=null,quiz=null,lastPool=QUESTIONS,lastMode='mc',currentChoices=[];
@@ -83,7 +83,7 @@ function showLoadError(message){$('loadMessage').hidden=false;$('loadMessage').c
 $('viewer').addEventListener('viewerError',event=>showLoadError(event.detail));
 refreshSavedSession();
 try {
- const files=await Promise.all(['muscles.json','muscles.bin','../skeletal-system-quiz/skeleton.json','../skeletal-system-quiz/skeleton.bin'].map(async path=>{const r=await fetch(new URL(path,import.meta.url));if(!r.ok)throw Error('Model files could not be loaded.');return path.endsWith('.json')?r.json():r.arrayBuffer();}));
+ const files=await Promise.all(['muscles.json','muscles.bin','../skeletal-system-quiz/skeleton.json','../skeletal-system-quiz/skeleton.bin'].map(async path=>{const r=await fetch(new URL(path+(path.startsWith('muscles.')?'?v=1.0.1':''),import.meta.url));if(!r.ok)throw Error('Model files could not be loaded.');return path.endsWith('.json')?r.json():r.arrayBuffer();}));
  const anatomy=buildAnatomy(decodeModel(files[0],files[1]),decodeModel(files[2],files[3]));
  for(const q of QUESTIONS)if(!anatomy.targets.has(q.id))throw Error('A target is missing from the muscle model.');
  viewer=new Viewer($('viewer'),anatomy);viewer.setGhost($('ghostToggle').checked);$('loadMessage').hidden=true;document.querySelectorAll('.viewer-controls button,.viewer-controls input,#mcModeButton,#freeModeButton').forEach(b=>b.disabled=false);$('focusButton').disabled=true;refreshSavedSession();
