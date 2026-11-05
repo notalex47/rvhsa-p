@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#173b67">
+ <link rel="icon" href="data:,">
+ <meta name="description" content="Study and quiz yourself on 25 muscles with a rotatable 3D model, complete muscle highlighting, multiple choice, and free response.">
+ <title>Muscular System 3D Quiz · Version 1.0.0 · RVHS Anatomy &amp; Physiology</title>
+ <link rel="stylesheet" href="style.css?v=1.0.0">
+ <link rel="stylesheet" href="../assets/styles/site.css?v=1.0.1">
+  <link rel="stylesheet" href="../assets/styles/quiz-interactions.css">
+</head>
+<body>
+ <header class="site-header">
+  <div class="quiz-header">
+   <nav class="quiz-header-nav" aria-label="Quiz navigation">
+    <a class="quiz-brand" href="../">RVHS Anatomy &amp; Physiology</a>
+    <span class="quiz-breadcrumb">Unit 4 · Muscular system</span>
+    <a class="all-quizzes-link" href="../#unit-4">All quizzes</a>
+   </nav>
+   <div class="quiz-heading-row">
+    <div class="quiz-heading"><h1>Muscular System <span>3D Quiz</span></h1><p class="header-sub">Rotate the body. Identify the muscle. Make it stick.</p></div>
+    <div id="scoreChip" class="score-chip" aria-label="Current score" hidden>0 correct</div>
+   </div>
+  </div>
+ </header>
+ <main>
+  <div class="layout">
+   <section class="model-card" aria-label="Muscle model viewer">
+    <div class="viewer-heading"><span><i class="target-dot"></i> <span id="targetHint">Explore the model</span></span><span class="viewer-tag">3D • Rotate &amp; zoom</span></div>
+    <div id="viewer" class="viewer" tabindex="0" aria-label="Muscle model viewer. Arrow keys rotate, plus and minus zoom."><div id="loadMessage" class="load-message" role="status">Loading your muscle model…</div><span class="orientation" id="orientation">Front view</span></div>
+    <div class="viewer-controls" aria-label="Model controls">
+     <div class="control-row"><button type="button" data-view="front" disabled>Front</button><button type="button" data-view="back" disabled>Back</button><button type="button" data-view="side" disabled>Left side</button><button type="button" data-view="otherSide" disabled>Right side</button></div>
+     <div class="control-row"><button id="focusButton" type="button" disabled>Focus target</button><button id="wholeButton" type="button" disabled>Whole body</button><button id="resetView" type="button" disabled>Reset view</button><button id="rotateLeft" type="button" aria-label="Rotate left" disabled>↶</button><button id="rotateRight" type="button" aria-label="Rotate right" disabled>↷</button><button id="zoomIn" type="button" aria-label="Zoom in" disabled>+</button><button id="zoomOut" type="button" aria-label="Zoom out" disabled>−</button></div>
+     <div class="check-row"><label><input id="ghostToggle" type="checkbox" disabled> See through other muscles</label><label><input id="autoFocus" type="checkbox" checked> Auto-focus questions</label></div>
+     <p class="viewer-help">Drag to rotate · scroll or pinch to zoom · right-drag / two-finger drag to pan</p>
+     <button id="backToQuestion" class="mobile-jump" type="button" hidden>Back to question ↓</button>
+    </div>
+   </section>
+   <div class="quiz-panel">
+    <section id="menuScreen" class="panel" aria-labelledby="modeHeading">
+     <span class="eyebrow">Your next practice session</span><h2 id="modeHeading">Choose a quiz mode</h2>
+     <p>Identify the orange structure on the rotatable muscle model. After every answer, learn where it is or what it does.</p>
+     <label class="select-label" for="regionSelect">Structures to practice</label><select id="regionSelect"><option value="all">All 25 structures</option></select>
+     <div class="study-tools"><label class="select-label" for="studySelect">Explore the 25 muscles</label><select id="studySelect"><option value="">Choose a muscle to study…</option></select><div id="studyNote" class="fact-box" hidden><span class="fact-label">Study mode</span><h3 id="studyTitle"></h3><p id="studyText"></p></div></div>
+     <div class="mode-grid"><button id="mcModeButton" type="button" class="mode-button" disabled><span class="mode-icon">MCQ</span><strong>Multiple Choice</strong><span>Choose from four shuffled answers.</span><b>Start multiple choice →</b></button><button id="freeModeButton" type="button" class="mode-button free-mode" disabled><span class="mode-icon">FRQ</span><strong>Free Response</strong><span>Type the name without answer choices.</span><b>Start free response →</b></button></div>
+     <div id="savedSession" class="saved-session" hidden><p id="savedSummary"></p><div class="saved-actions"><button id="resumeButton" class="primary" type="button" disabled>Resume saved quiz</button><button id="clearSavedButton" class="secondary" type="button">Clear saved quiz</button></div></div>
+     <label class="save-label"><input id="rememberProgress" type="checkbox" checked> Remember progress on this device</label>
+     <p id="storageStatus" class="small-note">Progress and your viewing preferences are saved only in this browser.</p>
+     <div class="features">25 unique structures · randomized questions · new choices each round · explanations after every answer</div>
+     <p class="small-note">The entire selected muscle is orange, including all modeled heads and portions on both sides. Pars peripheralis is the peripheral part of orbicularis oris. “Surtorius” is listed as Sartorius.</p>
+    </section>
+    <section id="quizScreen" class="panel" aria-labelledby="questionTitle" hidden>
+     <div class="progress-meta"><span id="questionCount">Question 1</span><span id="modeLabel">Multiple choice</span></div><progress id="progressBar" value="0" max="25" aria-label="Quiz progress"></progress>
+     <span class="eyebrow question-eyebrow">Identify the orange structure</span><h2 id="questionTitle" tabindex="-1">What is highlighted?</h2><p class="question-help">Rotate or zoom the model as much as you need.</p><button id="jumpToModel" class="mobile-jump light" type="button">View highlighted structure ↑</button>
+     <div id="choices" class="answers"></div>
+     <form id="freeForm" hidden><label for="freeAnswer">Structure name</label><div class="free-row"><input id="freeAnswer" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" maxlength="100" placeholder="Type your answer" aria-describedby="inputHelp feedback"><button type="submit" id="submitButton" class="primary">Check answer</button></div><p id="inputHelp" class="small-note">Not case-sensitive. Extra spaces and punctuation are ignored. Standard anatomical names and common spelling variants are accepted. Enter checks your answer.</p></form>
+     <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div>
+     <div id="factBox" class="fact-box" hidden><span class="fact-label">Anatomy note</span><h3 id="factTitle"></h3><p id="factText"></p><p id="landmarkNote" class="landmark-note" hidden></p></div>
+     <div class="question-actions"><button id="skipButton" type="button" class="secondary">I don’t know</button><button id="nextButton" type="button" class="primary" disabled>Next question →</button></div>
+     <button id="changeMode" type="button" class="text-button">Change mode / restart</button><p class="keyboard-hint">Keys: 1–4 select an answer · Enter continues after feedback.</p>
+    </section>
+    <section id="resultsScreen" class="panel" aria-labelledby="resultsHeading" hidden>
+     <span class="eyebrow">Practice complete</span><h2 id="resultsHeading">Your results</h2><div id="percentScore" class="score-big">0%</div><p id="rawScore"></p><p id="resultSummary"></p>
+     <div class="result-actions"><button id="retryButton" class="primary" type="button">Try another shuffle</button><button id="missedButton" class="secondary" type="button">Practice missed structures</button><a class="quiz-library-action" href="../#unit-4">Return to quiz library</a><button id="menuButton" class="secondary" type="button">Choose a mode</button></div>
+     <h3 id="reviewHeading">Review</h3><div id="reviewList" class="review-list"></div>
+    </section>
+   </div>
+  </div>
+  <details class="about"><summary>About the model &amp; anatomy references</summary><p>This model combines BodyParts3D muscle surfaces with a skeletal reference. Each target includes every modeled head or portion of the named muscle, on both sides. Six muscles unavailable in this dataset use original simplified teaching models: temporalis, orbicularis oculi, pars peripheralis of orbicularis oris, occipitofrontalis, rectus abdominis, and latissimus dorsi. Their shapes and boundaries are approximations. Occipitofrontalis includes both frontal and occipital bellies and its connecting epicranial aponeurosis; the aponeurosis is shown as a thin sheet. Pars peripheralis is highlighted as a complete peripheral band, excluding the marginal lip region. The view omits skin and many deeper structures.</p><p><a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/" target="_blank" rel="noopener">BodyParts3D</a>, © The Database Center for Life Science, licensed under <a href="https://creativecommons.org/licenses/by-sa/2.1/jp/" target="_blank" rel="noopener">CC Attribution-Share Alike 2.1 Japan</a>. Adapted geometry and original supplements are distributed under the same license. Rendering: <a href="https://threejs.org/" target="_blank" rel="noopener">Three.js</a> (MIT).</p><p>Anatomy references: OpenStax Anatomy &amp; Physiology 2e — <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/11-3-axial-muscles-of-the-head-neck-and-back" target="_blank" rel="noopener">head, neck, and back</a>, <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/11-4-axial-muscles-of-the-abdominal-wall-and-thorax" target="_blank" rel="noopener">abdominal wall and thorax</a>, <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/11-5-muscles-of-the-pectoral-girdle-and-upper-limbs" target="_blank" rel="noopener">upper limbs</a>, and <a href="https://openstax.org/books/anatomy-and-physiology-2e/pages/11-6-appendicular-muscles-of-the-pelvic-girdle-and-lower-limbs" target="_blank" rel="noopener">lower limbs</a>. <a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1469-7580.2008.01004.x" target="_blank" rel="noopener">Orbicularis oris compartments</a>.</p></details>
+ </main><footer>RVHS Anatomy &amp; Physiology Study Tools</footer>
+ <noscript><p class="noscript">Enable JavaScript to use the 3D quiz.</p></noscript>
+ <script type="module" src="app.mjs?v=1.0.0"></script>
+</body>
+</html>
