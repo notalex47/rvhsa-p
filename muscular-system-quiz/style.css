@@ -226,7 +226,7 @@
       transform: translate(-50%, -50%);
       border: 4px solid #fff;
       border-radius: 50%;
-      background: var(--red);
+      background: var(--brand-blue);
       box-shadow: 0 2px 8px rgba(0,0,0,.32);
       pointer-events: none;
     }
@@ -333,8 +333,7 @@
     .answer-panel .free-row { grid-template-columns: 1fr; margin-top: 0; }
     .answer-panel .submit-button { width: 100%; }
     .region-bracket { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-    .region-bracket path { fill: none; stroke: #a73535; stroke-width: 6; stroke-linejoin: round; }
-    .target-dot { background: #a73535; }
+    .region-bracket path { fill: none; stroke: var(--brand-blue); stroke-width: 6; stroke-linejoin: round; }
     .nav-row { flex-wrap: wrap; }
     .nav-row .rounded-button { flex: 1; }
     @media (max-width: 700px) {
@@ -349,8 +348,8 @@ main { width: min(1280px, 100%); }
 .diagram-panel { padding: 6px; overflow: auto; justify-content: flex-start; border-color: var(--color-border); }
 .diagram-wrap { width: 100%; min-width: 520px; flex: 1 0 auto; }
 .diagram-wrap img { height: auto; }
-.target-dot { width: 18px; border: 3px solid white; background: #005a70; box-shadow: 0 0 0 1px #003d4c, 0 2px 6px #0004; }
-.region-bracket path { stroke: #005a70; stroke-width: 3; vector-effect: non-scaling-stroke; }
+.target-dot { width: 18px; border: 3px solid white; background: var(--brand-blue); box-shadow: 0 0 0 1px var(--brand-navy), 0 2px 6px #0004; }
+.region-bracket path { stroke: var(--brand-blue); stroke-width: 3; vector-effect: non-scaling-stroke; }
 .region-bracket .marker-halo { stroke: white; stroke-width: 6; }
 .quiz-meta { flex-wrap: wrap; }
 @media (max-width: 950px) {
