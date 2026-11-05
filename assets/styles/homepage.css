@@ -138,3 +138,13 @@
   .unit-jump, .quiz-card, .primary-link, .quiz-link { transition: none; }
   .quiz-card:hover { transform: none; }
 }
+
+/* Unit 4: Muscular System */
+.unit-theme-4 { --unit-color: #a42d53; --unit-soft: #fceaf0; --unit-border: #edbac9; }
+.unit-theme-4 .quiz-card { background: #fffafb; border-color: #f0d3dd; }
+.unit-theme-4 .quiz-link, .muscle-feature .quiz-link { background: #a42d53; }
+.unit-theme-4 .quiz-link:hover, .muscle-feature .quiz-link:hover { background: #7d203e; }
+.muscle-feature { background: linear-gradient(145deg, #fff, #fff0f5); border-color: #edbac9; }
+.muscle-feature .feature-label { color: #8d2648; background: #fceaf0; border-color: #edbac9; }
+.muscle-patch { border-left-color: #a42d53; }
+@media (min-width: 651px) { .unit-jumps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
