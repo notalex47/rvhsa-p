@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
-import { QUIZZES, acceptsAnswer, choicesFor, normalizeAnswer, shuffle } from './core.mjs';
+import { QUIZZES, acceptsAnswer, choicesFor, normalizeAnswer, shuffle, pointerPaths } from './core.mjs';
 
 const counts = [9, 9, 11, 13, 10];
 test('all five reference diagrams have their expected distinct structures and local assets', () => {
@@ -25,6 +25,30 @@ test('all five reference diagrams have their expected distinct structures and lo
       }
     }
   });
+});
+
+test('every individual structure has a calibrated leader with an open head ending exactly at its target', () => {
+  for (const quiz of Object.values(QUIZZES)) {
+    for (const question of quiz.questions) {
+      if (question.marker) {
+        assert.equal(question.pointerFrom, null);
+        continue;
+      }
+      const [x, y] = question.point;
+      const [fromX, fromY] = question.pointerFrom;
+      assert.ok(fromX >= 0 && fromX <= quiz.width && fromY >= 0 && fromY <= quiz.height, question.answer);
+      assert.ok(Math.hypot(x - fromX, y - fromY) > 24, question.answer);
+      const paths = pointerPaths(question);
+      assert.ok(paths.stem.endsWith(`L ${x} ${y}`));
+      const head = paths.head.match(/-?\d+(?:\.\d+)?/g).map(Number);
+      assert.deepEqual(head.slice(2, 4), question.point);
+      // Both wings end behind the tip; no extension can cover the next tissue.
+      for (const [wingX, wingY] of [[head[0], head[1]], [head[4], head[5]]]) {
+        assert.ok((wingX - x) * (x - fromX) + (wingY - y) * (y - fromY) < 0);
+      }
+      assert.ok(!/[Zz]/.test(paths.head), 'The arrowhead must remain open');
+    }
+  }
 });
 
 test('every canonical answer and explicit alias is accepted, including case and punctuation variations', () => {

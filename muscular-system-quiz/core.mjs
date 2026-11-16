@@ -1,4 +1,22 @@
-export { QUIZZES } from './data.mjs';
+export { QUIZZES } from './data.mjs?v=1.4.1-pointers';
+
+// The open arrowhead meets the calibrated target exactly; nothing is filled
+// over the tissue. The SVG uses non-scaling strokes when the image is zoomed.
+export function pointerPaths(question) {
+  const [x, y] = question.point;
+  const [fromX, fromY] = question.pointerFrom;
+  const length = Math.hypot(x - fromX, y - fromY);
+  const ux = (x - fromX) / length;
+  const uy = (y - fromY) / length;
+  const headLength = 8;
+  const halfWidth = 3;
+  const baseX = x - ux * headLength;
+  const baseY = y - uy * headLength;
+  return {
+    stem: `M ${fromX} ${fromY} L ${x} ${y}`,
+    head: `M ${baseX - uy * halfWidth} ${baseY + ux * halfWidth} L ${x} ${y} L ${baseX + uy * halfWidth} ${baseY - ux * halfWidth}`
+  };
+}
 
 export function shuffle(array) {
   const copy = [...array];
