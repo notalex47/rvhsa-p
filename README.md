@@ -2,7 +2,7 @@
 
 A browser-based study library for RVHS Anatomy & Physiology students. Practice identifying structures on unlabeled diagrams and interactive 3D models, check answers, and revisit topics that need more work. The site emphasizes active recall: multiple choice helps with recognition, while free response asks students to name a structure without answer choices.
 
-The current library is **version 1.4.1**, with **12 quizzes across four units**. Start at [the quiz library](index.html); its [Patch Notes](index.html#patch-notes) give a shorter release overview.
+The current library is **version 1.4.2**, with **12 quizzes across four units**. Start at [the quiz library](index.html); its [Patch Notes](index.html#patch-notes) give a shorter release overview.
 
 ## Quiz library
 
@@ -67,6 +67,16 @@ These checks cover question sets, diagram targets, answer aliases, randomized ch
 This history uses the repository's GitHub commits, merged pull requests, and [homepage patch notes](index.html#patch-notes). The repository has no formal GitHub Releases or version tags. Dates below identify when the corresponding changes first reached `main`, using **America/Denver** time; they are not independently verified deployment or chat dates. Follow-up work kept under an existing version is described within that version. Each entry links to its supporting GitHub record.
 
 GitHub history supplies the three previously missing dates and corrects five dates from the older homepage notes: 1.2.1 to September 21, 1.3.0 to October 1, 1.3.3 to October 2, and 1.3.4–1.3.5 to October 3, 2026. Early versions originally appeared as 1.0, 1.1, 2.0, 2.1, 2.2, and 3.0; the [October 1 numbering change](https://github.com/notalex47/rvhsa-p/commit/30d9a52809ad65c5be156b956cbfa465f0eacb32) renamed those same releases to 1.1.0, 1.1.1, 1.2.0, 1.2.1, 1.2.2, and 1.3.0. The dates follow the original changes, rather than the later renaming.
+
+### 1.4.2 · November 16, 2026 · Precise Muscle Diagram Pointers & Zoom
+
+**Context:** Make closely packed structures easier to identify in all five muscular diagram quizzes, where large target dots could obscure the tissue being asked about.
+
+- Replace large dots with fine blue leader lines and open arrowheads that end at calibrated anatomical coordinates. Keep region brackets thin and visible as diagrams are enlarged.
+- Correct crowded target placements around connective tissue coverings, sarcoplasm, the transverse tubule and terminal cisterns, filaments, and Z discs.
+- Add 1×, 1.5×, 2×, and 3× zoom controls, a reset view button, and scrolling on both axes. Keep the current target centered when zooming, resizing, or changing questions.
+
+**GitHub record:** [PR #21 — precise muscle pointers and diagram zoom](https://github.com/notalex47/rvhsa-p/pull/21), merged November 16. All 52 questions were checked in both answer modes, with pointer alignment and visibility verified on desktop and a 320-pixel mobile viewport.
 
 ### 1.4.1 · November 4, 2026 · Muscular System 3D Quiz
 
