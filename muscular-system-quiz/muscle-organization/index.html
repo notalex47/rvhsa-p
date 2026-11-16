@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#173b67">
   <title>Skeletal Muscle Organization Quiz</title>
-  <link rel="stylesheet" href="../style.css?v=1.4.0-blue">
+  <link rel="stylesheet" href="../style.css?v=1.4.1-pointers">
   <link rel="stylesheet" href="../../assets/styles/site.css?v=1.0.1">
   <link rel="stylesheet" href="../../assets/styles/quiz-interactions.css">
 </head>
@@ -50,15 +50,27 @@
       <div class="card quiz-card">
         <div class="question-heading">
           <h2 id="questionTitle">Which structure is marked?</h2>
-          <p class="muted">Identify the teal dot, line, or bracket. The answer appears after you submit. Scroll the diagram sideways if needed.</p>
+          <p class="muted">Identify the structure at the arrow tip, or the region marked by a bracket. Use zoom for small details; scroll to explore the diagram.</p>
         </div>
         <div class="question-layout">
-        <div class="diagram-panel" tabindex="0" aria-label="Anatomy diagram. Scroll sideways to inspect small structures on narrow screens.">
+        <div class="diagram-column">
+          <div class="diagram-tools" role="group" aria-label="Diagram zoom">
+            <button id="zoomOut" class="rounded-button" type="button" aria-label="Zoom out of diagram" disabled>−</button>
+            <output id="zoomLabel" aria-live="polite" aria-label="Diagram zoom level">1×</output>
+            <button id="zoomIn" class="rounded-button" type="button" aria-label="Zoom into diagram">+</button>
+            <button id="resetView" class="rounded-button" type="button">Reset view</button>
+          </div>
+        <div class="diagram-panel" tabindex="0" aria-label="Anatomy diagram. The arrow tip marks the structure. Scroll horizontally or vertically when zoomed.">
           <div class="diagram-wrap">
             <img src="../images/muscle-organization.webp" alt="Sectioned skeletal muscle attached to bone, with a fascicle, muscle fiber, and myofibril pulled out in sequence." draggable="false" width="1000" height="714">
             <svg id="regionBracket" class="region-bracket hidden" viewBox="0 0 1000 714" aria-hidden="true"><path class="marker-halo"></path><path id="bracketPath"></path></svg>
-            <div id="targetDot" class="target-dot" aria-hidden="true"></div>
+            <svg id="targetPointer" class="target-pointer" viewBox="0 0 1000 714" aria-hidden="true">
+              <path class="pointer-stem-halo"></path><path class="pointer-head-halo"></path>
+              <path id="pointerStem"></path><path id="pointerHead"></path>
+            </svg>
           </div>
+        </div>
+
         </div>
 
         <div class="answer-panel">
@@ -94,6 +106,6 @@
     </section>
   </main>
 
-  <script type="module" src="../app.mjs?v=1.4.0"></script>
+  <script type="module" src="../app.mjs?v=1.4.1-pointers"></script>
 </body>
 </html>

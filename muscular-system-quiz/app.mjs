@@ -1,4 +1,4 @@
-import { QUIZZES, shuffle, choicesFor, acceptsAnswer } from './core.mjs?v=1.4.0';
+import { QUIZZES, shuffle, choicesFor, acceptsAnswer, pointerPaths } from './core.mjs?v=1.4.1-pointers';
 const quiz = QUIZZES[document.body.dataset.quiz];
 const { width: IMAGE_WIDTH, height: IMAGE_HEIGHT, questions: QUESTIONS } = quiz;
 
@@ -13,7 +13,13 @@ const { width: IMAGE_WIDTH, height: IMAGE_HEIGHT, questions: QUESTIONS } = quiz;
       modeLabel: document.getElementById("modeLabel"),
       categoryLabel: document.getElementById("categoryLabel"),
       progressFill: document.getElementById("progressFill"),
-      targetDot: document.getElementById("targetDot"),
+      targetPointer: document.getElementById("targetPointer"),
+      pointerStem: document.getElementById("pointerStem"),
+      pointerHead: document.getElementById("pointerHead"),
+      zoomIn: document.getElementById("zoomIn"),
+      zoomOut: document.getElementById("zoomOut"),
+      resetView: document.getElementById("resetView"),
+      zoomLabel: document.getElementById("zoomLabel"),
       regionBracket: document.getElementById("regionBracket"),
       bracketPath: document.getElementById("bracketPath"),
       mcAnswers: document.getElementById("mcAnswers"),
@@ -39,6 +45,37 @@ const { width: IMAGE_WIDTH, height: IMAGE_HEIGHT, questions: QUESTIONS } = quiz;
     let missedQuestions = [];
     let answered = false;
     let selectedChoice = null;
+    const zoomLevels = [1, 1.5, 2, 3];
+    let zoomIndex = 0;
+
+    function positionDiagram() {
+      if (els.quiz.classList.contains('hidden') || !currentQuestion()) return;
+      const panel = document.querySelector('.diagram-panel');
+      const wrap = document.querySelector('.diagram-wrap');
+      wrap.style.width = `${Math.max(520, panel.clientWidth - 12) * zoomLevels[zoomIndex]}px`;
+      const [x, y] = currentQuestion().point;
+      panel.scrollLeft = x / IMAGE_WIDTH * wrap.clientWidth - panel.clientWidth / 2 + 6;
+      panel.scrollTop = y / IMAGE_HEIGHT * wrap.clientHeight - panel.clientHeight / 2 + 6;
+      els.zoomLabel.textContent = `${zoomLevels[zoomIndex]}×`;
+      els.zoomOut.disabled = zoomIndex === 0;
+      els.zoomIn.disabled = zoomIndex === zoomLevels.length - 1;
+    }
+
+    els.zoomIn.addEventListener('click', () => {
+      zoomIndex = Math.min(zoomLevels.length - 1, zoomIndex + 1);
+      positionDiagram();
+    });
+    els.zoomOut.addEventListener('click', () => {
+      zoomIndex = Math.max(0, zoomIndex - 1);
+      positionDiagram();
+    });
+    els.resetView.addEventListener('click', () => { zoomIndex = 0; positionDiagram(); });
+    let panelWidth = 0;
+    new ResizeObserver(([entry]) => {
+      if (entry.contentRect.width === panelWidth) return;
+      panelWidth = entry.contentRect.width;
+      positionDiagram();
+    }).observe(document.querySelector('.diagram-panel'));
 
     function currentQuestion() { return deck[index]; }
 
@@ -58,6 +95,7 @@ const { width: IMAGE_WIDTH, height: IMAGE_HEIGHT, questions: QUESTIONS } = quiz;
       missedQuestions = [];
       answered = false;
       selectedChoice = null;
+      zoomIndex = 0;
       showOnly("quiz");
       renderQuestion();
     }
@@ -72,21 +110,20 @@ const { width: IMAGE_WIDTH, height: IMAGE_HEIGHT, questions: QUESTIONS } = quiz;
       els.categoryLabel.textContent = q.category;
       els.progressFill.style.width = `${((index + 1) / deck.length) * 100}%`;
       els.scoreChip.textContent = index ? `${score}/${index}` : "0";
-      const [x, y] = q.point;
-      els.targetDot.style.left = `${(x / IMAGE_WIDTH) * 100}%`;
-      els.targetDot.style.top = `${(y / IMAGE_HEIGHT) * 100}%`;
-      els.targetDot.classList.toggle("hidden", !!q.marker);
+      els.targetPointer.classList.toggle("hidden", !!q.marker);
       els.regionBracket.classList.toggle("hidden", !q.marker);
       if (q.marker) {
         els.bracketPath.setAttribute('d', q.marker);
         document.querySelector('.marker-halo').setAttribute('d', q.marker);
+      } else {
+        const { stem, head } = pointerPaths(q);
+        els.pointerStem.setAttribute('d', stem);
+        els.pointerHead.setAttribute('d', head);
+        document.querySelector('.pointer-stem-halo').setAttribute('d', stem);
+        document.querySelector('.pointer-head-halo').setAttribute('d', head);
       }
-      // Keep the active target visible when a narrow screen scrolls the diagram.
-      requestAnimationFrame(() => {
-        const panel = document.querySelector('.diagram-panel');
-        const wrap = document.querySelector('.diagram-wrap');
-        panel.scrollLeft = Math.max(0, x / IMAGE_WIDTH * wrap.clientWidth - panel.clientWidth / 2);
-      });
+      // Recenter on the same anatomical coordinate at every zoom and viewport.
+      requestAnimationFrame(positionDiagram);
       clearFeedback();
       els.nextButton.disabled = true;
       els.nextButton.textContent = index === deck.length - 1 ? "See Results ↵" : "Next Question ↵";
